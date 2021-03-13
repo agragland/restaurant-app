@@ -1,0 +1,23 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: white;
+    border-top: 1px solid whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+}
+
