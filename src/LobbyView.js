@@ -7,18 +7,14 @@ const tables = [
     "Table 19", "Table 20"
 ]
 
-const Modal = ({handleClose, show, tableNum, children}) => {
+//Uses custom-made modal, since there's a strange flashing that happens when changing bootstrap modals
+const Modal = ({show, children}) => {
     if (!show)
         return null;
 
-    const showClassName = show ? "modal display-block" : "modal display-none";
-
     return (
-        <div className={showClassName}>
+        <div className="modal">
             <section className="modal-main">
-                <button value={tableNum} onClick={handleClose}>
-                    X
-                </button>
                 {children}
             </section>
         </div>
@@ -41,7 +37,9 @@ export default function TableModals() {
 
     const [orderShow, setOrderShow] = useState(false);
     const handleOrderClick = ({target}) => {
-        setTable(() => target.value);
+        if(target.value)
+            setTable(() => target.value);
+
         if(orderShow === true){
             setOrderShow(() => false);
             setTableShow(() => true);
@@ -59,14 +57,19 @@ export default function TableModals() {
                     {table}
                 </button>
             ))}
-            <Modal show={tableShow} tableNum={table} handleClose={handleTableClick}>
-                <p>{table}
-                    <button value={table} onClick={handleOrderClick}>Show Order</button>
+            <Modal show={tableShow}>
+                <button onClick={handleTableClick}>X</button>
+                <p>
+                    {table}
+                    <button onClick={handleOrderClick}>Show Order</button>
                 </p>
                 <p>Classic Taco</p>
                 <button onClick={handleTableClick}>Complete Request</button>
             </Modal>
-            <Modal show={orderShow} tableNum={table} handleClose={handleOrderClick}>
+            <Modal show={orderShow}>
+                <button onClick={handleOrderClick}>
+                    X
+                </button>
                 <p>{table} Order</p>
                 <p>
                     Classic Taco, $7.99
