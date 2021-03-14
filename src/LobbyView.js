@@ -1,54 +1,34 @@
 import React, {useState} from 'react';
-import './LobbyView.css';
+import Modal from './Modal';
 
-/*const tables = [
-    "Table 1",  "Table 2",  "Table 3",  "Table 4",  "Table 5",  "Table 6",  "Table 7",  "Table 8",  "Table 9",
-    "Table 10", "Table 11", "Table 12", "Table 13", "Table 14", "Table 15", "Table 16", "Table 17", "Table 18",
-    "Table 19", "Table 20"
-]*/
+const classicTaco = {name: "Classic Taco", price: 7.99}
+const wackyTaco = {name: "Wacky Taco", price: 12.99}
 
 //temporary array for items
 const tables = [
-    {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99}, {name: "Classic Taco", price: 7.99},
-    {name:"Wacky Taco", price: 12.99}, {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99},
-    {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99}, {name: "Classic Taco", price: 7.99},
-    {name:"Wacky Taco", price: 12.99}, {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99},
-    {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99}, {name: "Classic Taco", price: 7.99},
-    {name:"Wacky Taco", price: 12.99}, {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99},
-    {name: "Classic Taco", price: 7.99}, {name:"Wacky Taco", price: 12.99}
+    {status: "Occupied", orders: [classicTaco, wackyTaco]}, {status: "Available", orders: []},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]},
+    {status: "Occupied", orders: [classicTaco]}, {status: "Occupied", orders: [wackyTaco]}
 ]
 
-//Uses custom-made modal, since there's a strange flashing that happens when changing bootstrap modals
-const Modal = ({show, children}) => {
-    if (!show)
-        return null;
-
-    return (
-        <div className="modal">
-            <section className="modal-main">
-                {children}
-            </section>
-        </div>
-    );
-}
-
 export default function TableModals() {
-    const [tableNum, setTableNum] = useState("-1");                 //the number of the table (1-20)
-    const [order, setOrder] = useState({name: "-1", price: "-1"});  //the name and price of menu item
-
-    const tableSets = ({target}) => {
-        if(target.dataset.index && target.dataset.name && target.dataset.price) {       //ensures nothing is undefined
+    const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
+    const handleSetTableNum = ({target}) => {
+        if(target.dataset.index) {                  //ensures index is not undefined
             setTableNum(() => target.dataset.index);
-            setOrder(() => ({
-                name: target.dataset.name,
-                price: target.dataset.price
-            }));
         }
     }
 
     const [tableShow, setTableShow] = useState(false);
     const handleTableClick = ({target}) => {        //when a table button is clicked
-        tableSets({target})
+        handleSetTableNum({target})
 
         if(tableShow === true) {                    //toggles table modal
             setTableShow(() => false);
@@ -60,7 +40,7 @@ export default function TableModals() {
 
     const [orderShow, setOrderShow] = useState(false);
     const handleOrderClick = ({target}) => {        //when the show order button is clicked
-        tableSets({target})
+        handleSetTableNum({target})
 
         if(orderShow === true){                     //swaps between Order and Table modals
             setOrderShow(() => false);
@@ -72,11 +52,26 @@ export default function TableModals() {
         }
     };
 
+    const handleCompleteClick = ({target}) => {
+        const index = target.dataset.index;
+        tables[index].status = "Occupied";
+
+        setTableShow(() => false);
+    };
+
+    const handleRemoveClick = ({target}) => {
+        tables[target.dataset.table].orders[target.dataset.index].price = 0;
+        setOrderShow(() => false);
+        setTableShow(() => true);
+    };
+
     return (
         <>
-            {tables.map((order, index) => (
-                <button data-price={order.price} data-name={order.name} data-index={index+1} onClick={handleTableClick}>
+            {tables.map((table, index) => (
+                <button data-index={index+1} onClick={handleTableClick}>
                     Table {index+1}
+                    <br />
+                    {table.status}
                 </button>
             ))}
             <Modal show={tableShow}>
@@ -85,16 +80,20 @@ export default function TableModals() {
                     Table {tableNum}
                     <button onClick={handleOrderClick}>Show Order</button>
                 </p>
-                <p>{order.name}</p>
-                <button onClick={handleTableClick}>Complete Request</button>
+                {tables[tableNum-1].orders.map((order) => (
+                    <p>{order.name}</p>
+                ))}
+                <button data-index={tableNum-1} onClick={handleCompleteClick}>Complete Request</button>
             </Modal>
             <Modal show={orderShow}>
                 <button onClick={handleOrderClick}>X</button>
                 <p>Table {tableNum} Order</p>
-                <p>
-                    {order.name}, {order.price}
-                    <button>Remove</button>
-                </p>
+                {tables[tableNum-1].orders.map((order, index) => (
+                    <p>
+                        {order.name}, ${order.price}
+                        <button data-table={tableNum-1} data-index={index} onClick={handleRemoveClick}>Remove</button>
+                    </p>
+                ))}
             </Modal>
         </>
     );
