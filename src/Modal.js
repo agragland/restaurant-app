@@ -7,7 +7,7 @@ export default function Modal({show, children}) {
         return null;
 
     return (
-        <div className="modal">
+        <div className="modal-background">
             <section className="modal-main">
                 {children}
             </section>
