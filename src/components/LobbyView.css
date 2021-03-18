@@ -1,0 +1,11 @@
+.tableButton{
+    width: 200px;
+    height: 100px;
+    padding: 16px 16px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.orderButton{
+    margin-right: 10px;
+}

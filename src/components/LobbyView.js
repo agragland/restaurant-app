@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Modal from './Modal';
+import './LobbyView.css';
 
 const classicTaco = {name: "Classic Taco", price: 7.99}
 const wackyTaco = {name: "Wacky Taco", price: 12.99}
@@ -8,7 +9,7 @@ const available = {status: "Available", orders: [], drinks: []}
 //temporary array for items
 const tables = [
     {status: "Refill", orders: [classicTaco, wackyTaco], drinks: ["Taco Juice", "Taco Water"]},
-    {status: "Help", orders: [wackyTaco], drinks: []}, {status: "Ready", orders: [classicTaco], drinks: []},
+    {status: "Help", orders: [wackyTaco], drinks: []}, {status: "Order Ready", orders: [classicTaco], drinks: []},
     {status: "Occupied", orders: [classicTaco], drinks: []}, available, available,  available, available, available,
     available, available, available, available, available, available, available, available, available, available,
     available,
@@ -95,9 +96,10 @@ export default function TableModals() {
     };
 
     return (
-        <>
+        <div>
+            <p style={{ backgroundColor: 'lightgray', fontSize: '28px', textAlign: 'center', }}>Lobby</p>
             {tables.map((table, index) => (
-                <button data-index={index+1} onClick={handleTableClick}>
+                <button class='tableButton' data-index={index+1} onClick={handleTableClick}>
                     Table {index+1}
                     <br />
                     {table.status}
@@ -107,7 +109,7 @@ export default function TableModals() {
                 <button onClick={handleTableClick}>X</button>
                 <p>
                     Table {tableNum}
-                    <button onClick={handleOrderClick} disabled={!table.orders[0]}>Show Order</button>
+                    <button  onClick={handleOrderClick} disabled={!table.orders[0]}>Show Order</button>
                 </p>
                 <Needs tableNum={tableNum}/>
                 <button onClick={handleCompleteClick} disabled={table.status === "Available" || table.status === "Occupied"}>Complete Request</button>
@@ -122,6 +124,6 @@ export default function TableModals() {
                     </p>
                 ))}
             </Modal>
-        </>
+        </div>
     );
 };

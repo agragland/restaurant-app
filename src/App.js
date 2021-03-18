@@ -1,6 +1,6 @@
 //Electronic Restaurant - Main App.js
 import './App.css';
-import TableModals from "./LobbyView";
+import TableModals from "./components/LobbyView";
 
 function App() {
   return (
