@@ -1,0 +1,48 @@
+.auto-grid {
+  --auto-grid-min-size: 15rem;
+  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 4fr));
+  grid-gap: 1rem;
+}
+
+.x
+{
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 3px;
+}
+
+h1
+{
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+}
+
+ img
+{
+   display: block;
+    max-width: 340px;
+    max-height: 200px;
+    align-items: baseline;
+    background-size: cover;
+}
+h2
+{
+    font-size: 25px;
+}
+
+h3
+{
+    font-size: 15px;
+}
+
+h4
+{
+    font-size: 12px;
+}
