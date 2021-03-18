@@ -9,3 +9,9 @@
 .orderButton{
     margin-right: 10px;
 }
+
+.tablesView{
+    background-color: lightgray;
+    font-size: 28px;
+    text-align: center;
+}

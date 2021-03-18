@@ -7,7 +7,7 @@ const wackyTaco = {name: "Wacky Taco", price: 12.99}
 const available = {status: "Available", orders: [], drinks: []}
 
 //temporary array for items
-const tables = [
+const globalTables = [
     {status: "Refill", orders: [classicTaco, wackyTaco], drinks: ["Taco Juice", "Taco Water"]},
     {status: "Help", orders: [wackyTaco], drinks: []}, {status: "Order Ready", orders: [classicTaco], drinks: []},
     {status: "Occupied", orders: [classicTaco], drinks: []}, available, available,  available, available, available,
@@ -15,39 +15,10 @@ const tables = [
     available,
 ]
 
-function Needs({tableNum}) {
-    if(!tableNum)
-        return <></>
 
-    const table = tables[tableNum - 1];
-    if (table.status === "Refill") {
-        return (
-            <div>
-                Refill requested for:
-                {table.drinks.map((drink) => (
-                    <p>{drink}</p>
-                ))}
-            </div>
-        );
-    }
-    if (table.status === "Help") {
-        return(
-            <div>
-                <p>Wait staff requested.</p>
-            </div>
-        );
-    }
-    if (table.status === "Ready") {
-        return(
-            <div>
-                <p>Order ready to be delivered.</p>
-            </div>
-        )
-    } else
-        return null;
-}
 
 export default function TableModals() {
+    const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
     const [table, setTable] = useState({status: "Available", orders: []});
     const handleSetTableVals = ({target}) => {
@@ -95,15 +66,69 @@ export default function TableModals() {
         setTableShow(() => true);
     };
 
+    function Needs({tableNum}) {
+        if(!tableNum)
+            return <></>
+
+        const table = tables[tableNum - 1];
+        if (table.status === "Refill") {
+            return (
+                <div>
+                    Refill requested for:
+                    {table.drinks.map((drink) => (
+                        <p>{drink}</p>
+                    ))}
+                </div>
+            );
+        }
+        if (table.status === "Help") {
+            return(
+                <div>
+                    <p>Wait staff requested.</p>
+                </div>
+            );
+        }
+        if (table.status === "Ready") {
+            return(
+                <div>
+                    <p>Order ready to be delivered.</p>
+                </div>
+            )
+        } else
+            return null;
+    }
+
+    let tableColor = "black";
+
+    function setColor(curTable) {
+        if(curTable !== undefined) {
+            const curStatus = curTable.status
+
+            if (curStatus === "Refill")
+                tableColor = "lightblue"
+            else if (curStatus === "Occupied")
+                tableColor = "lightgreen"
+            else if (curStatus === "Help")
+                tableColor = "#ffc87c"          //light orange
+            else if (curStatus === "Order Ready")
+                tableColor = "pink"
+            else
+                tableColor = "white"
+        }
+    }
+
     return (
         <div>
-            <p style={{ backgroundColor: 'lightgray', fontSize: '28px', textAlign: 'center', }}>Lobby</p>
+            <p className="tablesView">Lobby</p>
             {tables.map((table, index) => (
-                <button class='tableButton' data-index={index+1} onClick={handleTableClick}>
-                    Table {index+1}
-                    <br />
-                    {table.status}
-                </button>
+                <>
+                    {setColor(table)}
+                    <button className='tableButton' data-index={index+1} onClick={handleTableClick} style={{background: tableColor}}>
+                        Table {index+1}
+                        <br />
+                        {table.status}
+                    </button>
+                </>
             ))}
             <Modal show={tableShow}>
                 <button onClick={handleTableClick}>X</button>
