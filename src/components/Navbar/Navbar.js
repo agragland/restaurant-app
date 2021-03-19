@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { StaffPages } from "../Pages/Pages";
 import LobbyView from "../Pages/LobbyView";
 import KitchenView from "../Pages/KitchenView";
+import ManagerView from "../Pages/ManagerView";
 import StaffMenu from "./StaffMenu";
 import Modal from "../Modal";
 import './Navbar.css'
@@ -23,7 +24,7 @@ function Navbar() {
         else if(view === "Kitchen")
             setComponent(() => <KitchenView />)
         else if(view === "Manager")
-            setComponent(() => null)//component: <ManagerView />})     needs to implement Manager view first :(
+            setComponent(() => <ManagerView />)
     }
 
     const handlePassword = () => {
