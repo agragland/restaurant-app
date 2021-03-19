@@ -1,0 +1,186 @@
+#background {
+    background-image: url("_img/taco-catch-background2.jpg");
+}
+
+#header {
+    font-family: "Papyrus", fantasy;
+    color: aliceblue;
+    font-size: 72px;
+    font-weight: bolder;
+    text-shadow: 1px 1px black;
+    text-align: center;
+}
+
+#menu {
+    position: relative;
+    left: 30%;
+    top: 20%;
+    height: 500px;
+    width: 500px;
+    text-align: center;
+    background-color: gray;
+}
+
+.menuButton {
+    height: 50px;
+    width: 100px;
+}
+
+#score {
+    position: relative;
+    left: 15%;
+    top: 20%;
+    width: 700px;
+    height: 600px;
+    background-color: darkgray;
+}
+
+.scoreDisplay {
+    text-align: right;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    font-size: 48px;
+}
+
+#game {
+    float: left;
+    margin: 0 0;
+    /*left: 15%;
+    top: 0%;*/
+    height: 600px;
+    width: 600px;
+    text-align: center;
+    background-color: silver;
+}
+
+.moveButton {
+    display: block;
+    background-color: lightskyblue;
+    height: 200px;
+    width: 40px;
+}
+
+.taco {
+    float: left;
+    padding: 1px;
+    height: 20px;
+    width: 40px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border: 1px solid black;
+    background-color: tan;
+    animation: 4s linear infinite rotation;
+    transform-origin: 50% 100%;
+}
+
+.taco.traverseRight {
+    -webkit-transition: 3s;
+    -moz-transition: 3s;
+    -ms-transition: 3s;
+    -o-transition: 3s;
+    transition: 3s;
+    margin-left: 100% !important;
+}
+
+.animateTaco {
+    animation: traverseRight 3000ms linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+#basketBar {
+    float: right;
+    margin: 0 0;
+    /* flex-direction: row;
+    justify-content: space-between;
+     left: 0;*/
+    background-color: silver;
+    width: 100px;
+    height: 600px;
+}
+
+.basket {
+    float: left;
+    top: 20px;
+    background-image: url("_img/taco-basket.png");
+    /*animation-name: basket;*/
+}
+
+@keyframes basket {
+    0% {
+        top: 0px;
+    }
+    5% {
+        top: 30px;
+    }
+    10% {
+        top: 60px;
+    }
+    15% {
+        top: 90px;
+    }
+    20% {
+        top: 120px;
+    }
+    25% {
+        top: 150px;
+    }
+    30% {
+        top: 180px;
+    }
+    35% {
+        top: 210px;
+    }
+    40% {
+        top: 240px;
+    }
+    45% {
+        top: 270px;
+    }
+    50% {
+        top: 300px;
+    }
+    55% {
+        top: 330px;
+    }
+    60% {
+        top: 360px;
+    }
+    65% {
+        top: 390px;
+    }
+    70% {
+        top: 420px;
+    }
+    75% {
+        top: 450px;
+    }
+    80% {
+        top: 480px;
+    }
+    85% {
+        top: 510px;
+    }
+    90% {
+        top: 540px;
+    }
+    95% {
+        top: 570px;
+    }
+    100% {
+        top: 600px;
+    }
+}
+
+img {
+    max-width: 30%;
+    height: auto;
+    transform: scale(3, 3) rotate(270deg);
+}

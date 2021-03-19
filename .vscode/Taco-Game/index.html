@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Taco Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="background">
+    <!--Game title-->
+    <h1 id="header">Taco Catch</h1>
+    <div id="menu">
+        <!--center the buttons-->
+        <p style="text-align: center">
+            <!--2 buttons: one to start new game, one to exit game-->
+            <button class="menuButton" onclick="clearMenu()">New Game</button>
+            <button class="menuButton" onclick="closeWindow()">Exit</button>
+        </p>
+    </div>
+    <div id="score">
+        <button id="play" onclick="start_game()">Play</button>
+        <p class="scoreDisplay"></p>
+
+        <div id="game">
+            <!-- <a class="taco">{{positionY}}</a>-->
+            <a class="taco"></a>
+        </div>
+
+        <div id="basketBar">
+            <img src="_img/taco-basket.png" class="basket">
+            <button class="moveButton" onclick="moveUp()">U &#13;&#10; P</button>
+            <button class="moveButton" onclick="moveDown()">D &#13;&#10; O&#13;&#10; W&#13;&#10; N</button>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        //set all game elements to none
+        document.getElementById("game").style.display = "none";
+        //set the score board to none
+        document.getElementById("score").style.display = "none";
+        //set basket bar to none
+        document.getElementById("basketBar").style.display = "none";
+    </script>
+</body>
+
+</html>
