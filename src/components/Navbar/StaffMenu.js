@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import "./staffMenu.css"
 
+//makes modal
 function Modal({show, children}) {
     if (!show)
         return null;
@@ -14,6 +15,7 @@ function Modal({show, children}) {
     );
 }
 
+//makes dropdown menu
 function DropMenu({show, children}) {
     if(!show)
         return null;
@@ -31,31 +33,39 @@ export default function StaffMenu() {
         setShowModal((prev) => !prev);
     }
 
+    //various dropdown menus based on menu categories
+
+    //Entrees
     const [showEntrees, setShowEntrees] = useState(false);
     const handleEntreesClick = () => {
         setShowEntrees((prev) => !prev);
     }
 
+    //Appetizers
     const [showAppetizers, setShowAppetizers] = useState(false);
     const handleAppetizersClick = () => {
         setShowAppetizers((prev) => !prev);
     }
 
+    //Sides
     const [showSides, setShowSides] = useState(false);
     const handleSidesClick = () => {
         setShowSides((prev) => !prev);
     }
 
+    //Kids
     const [showKids, setShowKids] = useState(false);
     const handleKidsClick = () => {
         setShowKids((prev) => !prev);
     }
 
+    //Desserts
     const [showDesserts, setShowDesserts] = useState(false);
     const handleDessertsClick = () => {
         setShowDesserts((prev) => !prev);
     }
 
+    //Drinks
     const [showDrinks, setShowDrinks] = useState(false);
     const handleDrinksClick = () => {
         setShowDrinks((prev) => !prev);

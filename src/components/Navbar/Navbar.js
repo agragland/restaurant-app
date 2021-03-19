@@ -11,8 +11,10 @@ class Navbar extends Component{
 
     handleClick = (e) => {
         e.preventDefault()
-        this.setState({ clicked: !this.state.clicked})
+        this.setState({ clicked: !this.state.clicked})  //blocks auto-refresh
         const view = e.target.name
+
+        //chooses which view to display
         if(view === "Lobby")
             this.setState({component: <LobbyView />})
         else if(view === "Kitchen")

@@ -28,38 +28,26 @@ export default function TableView() {
 
     const [tableShow, setTableShow] = useState(false);
     const handleTableClick = ({target}) => {        //when a table button is clicked
-        handleSetTableVals({target})
-
-        if(tableShow === true) {                    //toggles table modal
-            setTableShow(() => false);
-        }
-        else {
-            setTableShow(() => true);
-        }
+        handleSetTableVals({target});
+        setTableShow((prev) => !prev);  //toggles table modal
     };
 
     const [orderShow, setOrderShow] = useState(false);
     const handleOrderClick = ({target}) => {        //when the show order button is clicked
         handleSetTableVals({target})
 
-        if(orderShow === true){                     //swaps between Order and Table modals
-            setOrderShow(() => false);
-            setTableShow(() => true);
-        }
-        else{
-            setTableShow(() => false);
-            setOrderShow(() => true);
-        }
+        setTableShow((prev) => !prev);  //toggles table modal
+        setOrderShow((prev) => !prev);  //toggles order modal
     };
 
     const handleCompleteClick = () => {
-        table.status = "Occupied";
+        table.status = "Occupied";                  //resets table status to occupied
         //needs to actually set stuff in the data as well
         setTableShow(() => false);
     };
 
     const handleRemoveClick = ({target}) => {
-        table.orders[target.dataset.index].price = 0;
+        table.orders[target.dataset.index].price = 0;   //sets price of comped item to 0
         setOrderShow(() => false);
         setTableShow(() => true);
     };
@@ -69,39 +57,41 @@ export default function TableView() {
             return <></>
 
         const table = tables[tableNum - 1];
+        //displays the needs of the table
         if (table.status === "Refill") {
             return (
                 <div>
                     Refill requested for:
-                    {table.drinks.map((drink) => (
+                    {table.drinks.map((drink) => (      //lists all drinks that need refills
                         <p>{drink}</p>
                     ))}
                 </div>
             );
         }
-        if (table.status === "Help") {
+        else if (table.status === "Help") {
             return(
                 <div>
                     <p>Wait staff requested.</p>
                 </div>
             );
         }
-        if (table.status === "Ready") {
+        else if (table.status === "Ready") {
             return(
                 <div>
                     <p>Order ready to be delivered.</p>
                 </div>
             )
-        } else
+        }
+        else
             return null;
     }
 
-    let tableColor = "black";
-
+    let tableColor = "black";           //sets to black by default, to show any errors
     function setColor(curTable) {
-        if(curTable !== undefined) {
+        if(curTable !== undefined) {    //ensures curTable is not undefined
             const curStatus = curTable.status
 
+            //sets button color based on status
             if (curStatus === "Refill")
                 tableColor = "lightblue"
             else if (curStatus === "Occupied")
@@ -117,7 +107,7 @@ export default function TableView() {
 
     return (
         <div className="lobby">
-            <p class="lobby-title">Lobby</p>
+            <p className="lobby-title">Lobby</p>
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}
@@ -130,7 +120,7 @@ export default function TableView() {
             ))}
             <Modal show={tableShow}>
                 <button onClick={handleTableClick}>X</button>
-                <button class='orderButton' onClick={handleOrderClick} disabled={!table.orders[0]} >Show Order</button>
+                <button className='orderButton' onClick={handleOrderClick} disabled={!table.orders[0]} >Show Order</button>
                 <p style={{ fontSize: '1.25rem', textAlign: 'center'}}></p>
                 <p>
                     Table {tableNum}
