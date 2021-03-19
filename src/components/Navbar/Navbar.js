@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { StaffPages } from "../Pages/Pages";
 import LobbyView from "../Pages/LobbyView";
 import KitchenView from "../Pages/KitchenView";
+import ManagerView from "../Pages/ManagerView";
 import StaffMenu from "./StaffMenu";
 import './Navbar.css'
 
@@ -20,7 +21,7 @@ class Navbar extends Component{
         else if(view === "Kitchen")
             this.setState({component: <KitchenView />})
         else if(view === "Manager")
-            this.setState({})//component: <ManagerView />})     needs to implement Manager view first :(
+            this.setState({component: <ManagerView />})    // needs to implement Manager view first :(
     }
 
     render(){
