@@ -1,40 +1,50 @@
 //assitance from: https://www.youtube.com/watch?v=fL8cFqhTHwA
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import { StaffPages } from "../Pages/Pages";
 import LobbyView from "../Pages/LobbyView";
 import KitchenView from "../Pages/KitchenView";
 import StaffMenu from "./StaffMenu";
+import Modal from "../Modal";
 import './Navbar.css'
 
-class Navbar extends Component{
-    state = { clicked: false, component: <LobbyView /> }
+function Navbar() {
+    const [clicked, setClicked] = useState(false);
+    const [component, setComponent] = useState(<LobbyView/>);
+    const [showPassword, setShowPassword] = useState(true);
 
-    handleClick = (e) => {
-        e.preventDefault()
-        this.setState({ clicked: !this.state.clicked})  //blocks auto-refresh
+    const handleClick = (e) => {
+        e.preventDefault()              //blocks auto-refresh
+        setClicked(() => !clicked)
         const view = e.target.name
 
         //chooses which view to display
         if(view === "Lobby")
-            this.setState({component: <LobbyView />})
+            setComponent(() => <LobbyView />)
         else if(view === "Kitchen")
-            this.setState({component: <KitchenView />})
+            setComponent(() => <KitchenView />)
         else if(view === "Manager")
-            this.setState({})//component: <ManagerView />})     needs to implement Manager view first :(
+            setComponent(() => null)//component: <ManagerView />})     needs to implement Manager view first :(
     }
 
-    render(){
+    const handlePassword = () => {
+       setShowPassword(() => !showPassword)
+    }
+
         return(
             <div>
                 <StaffMenu />
-                {this.state.component}
+                <Modal show={showPassword}>
+                    <button onClick={handlePassword}>X</button>
+                    <p>Insert Employee ID:</p>
+                </Modal>
+                {component}
                 <nav className="NavbarPages">
                     <h1 className="employee-id">Employee ID: <i className="fab fa-empID"></i></h1> {/* Still need to add inputed employee id*/}
-                    <ul className={this.state.clicked ? 'nav-page active' : 'nav-page'}>
+                    <ul className={clicked ? 'nav-page active' : 'nav-page'}>
                         {StaffPages.map((item, index) => {
                             return(
                                 <li key={index}>
-                                    <a className={item.cName} href={item.url} name={item.title} onClick={this.handleClick}>
+                                    <a className={item.cName} href={item.url} name={item.title} onClick={handleClick}>
                                         {item.title}
                                     </a>
                                 </li>
@@ -44,7 +54,6 @@ class Navbar extends Component{
                 </nav>
             </div>
         );
-    }
 
 }
 
