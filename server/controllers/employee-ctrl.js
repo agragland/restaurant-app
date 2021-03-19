@@ -52,6 +52,7 @@ updateEmployee = async (req, res) => {
                 message: 'Customer not found!',
             })
         }
+        employee.emp_id = body.emp_id
         employee.name = body.name
         employee.role = body.role
         employee.password = body.password
@@ -78,7 +79,7 @@ deleteEmployee = async (req, res) => {
         if (err) {
             return res.status(400).json({success: false, error: err})
         }
-        if (!employee.length) {
+        if (!employee) {
             return res
                 .status(404)
                 .json({success: false, error: `Employee not found`})
@@ -94,7 +95,7 @@ getEmployeeById = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!employee.length) {
+        if (!employee) {
             return res
                 .status(404)
                 .json({ success: false, error: `Employee not found` })

@@ -22,7 +22,7 @@ createCustomer = (req, res) => {
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: item._id,
+                id: customer._id,
                 message: 'Customer created!',
             })
         })

@@ -7,8 +7,8 @@ const Item = new Schema(
         category: { type: String, required: true },
         ingredients: {type: [String], required: true},
         price: {type: Number, required: true, default: 0.0},
-        img: {type: String, required: true},
-        isAvailable: {type: String, required: true}
+        img: {type: String, required: false, default: ""},
+        isAvailable: {type: Boolean, required: false, default: true} //TODO: change to boolean
     },
 
 )

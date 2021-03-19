@@ -20,7 +20,7 @@ router.put('/item/:id', ItemCtrl.updateItem)
 router.delete('/item/:id', ItemCtrl.deleteItem)
 router.get('/item/:id', ItemCtrl.getItemById)
 router.get('/items', ItemCtrl.getItems)
-router.get('/item/:avail', ItemCtrl.getAvailableItems)
+router.get('/items/avail', ItemCtrl.getAvailableItems)
 
 //Loyalty Commands
 router.post('/customer', LoyaltyCtrl.createCustomer)
@@ -31,5 +31,9 @@ router.get('/customers', LoyaltyCtrl.getCustomers)
 
 //Order Commands
 router.post('/order', OrderCtrl.createOrder)
+router.put('/order/:id',OrderCtrl.updateOrder)
+router.delete('/order/:id', OrderCtrl.deleteOrder)
+router.get('/order/:id', OrderCtrl.getOrderById)
+router.get('/orders', OrderCtrl.getOrders)
 
 module.exports = router

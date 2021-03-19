@@ -1,15 +1,14 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Item = require('./item-model')
 
 const Order = new Schema(
     {
-        items: { type: [Item], required: true },
+        order_items: [{type: mongoose.Schema.Types.ObjectId, ref: 'items'}],
         comments: {type: [String], required: true}, //CAN BE REVERTED TO SINGLE STRING IF 3.2.3 CLARIFIED
-        subtotal: { type: Number, required: true },
-        tip: { type: Number, required: true },
-        total: {type: Number, required: true},
-        status: {type: String, required: true, default: "Created"}
+        subtotal: { type: Number, required: false, default: 0.0 },
+        tip: { type: Number, required: false, default: 0.0 },
+        total: {type: Number, required: false, default: 0.0 },
+        status: {type: String, required: false, default: "Created"}
     },
     {timestamps: true},
 )

@@ -107,22 +107,22 @@ getItemById = async (req, res) => {
 }
 
 getItems = async (req, res) => {
-    await Item.find({}, (err, item) => {
+    await Item.find({}, (err, items) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!item.length) {
+        if (!items.length) {
             return res
                 .status(404)
                 .json({ success: false, error: `Movie not found` })
         }
-        return res.status(200).json({ success: true, data: item })
+        return res.status(200).json({ success: true, data: items })
     }).catch(err => console.log(err))
 }
 
 
 getAvailableItems = async (req, res) => {
-    await Item.find({isAvailable: req.params.isAvailable}, (err, items) => {
+    await Item.find({isAvailable: true}, (err, items) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }

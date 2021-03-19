@@ -3,10 +3,10 @@ const Schema = mongoose.Schema
 
 const Employee = new Schema(
     {
-        _id: {type: Number, required: true, unique: true},
+        emp_id: {type: Number, required: true},
         name: { type: String, required: true },
         role: { type: String, required: true }, //Manager, Lobby, Kitchen
-        password: {type: String, required: false}
+        password: {type: String, required: false, default: ""} //Only Managers have password
     },
 )
 
