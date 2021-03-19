@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import { StaffPages } from "../Pages/Pages";
 import LobbyView from "../LobbyView";
 import KitchenView from "../KitchenView";
-import './Navbar.css'
+import StaffMenu from "./StaffMenu";
+import './Navbar.css';
 
 class Navbar extends Component{
     state = { clicked: false, component: <LobbyView /> }
@@ -15,7 +16,7 @@ class Navbar extends Component{
         if(view === "Lobby")
             this.setState({component: <LobbyView />})
         else if(view === "Kitchen")
-            this.setState({component: <KitchenView />})     //needs to implement Kitchen view first :(
+            this.setState({component: <KitchenView />})
         else if(view === "Manager")
             this.setState({})//component: <ManagerView />})     needs to implement Manager view first :(
     }
@@ -23,10 +24,10 @@ class Navbar extends Component{
     render(){
         return(
             <div>
+                <StaffMenu />
                 {this.state.component}
                 <nav className="NavbarPages">
                     <h1 className="employee-id">Employee ID: <i className="fab fa-empID"></i></h1> {/* Still need to add inputed employee id*/}
-                    <div className="staff-page" onClick={this.handleClick}></div>
                     <ul className={this.state.clicked ? 'nav-page active' : 'nav-page'}>
                         {StaffPages.map((item, index) => {
                             return(
