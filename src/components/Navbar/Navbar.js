@@ -1,10 +1,10 @@
 //assitance from: https://www.youtube.com/watch?v=fL8cFqhTHwA
 import React, {Component} from 'react';
 import { StaffPages } from "../Pages/Pages";
-import LobbyView from "../LobbyView";
-import KitchenView from "../KitchenView";
+import LobbyView from "../Pages/LobbyView";
+import KitchenView from "../Pages/KitchenView";
 import StaffMenu from "./StaffMenu";
-import './Navbar.css';
+import './Navbar.css'
 
 class Navbar extends Component{
     state = { clicked: false, component: <LobbyView /> }
