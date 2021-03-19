@@ -15,7 +15,7 @@ const globalTables = [
     available,
 ]
 
-export default function TableModals() {
+export default function TableView() {
     const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
     const [table, setTable] = useState({status: "Available", orders: []});
