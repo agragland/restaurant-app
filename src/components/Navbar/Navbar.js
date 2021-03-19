@@ -1,8 +1,8 @@
 //assitance from: https://www.youtube.com/watch?v=fL8cFqhTHwA
 import React, {Component} from 'react';
-import { StaffPages } from "../Pages/Pages";
-import LobbyView from "../LobbyView";
-import KitchenView from "../KitchenView";
+import { StaffPages } from "../pages/Pages";
+import LobbyView from "../pages/LobbyView";
+import KitchenView from "../pages/KitchenView";
 import './Navbar.css'
 
 class Navbar extends Component{

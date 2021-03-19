@@ -15,8 +15,6 @@ const globalTables = [
     available,
 ]
 
-
-
 export default function TableModals() {
     const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)

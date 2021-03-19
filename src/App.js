@@ -8,7 +8,6 @@ function App() {
   return (
     <div className="App">Taco Palace
       <div className="bg"></div>
-      <TableModals />
       <Navbar />
     </div>
   );
