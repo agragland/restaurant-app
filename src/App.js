@@ -1,10 +1,11 @@
 //Electronic Restaurant - Main App.js
 import './App.css';
-import TableModals from "./components/LobbyView";
+import LobbyView from "./components/LobbyView";
+import Navbar from "./components/Navbar/Navbar.js"
 
 function App() {
   return (
-    <TableModals />
+    <Navbar />
   );
 }
 
