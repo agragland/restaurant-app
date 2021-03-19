@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
+import './KitchenView.css'
+
 export default function KitchenView (){
     return (
-        <div> 
-            
+        <div className='kitchen'> 
+            <div className='kitchen-title'>Kitchen</div>
         </div>
     );
 }
