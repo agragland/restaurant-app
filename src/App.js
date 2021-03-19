@@ -1,7 +1,6 @@
 //Electronic Restaurant - Main App.js
 import './App.css';
 import Navbar from "./components/Navbar/Navbar"
-import TableModals from "./components/pages/LobbyView";
 //import ________ form "./components/pages/KitchenView";
 
 function App() {

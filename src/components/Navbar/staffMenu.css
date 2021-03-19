@@ -1,3 +1,12 @@
+.menu-button {
+    right: 5%;
+    top: 5%;
+    position: fixed;
+    width: 100px;
+    height: 50px;
+    padding: 16px 16px;
+}
+
 .modal-background-staff {
     position: fixed;
     left: 0;

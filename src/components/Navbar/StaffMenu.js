@@ -63,7 +63,7 @@ export default function StaffMenu() {
 
     return (
         <div>
-            <button onClick={handleModalClick}>Menu</button>
+            <button onClick={handleModalClick} className="menu-button">Menu</button>
             <Modal show={showModal}>
                 <button onClick={handleModalClick}>X</button>
                 <p>
