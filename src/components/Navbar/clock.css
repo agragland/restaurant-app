@@ -1,0 +1,15 @@
+.clock{
+    top: 5%;
+    left: 5%;
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: #efefef;
+    outline: #767676 solid 1px;
+    text-align: center;
+}
+
+.time{
+    font-size: 14px;
+    vertical-align: middle;
+}
