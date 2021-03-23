@@ -1,5 +1,4 @@
 .lobby{
-    background: linear-gradient(deg0, #F5853F, #440D0F);
     font-size: 1rem;
     justify-items: center;
     background-color: lightgray;
@@ -16,7 +15,7 @@
 } 
 
 .orderButton{
-    margin-inline-end: 0px;
+    margin-inline-end: 0;
 }
 
 .lobby-title{

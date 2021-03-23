@@ -121,7 +121,6 @@ export default function TableView() {
             <Modal show={tableShow}>
                 <button onClick={handleTableClick}>X</button>
                 <button className='orderButton' onClick={handleOrderClick} disabled={!table.orders[0]} >Show Order</button>
-                <p style={{ fontSize: '1.25rem', textAlign: 'center'}}></p>
                 <p>
                     Table {tableNum}
                 </p>
