@@ -1,10 +1,12 @@
 //assitance from: https://www.youtube.com/watch?v=fL8cFqhTHwA
 import React, {useState} from 'react';
 import { StaffPages } from "../Pages/Pages";
+
 import LobbyView from "../Pages/LobbyView";
 import KitchenView from "../Pages/KitchenView";
-import ManagerView from "../Pages/ManagerView";
+import ManagerView from "../Pages/ManagerView/ManagerView";
 import StaffMenu from "./StaffMenu";
+
 import Modal from "../Modal";
 import './Navbar.css'
 
@@ -24,7 +26,10 @@ function Navbar() {
         else if(view === "Kitchen")
             setComponent(() => <KitchenView />)
         else if(view === "Manager")
+        {
             setComponent(() => <ManagerView />)
+            //setComponent(() => <ManagerLogin />)
+        }
     }
 
     const handlePassword = () => {
