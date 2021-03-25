@@ -37,3 +37,43 @@
     float: left;
     min-width: 75px;
 }
+
+.order{
+    position: relative;
+    outline: black solid 2px;
+    outline-offset: -5px;
+    width: 45%;
+    left: 3%;
+    right: -2.5%;
+    padding: 1%;
+    float: left;
+}
+
+.ready-button{
+    position: absolute;
+    right: calc(1% + 5px);
+    bottom: calc(3% + 5px);
+}
+
+.order-table{
+    font-weight: normal;
+}
+
+.item-name{
+    margin: 0;
+    padding:0;
+}
+
+.item-comments{
+    margin: 0;
+    padding:0;
+    font-size: 14px;
+}
+
+.item{
+    text-align: left;
+}
+
+.true{
+    font-size: 20px;
+}
