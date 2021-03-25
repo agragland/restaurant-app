@@ -8,7 +8,7 @@ const Item = new Schema(
         ingredients: {type: [String], required: true},
         price: {type: Number, required: true, default: 0.0},
         img: {type: String, required: false, default: ""},
-        isAvailable: {type: Boolean, required: false, default: true} //TODO: change to boolean
+        isAvailable: {type: Boolean, required: false, default: true}
     },
 
 )
