@@ -2,16 +2,17 @@ import React, {useState} from 'react';
 import './KitchenView.css'
 
 const globalOrderQueue = [
-    {comments: ["No shell", "Extra shell"], table: 17, status: "Created", items: [{name: "Classic Taco", price: 7.99, done: false}, {name: "Wacky Taco", price: 12.99, done: false}]},
-    {comments: ["", "help :)"], table: 1, status: "Created", items: [{name: "Classic Taco", price: 7.99, done: false}, {name: "Wacky Taco", price: 12.99, done: false}]},
-    {comments: ["Make it cheaper"], table: 10, status: "Created", items: [{name: "Wacky Taco", price: 12.99, done: false}]},
-    {comments: ["Classic."], table: 15, status: "Created", items: [{name: "Classic Taco", price: 7.99, done: false}]}
+    {comments: ["No shell", "Extra shell"], table: 17, status: "Created", items: [{name: "Classic Taco", price: 7.99}, {name: "Wacky Taco", price: 12.99}]},
+    {comments: ["", "help :)"], table: 1, status: "Created", items: [{name: "Classic Taco", price: 7.99}, {name: "Wacky Taco", price: 12.99}]},
+    {comments: ["Make it cheaper"], table: 10, status: "Created", items: [{name: "Wacky Taco", price: 12.99}]},
+    {comments: ["Classic."], table: 15, status: "Created", items: [{name: "Classic Taco", price: 7.99}]}
 ]
 const globalActive = [];
 
 export default function KitchenView (){
     const [orderQueue, setOrderQueue] = useState(globalOrderQueue);
     const [actives, setActives] = useState(globalActive);
+    const [itemOrder, setItemOrder] = useState([["working", "working"], ["working", "working"], ["working"], ["working"]]);
 
     const clickToActive = ({target}) => {
         const index = target.value
@@ -31,7 +32,15 @@ export default function KitchenView (){
     }
 
     const clickItem = ({target}) => {
-        let isDone = actives[target.dataset.activesindex].items[target.dataset.itemindex].done
+        let tempArr = [...itemOrder]
+        const activesIndex = target.dataset.activesindex
+        const itemIndex = target.dataset.itemindex
+
+        if(tempArr[activesIndex][itemIndex] === "working")
+            tempArr[activesIndex][itemIndex] = "done"
+        else
+            tempArr[activesIndex][itemIndex] = "working"
+        setItemOrder(() => tempArr);
     }
 
     return (
@@ -53,7 +62,7 @@ export default function KitchenView (){
                         {order.items.map((item, itemIndex) => (
                             <div className="item">
                                 <p className="item-name">
-                                    <button onClick={clickItem} data-activesindex={activesIndex} data-itemindex={itemIndex} className={item.done}>&nbsp;</button>
+                                    <button onClick={clickItem} data-activesindex={activesIndex} data-itemindex={itemIndex} className={itemOrder[activesIndex][itemIndex]}>&nbsp;</button>
                                     {item.name}
                                 </p>
                                 <p className="item-comments">&emsp;&emsp;-{actives[activesIndex].comments[itemIndex]}</p>

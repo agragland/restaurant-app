@@ -74,6 +74,7 @@
     text-align: left;
 }
 
-.true{
-    font-size: 20px;
+.done{
+    border-radius: 50%;
+    background-color: black;
 }
