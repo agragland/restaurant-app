@@ -9,20 +9,17 @@
 
 <main>
     
-    <label for= "name">Name:</label><br>
-    <input type="text" id="name" name="name"><br>
-    
     <label for="phoneNum">Phone Number:</label><br>
-    <input type="text" id="phoneNum" name="phoneNum"><br>
+    <input type="tel" id="phoneNum" name= "phoneNum" placeholder = "123-456-6780" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br><br>
     
     
     <label for="Email">Email:</label><br>
-    <input type="text" id="Email" name="Email"><br>
+    <input type="email" id="Email" name="Email" placeholder = "example@yahoo.com" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required /><br><br>
     
-    <label for= "Birthday">Birthday:</label><br>
-    <input type="text" id="Birthday" name="Birthday"><br>
     
-    <button onclick="javascript:window.location='mainPage.html'">Complete Sign Up</button>
+
+    
+    <button onclick="javascript:window.location='mainPage.html'">Complete Sign In</button>
     
     
     

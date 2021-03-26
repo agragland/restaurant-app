@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <body>
+    
+    <script>
+        
+        
+        
+        window.onload = function()
+        {   
+            var iframe = document.getElementById('iframe1');
+            iframe.style.display = 'none';
+          
+            document.getElementById("pinOut").style.display = 'none';
+        
+        }
+        
+        var password = '';
+        var passwordLogOut = '';
+        
+        
+        function pin()
+        {
+
+            password = document.querySelector("#pinTyped").value;
+        
+            document.getElementById("exit").style.display = 'none';
+            document.getElementById("pin").style.display = 'none';
+             document.getElementById("pinOut").style.display = 'block';
+            
+        }
+        
+        function logOut()
+        {
+            passwordLogOut = document.querySelector("#logOut").value;
+            
+            if(password != passwordLogOut)
+            {
+                   alert("Password did not match: Please try again")
+                    return false;
+            }
+            
+            else
+            {
+                document.querySelector("#pinTyped").value = "";
+
+                document.getElementById("pinOut").style.display = 'none';
+                document.getElementById("pin").style.display = 'block';
+                document.getElementById("exit").style.display = 'block';
+              
+                
+            }
+        }
+  
+        function create() 
+        {  
+            var iframe = document.getElementById("iframe1");  
+            iframe.style.display = 'flex';
+        }
+
+        function closeIframe() 
+        {   
+           var iframe = document.getElementById('iframe1');
+           iframe.style.display = 'none';
+        }
+        
+        
+        
+    </script>
+        
+        
+        
+        
+        <div id = "exit">
+        
+        <a href="javascript: window.parent.closeIframe4().style.display='none'"><button class = 'X'>X</button></a>
+        
+        </div>
+        
+        
+        <br>
+        <br>
+        <br>
+        
+         <iframe name = "iframe1" id = "iframe1" iframe src = "kidsPage.html" style="position:fixed; top:0px; left:0px; bottom:0px; right:0; width:956px; height:600px; border:5px 5px black; background:white; margin:0; padding:0; overflow:hidden; z-index:999999; border-radius: 20px">   
+        </iframe>
+
+      
+        <div id="pin">
+        <label for="labelPin">Pin</label>
+        <input id="pinTyped" type="password" onfocus="this.value=''">
+        <button id = "signIn" onclick="pin()">Log In</button>
+        </div>
+        
+        
+        <div id = "pinOut">
+        <button onclick="create()" target="iframe">Click Me for Fun!!</button> 
+        <br>
+        <br>
+        <label for = "labelOut">Sign Out</label>
+        <input id = "logOut" type="password" onfocus="this.value=''">
+        <button id = "Log" onclick = "logOut()">Log Out</button>
+        </div>
+
+
+        
+        
+        
+       
+    
+    </body>
+    
+    
+    
+    
+    
+    
+
+</html>
+
+
+
