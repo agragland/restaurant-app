@@ -1,0 +1,28 @@
+.menu-button {
+    right: 5%;
+    top: 5%;
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    padding: 16px 16px;
+}
+
+.modal-background-staff {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-main-staff {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: white;
+}

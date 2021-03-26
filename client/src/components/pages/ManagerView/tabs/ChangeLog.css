@@ -1,0 +1,13 @@
+.ChangeLog{
+    position: relative;
+    background-color: gray;
+    height: 500px;
+    margin: 0px;
+}
+
+.logDisplay{
+    height: 80%;
+    width: 90%;
+    background: white;
+    margin-left: 5%;
+}

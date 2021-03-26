@@ -1,0 +1,46 @@
+.lobby{
+    font-size: 1rem;
+    justify-items: center;
+    background-color: lightgray;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.tableButton{
+    width: 200px;
+    height: 100px;
+    padding: 16px 16px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+} 
+
+.orderButton{
+    margin-inline-end: 0;
+}
+
+.lobby-title{
+    justify-self: center;
+    font-size: 2.5rem;
+    color: black;
+    background-color: lightgray;
+}
+
+.btn--primary{
+    background-color: gray;
+}
+
+.btn--occupied{
+    background-color: #77CB77;
+}
+
+.btn--help{
+    background-color: #E3EA7C;
+}
+
+.btn--refill{
+    background-color: #63B4DC;
+}
+
+.btn--ready{
+    background-color: #8D1D1D;
+}
