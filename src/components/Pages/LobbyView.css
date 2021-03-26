@@ -25,22 +25,35 @@
     background-color: lightgray;
 }
 
-.btn--primary{
-    background-color: gray;
+.x-button{
+    position: relative;
+    right: 249px;
+    bottom: 13px;
 }
 
-.btn--occupied{
-    background-color: #77CB77;
+.show-order{
+    position: absolute;
+    right: 5px;
 }
 
-.btn--help{
-    background-color: #E3EA7C;
+.table-num{
+    position: relative;
+    bottom: 20px;
 }
 
-.btn--refill{
-    background-color: #63B4DC;
+.needs{
+    text-align: left;
+    margin: 0;
+    padding:0;
 }
 
-.btn--ready{
-    background-color: #8D1D1D;
+.needs-text{
+    margin: 0;
+    padding:0;
+}
+
+.complete-request{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }

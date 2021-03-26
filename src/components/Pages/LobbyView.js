@@ -60,25 +60,25 @@ export default function TableView() {
         //displays the needs of the table
         if (table.status === "Refill") {
             return (
-                <div>
+                <div className="needs">
                     Refill requested for:
                     {table.drinks.map((drink) => (      //lists all drinks that need refills
-                        <p>{drink}</p>
+                        <p className="needs-text">&emsp;{drink}</p>
                     ))}
                 </div>
             );
         }
         else if (table.status === "Help") {
             return(
-                <div>
-                    <p>Wait staff requested.</p>
+                <div className="needs">
+                    <p className="needs-text">Wait staff requested.</p>
                 </div>
             );
         }
-        else if (table.status === "Ready") {
+        else if (table.status === "Order Ready") {
             return(
-                <div>
-                    <p>Order ready to be delivered.</p>
+                <div className="needs">
+                    <p className="needs-text">Order ready to be delivered.</p>
                 </div>
             )
         }
@@ -119,17 +119,18 @@ export default function TableView() {
                 </>
             ))}
             <Modal show={tableShow}>
-                <button onClick={handleTableClick}>X</button>
-                <button className='orderButton' onClick={handleOrderClick} disabled={!table.orders[0]} >Show Order</button>
-                <p>
+                <button onClick={handleTableClick} className="x-button">X</button>
+                <button onClick={handleOrderClick} disabled={!table.orders[0]} className="show-order">Show Order</button>
+                <h4 className="table-num">
                     Table {tableNum}
-                </p>
+                </h4>
                 <Needs tableNum={tableNum}/>
-                <button onClick={handleCompleteClick} disabled={table.status === "Available" || table.status === "Occupied"}>Complete Request</button>
+                <br/>
+                <button onClick={handleCompleteClick} disabled={table.status === "Available" || table.status === "Occupied"} className="complete-request">Complete Request</button>
             </Modal>
             <Modal show={orderShow}>
-                <button onClick={handleOrderClick}>X</button>
-                <p>Table {tableNum} Order</p>
+                <button onClick={handleOrderClick} className="x-button">X</button>
+                <h4 className="table-num">Table {tableNum} Order</h4>
                 {table.orders.map((order, index) => (
                     <p>
                         {order.name}, ${order.price}
