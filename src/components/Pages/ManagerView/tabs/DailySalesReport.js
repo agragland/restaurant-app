@@ -3,27 +3,27 @@ import React, {useState} from 'react';
 import "./DailySalesReport.css";
 
 //dictionary for manu id and the amount purchased
-const taco1 = { menu_id: 'Taco 1', price: 10.00, amountPurchased: 12}
-const taco2 = {menu_id: 'Taco 2', price: 7.99, amountPurchased:3}
-const tacotaco = {menu_id: 'TacoTaco', price: 13.99, amountPurchased:20}
-const dictionary = { menu_id: 0, price: 0.00, amountPurchased: 0}
+const taco1 = { menu_id: 'Taco 1', price: 10.00, amountPurchased: 12, itemProfit: 0.0}
+const taco2 = {menu_id: 'Taco 2', price: 7.99, amountPurchased:3, itemProfit: 0.0}
+const tacotaco = {menu_id: 'TacoTaco', price: 13.99, amountPurchased:20, itemProfit: 0.0}
+const dictionary = { menu_id: 0, price: 0.00, amountPurchased: 0, itemProfit: 0.0}
 //const currDate = new Date();
 
 //temp array for dsr for menu information
 const DSR = [ //plan is to have an array of dictionary, date, and
-    { dict: [taco1, tacotaco]}, //date: ((currDate.getMonth()+1) + '/' + currDate.getDate() + '/' +  currDate.getFullYear())},
-    { dict: taco2}, //date: ((currDate.getMonth()+1) + '/' + currDate.getDate()-1 + '/' +  currDate.getFullYear())},
-    { dict: dictionary},// date: ((currDate.getMonth()+1) + '/' + currDate.getDate() + '/' +  currDate.getFullYear())},
-    { dict: dictionary},
-    { dict: dictionary}, //date
+    { dict: [taco1, tacotaco,]}, //date: ((currDate.getMonth()+1) + '/' + currDate.getDate() + '/' +  currDate.getFullYear())},
+    { dict: [taco2,]}, //date: ((currDate.getMonth()+1) + '/' + currDate.getDate()-1 + '/' +  currDate.getFullYear())},
+    { dict: [dictionary,]},// date: ((currDate.getMonth()+1) + '/' + currDate.getDate() + '/' +  currDate.getFullYear())},
+    { dict: [dictionary,]},
+    { dict: [dictionary,]}, //date
 ]
 
 
 
 export default function DailySalesReport(){
     const [dailySales, setDailySales] = useState(DSR);
-    const [itemProfit, setItemProfit] = useState(0.00);
     const [dailySale, setDailySale] = useState({dict: dictionary});
+    const [ItemProfit, setItemProfit] = useState(0);
     const [count, setCount] = useState(0);
 
     const handleDailySales = ({target}) => {
@@ -33,11 +33,13 @@ export default function DailySalesReport(){
         }
     }
 
-    let profit = 0.00;  //initially sets profit to $0.00, to show any errors
+    
     let totalProfit = 0.00; //the total found
     function setProfit(curDS){
         if(curDS !== undefined){
-            profit = (curDS.dict.price * curDS.dict.amountPurchased);
+            //initially profit is set to $0.00, to show any errors
+            {}
+            let profit = (curDS.dict.price * curDS.dict.amountPurchased);
             totalProfit = totalProfit + profit;
         } 
     }
@@ -82,7 +84,7 @@ export default function DailySalesReport(){
                         TIME
                     </p>    
                 </p>
-                <p >Number of Sales:<br/>
+                <p >Number of Items Ordered:<br/>
                     <p className="block">
 
                     </p>
