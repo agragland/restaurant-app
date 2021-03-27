@@ -1,0 +1,13 @@
+.StartMenu {
+    position: relative;
+    background-color: transparent;
+    height: 50%;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+      font-size: '28px';
+      text-align: center;
+}
