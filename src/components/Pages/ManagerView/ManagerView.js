@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 //import ManagerLogin from './tabs/ManagerLogin';
-import Time from "../Clock"
+import Time from '../Clock';
 import ChangeLog from './tabs/ChangeLog';
 import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';

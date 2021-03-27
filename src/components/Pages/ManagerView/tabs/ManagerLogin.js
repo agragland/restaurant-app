@@ -8,48 +8,7 @@ import "./ManagerLogin.css";
 const masterPassword = {password: "123456789"}
 
 export default function ManagerLogin(){
-    /*const [password, setPassword] = useState('');
 
-    const handlePassword = (text) =>{
-        this.setState({ password: text })
-        //if(text === masterPassword)
-        //{
-            return <ManagerView />
-        //}
-        //else
-        //{
-            //alert("Password not recognized,", "please try again.");
-        //}
-    }
-
-   
-    constructor(props) {
-        super(props);
-        this.state = {
-            isVisible: true
-        };
-    //bindings
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSubmit = this.handleRemount.bind(this);
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        this.setState({
-            isVisible: false
-        }, function(){
-            console.log(this.state.isVisible)
-        });
-        return false;
-    }
-    
-    function Input(){
-        return <div className='Input'>
-            <input type={ this.props.type } name={ this.props.name } placeholder={ this.props.placeholder } required autocomplete='false' />
-            <label for={ this.props.name }></label>
-        </div>
-    }*/
-    
     return(
         <div className="login">
             <h1 className="login-title">Log-in</h1>
