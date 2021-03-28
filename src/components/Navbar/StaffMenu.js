@@ -27,29 +27,21 @@ function DropMenu({show, children}) {
     );
 }
 
-//populate the menu from database
-function popMenu(){
+//makes add menu modal
+function AddModal({show, children}) {
+    if(!show)
+        return null;
 
+    return (
+        <div className="modal-background">
+            <section className="modal-add-item">
+                {children}
+            </section>
+        </div>
+    ); 
 }
 
-//remove an item from avalible menu - NOTE: this removes an item from avalible array
-//and places it into the unavalible array
-function removeMenu(){
-
-}
-
-//replace an item to avalible menu - NOTE: this removes an item form unavalible
-//array and places it into the avalible array
-function replaceMenu(){
-
-}
-
-//deletes an item from the unavalible array
-function deleteMenu(){
-
-}
-
-const item = {category: '', name: '', price: '', ingredients: '', }
+const item = { name: '', category: '', ingredients: '', price: '', avalibility: true, image: '' }
 
 //accessing the menu is something everyone can do
 export default function AccessMenu({level}) {
@@ -57,9 +49,6 @@ export default function AccessMenu({level}) {
         // 0 : customer - will get access to view only
         // 1 : Lobby - will get access to view and remove
         // 2 : Manager - will get acces to view, remove, replace, delete, and add
-
-    let avalibleMenu = [] 
-    let unavalibleMenu = []
 
     const [showModal, setShowModal] = useState(false);
     const handleModalClick = () => {
@@ -104,15 +93,62 @@ export default function AccessMenu({level}) {
         setShowDrinks((prev) => !prev);
     }
 
+    //Menu options
+    const [menuItem, setMenuItem] = useState(item);
+    let avalibleMenu = [] 
+    let unavalibleMenu = []
+
+    //populate the menu from database - VERY FIRST THING TO HAPPEN
+    const popMenu = () => {
+
+    }
 
     //add menu item
-    
-    const AddMenu = () => {
-    } 
-    
-    var canAdd; //will be set to button to access AddMenu
+    const [showAdd, setShowAdd] = useState(false);
+    const handleAddClick = () => {
+        setShowAdd((prev) => !prev);
+    }     
+    var canAdd; //button to access AddMenu - Manager ONLY
     if (level > 1){
-        canAdd = <button onClick={AddMenu}>Add Menu Item</button>;
+        canAdd = <button onClick={handleAddClick}>Add Menu Item</button>;
+    }
+    //add item to database and menu
+    const AddMenu = () => {
+        //add to database
+
+        //if avalible is true -> add to avalible menu
+
+        //else (avalible is false) -> add to unavalible menu
+    }
+
+    //remove an item from avalible menu - NOTE: this removes an item from avalible array
+    //and places it into the unavalible array
+    const RemoveMenu = () => {
+
+    }
+    var canRemove; //button to access RemoveMenu
+    if (level > 0){
+        canRemove = <button onClick={RemoveMenu}>Remove Item</button> 
+    }
+
+    //replace an item to avalible menu - NOTE: this removes an item form unavalible
+    //array and places it into the avalible array
+    const ReplaceMenu = () => {
+
+    }
+    var canReplace; //button to access Replace - Manager ONLY
+    if (level > 1){
+        canReplace = <button onClick={ReplaceMenu}>Replace Item</button> 
+    }
+
+
+    //deletes an item from the unavalible array - Manager ONLY
+    const DeleteMenu = () => {
+
+    }
+    var canDelete; //button to access Delete - Manager ONLY
+    if (level > 1){
+        canDelete = <button onClick={DeleteMenu}>Delete Item</button> 
     }
 
 
@@ -159,6 +195,24 @@ export default function AccessMenu({level}) {
                     </DropMenu>
                 </p>
             </Modal>
+            <AddModal show={showAdd}>
+                <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <form>
+                    {/*enter name*/}
+
+                    {/*select category*/}
+
+                    {/*enter ingredients*/}
+
+                    {/*enter price*/}
+
+                    {/*select if avaliable*/}
+
+                    {/*collect image*/}
+
+                </form>
+            </AddModal>
+
         </div>
     );
 }
