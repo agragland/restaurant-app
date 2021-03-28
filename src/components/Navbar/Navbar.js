@@ -5,7 +5,7 @@ import { StaffPages } from "../Pages/Pages";
 import LobbyView from "../Pages/LobbyView";
 import KitchenView from "../Pages/KitchenView";
 import ManagerView from "../Pages/ManagerView/ManagerView";
-import StaffMenu from "./StaffMenu";
+import AccessMenu from "./StaffMenu";
 
 import Modal from "../Modal";
 import './Navbar.css'
@@ -38,7 +38,7 @@ function Navbar() {
 
         return(
             <div>
-                <StaffMenu />
+                <AccessMenu />
                 <Modal show={showPassword}>
                     <button onClick={handlePassword}>X</button>
                     <p>Insert Employee ID:</p>

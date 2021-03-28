@@ -27,7 +27,40 @@ function DropMenu({show, children}) {
     );
 }
 
-export default function StaffMenu() {
+//populate the menu from database
+function popMenu(){
+
+}
+
+//remove an item from avalible menu - NOTE: this removes an item from avalible array
+//and places it into the unavalible array
+function removeMenu(){
+
+}
+
+//replace an item to avalible menu - NOTE: this removes an item form unavalible
+//array and places it into the avalible array
+function replaceMenu(){
+
+}
+
+//deletes an item from the unavalible array
+function deleteMenu(){
+
+}
+
+const item = {category: '', name: '', price: '', ingredients: '', }
+
+//accessing the menu is something everyone can do
+export default function AccessMenu({level}) {
+    //for the levels: 
+        // 0 : customer - will get access to view only
+        // 1 : Lobby - will get access to view and remove
+        // 2 : Manager - will get acces to view, remove, replace, delete, and add
+
+    let avalibleMenu = [] 
+    let unavalibleMenu = []
+
     const [showModal, setShowModal] = useState(false);
     const handleModalClick = () => {
         setShowModal((prev) => !prev);
@@ -71,11 +104,24 @@ export default function StaffMenu() {
         setShowDrinks((prev) => !prev);
     }
 
+
+    //add menu item
+    
+    const AddMenu = () => {
+    } 
+    
+    var canAdd; //will be set to button to access AddMenu
+    if (level > 1){
+        canAdd = <button onClick={AddMenu}>Add Menu Item</button>;
+    }
+
+
     return (
         <div>
             <button onClick={handleModalClick} className="menu-button">Menu</button>
             <Modal show={showModal}>
-                <button onClick={handleModalClick}>X</button>
+                <button onClick={handleModalClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                {canAdd}
                 <p>
                     <button onClick={handleAppetizersClick}>Appetizers</button>
                     <DropMenu show={showAppetizers}>

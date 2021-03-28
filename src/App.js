@@ -2,8 +2,7 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar"
 
-import AccessMenu from "./components/Pages/Menu";
-
+import AccessMenu from "./components/Navbar/StaffMenu";
 
 function App() {
   return (
@@ -12,8 +11,7 @@ function App() {
      // <Navbar />
     //</div>
     <div className="App">
-
-      <AccessMenu/>
+      <AccessMenu level = {2}/>
     </div>
   );
 }

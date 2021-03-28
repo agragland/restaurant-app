@@ -12,9 +12,8 @@ export default function AccessMenu(){
     const [state, setState] = useState(vTrue); //test - RENAME
     const [menuItem, setMenuItem] = useState(item);  //menu item filled from data to 
 
-    let bool = false;
     const handleOpen = () => {
-        setState = useState({!bool})
+        setState = useState(state => true)
     }
 
     const handleClose = () => {
