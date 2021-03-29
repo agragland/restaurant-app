@@ -26,12 +26,14 @@ export default function KitchenView (){
     const clickToReady = ({target}) => {
         const index = target.value
         actives[index].status = "Ready"
+
         let temp = [...actives]
         temp.splice(index, 1)
         setActives(() => temp)
-        let temp_working = [...itemOrder]
-        temp_working.splice(index, 1)
-        setActives(() => temp_working)
+
+        let tempWorking = [...itemOrder]
+        tempWorking.splice(index, 1)
+        setItemOrder(() => tempWorking)
     }
 
     const clickItem = ({target}) => {
@@ -47,7 +49,7 @@ export default function KitchenView (){
     }
 
     return (
-        <div className='kitchen'> 
+        <div className='kitchen'>
             <p className='kitchen-title'>Kitchen</p>
             <section className="order-queue">
                 <h1 className="queue-title">Queue</h1>
@@ -72,6 +74,7 @@ export default function KitchenView (){
                                 <br/>
                             </div>
                         ))}
+                        <br/>
                         <button value={activesIndex} className="ready-button" onClick={clickToReady}>Ready</button>
                     </section>
                 ))}
