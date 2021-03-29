@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 
-import Taco from './components/Taco';
-import Obstacles from './components/obstacles';
+import Taco from './src/components/Taco';
+import Obstacles from './src/components/obstacles';
 
 export default function App() {
   //get screen width and height
