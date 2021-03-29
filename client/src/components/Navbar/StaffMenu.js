@@ -1,5 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./staffMenu.css"
+import api from "../../api";
+
+let menu_items = []
+
+const Item = ({name, price,}) => (
+    <div>
+        <div>
+            <p>{name}</p>
+            <p>{price}</p>
+        </div>
+    </div>
+)
+
 
 //makes modal
 function Modal({show, children}) {
@@ -29,8 +42,23 @@ function DropMenu({show, children}) {
 
 export default function StaffMenu() {
     const [showModal, setShowModal] = useState(false);
-    const handleModalClick = () => {
+
+    useEffect(() => {
+        handleGetItems()
+    }, []);
+
+
+    const handleGetItems = async () => {
+        await api.getAllItems().then(items => {
+            menu_items = items.data.data
+        })
+
+        console.log(menu_items)
+    }
+
+    const handleModalClick =  () => {
         setShowModal((prev) => !prev);
+
     }
 
     //various dropdown menus based on menu categories
@@ -79,25 +107,81 @@ export default function StaffMenu() {
                 <p>
                     <button onClick={handleAppetizersClick}>Appetizers</button>
                     <DropMenu show={showAppetizers}>
-                        I'm a drop menu :)
+                        {
+                            menu_items.map((item, index) => {
+                                if(item.category === 'appetizers')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
                     </DropMenu>
                 </p>
                 <p>
                     <button onClick={handleEntreesClick}>Entrees</button>
                     <DropMenu show={showEntrees}>
-                        I'm a drop menu :)
+                        {
+                            menu_items.map((item, index) => {
+                                if(item.category === 'entrees')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
                     </DropMenu>
                 </p>
                 <p>
                     <button onClick={handleSidesClick}>Sides</button>
                     <DropMenu show={showSides}>
-                        I'm a drop menu :)
+                        {
+                            menu_items.map((item, index) => {
+                                if(item.category === 'sides')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
                     </DropMenu>
                 </p>
                 <p>
                     <button onClick={handleKidsClick}>Kids Meals</button>
                     <DropMenu show={showKids}>
-                        I'm a drop menu :)
+                        {
+                            menu_items.map((item, index) => {
+                                if(item.category === 'kids')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
                     </DropMenu>
                 </p>
                 <p>

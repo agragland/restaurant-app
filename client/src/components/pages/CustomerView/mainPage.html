@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/mainPage.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+<script>
+   
+$(document).ready(function()
+{
+        $("#Carousel").carousel();
+
+        $(".item1").click(function()
+        {
+            $("Carousel").carousel(0);
+        });  
+    
+        $(".item2").click(function()
+        {
+            $("#Carousel").carousel(1);
+        });
+    
+        $(".item3").click(function()
+        {
+            $("#Carousel").carousel(2);
+        });
+    
+        $(".item4").click(function()
+        {
+            $("#Carousel").carousel(3);
+        });
+    
+        $(".item5").click(function()
+        {
+            $("#Carousel").carousel(4);
+        });
+    
+        $(".left").click(function()
+        {
+        $   ("#Carousel").carousel("prev");
+        });
+    
+        $(".right").click(function()
+        {
+            $("#Carousel").carousel("next");
+        });
+    
+});   
+    
+ window.onload = function()
+ {
+     var iframe = document.getElementById('iframe1');
+     var iframe2 = document.getElementById('iframe2');
+     var iframe3 = document.getElementById('iframe3');
+     iframe.style.display ='none';
+     iframe2.style.display = 'none';
+     iframe3.style.display = 'none';
+ }
+ 
+function create() 
+{  
+    var iframe = document.getElementById("iframe1");  
+    iframe.style.display = 'block';
+}
+    
+function closeIframe() 
+{   
+   var iframe = document.getElementById('iframe1');
+   iframe.style.display = 'none';
+}
+
+function create2() 
+{  
+    var iframe = document.getElementById("iframe2");  
+    iframe.style.display = 'block';
+}
+    
+function closeIframe2() 
+{   
+   var iframe = document.getElementById('iframe2');
+   iframe.style.display = 'none';
+}
+
+function create3() 
+{  
+    var iframe = document.getElementById("iframe3");  
+    iframe.style.display = 'block';
+}
+    
+function closeIframe3() 
+{   
+   var iframe = document.getElementById('iframe3');
+   iframe.style.display = 'none';
+}
+ 
+    
+</script>
+
+
+
+
+<head>
+    
+    
+</head>
+
+
+<body>
+ 
+    <div class="kid korner">
+    
+    <button class = "kids">Kids Korner</button>
+        
+    </div>
+    
+    <div class ="order">
+
+    
+        
+    </div>
+        
+    
+  
+<div class="slideshow-container" id="Carousel">
+    
+<div class="carousel-inner" role="listbox">
+    
+<div class="item active">
+<img class = "fixed-height" src="assets/fried-tacos-on-a-stick.jpg" alt="Tacos on a Stick"/>
+</div>
+
+<div class="item">
+<img class = "fixed-height" src="assets/Mexican-Street-TacosIMG_9091.jpg"  alt="Mexican Street Tacos"/>
+</div>
+    
+<div class="item">
+<img class = "fixed-height" src="assets/shrimpTacos.jpg"  alt="Shrimp Tacos"/>
+</div>
+    
+<div class="item">
+<img class = "fixed-height" src="assets/CheesecakeTacos.png" ; alt="Cheesecake Tacos"/>
+</div>
+    
+<div class="item">
+<img class = "fixed-height" src="assets/Sushi%20Tacos.jpg"  alt="Sushi Tacos"/>
+</div>
+    
+<a class="left carousel-control" href="#Carousel" role="button">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#Carousel" role="button">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    
+<div style='text-align: center; background-color: white;'>
+  <span class="dot item1"></span>
+  <span class="dot item2"></span>
+  <span class="dot item3"></span>
+  <span class="dot item4"></span>
+  <span class="dot item5"></span>
+</div>
+    
+</div>   
+    
+</div>
+ 
+
+<iframe name ="iframe" id="iframe1" style="position:fixed; top:0; left:140px; bottom:0; right:0; width:62.5%; height:450px; border:5px 5px black; background:white; margin:0; padding:0; overflow:hidden; z-index:999999; border-radius: 20px;">
+</iframe>
+    
+<iframe name ="iframe2" id="iframe2" style="position:fixed; top:0; left:300px; bottom:0; right:0; width:24.3%; height:450px; border:5px 5px black; background:white; margin:0; padding:0; overflow:hidden; z-index:999999; border-radius: 20px">   
+</iframe>
+    
+<iframe name ="iframe3" id="iframe3" style="position:fixed; top:0; left:610px; bottom:0; right:0; width:25.8%; height:450px; border:5px 5px black; background:white; margin:0; padding:0; overflow:hidden; z-index:999999; border-radius: 20px">   
+</iframe>
+    
+  
+      
+<div class ="navbar" id="nav">
+    
+    <a href="javascript:window.location='menu.html'" target="iframe" onclick="create()">Menu</a>
+    <a href="javascript:window.location='refill.html'" target="iframe2" onclick="create2()">Refill</a>
+    <a href="javascript:window.location='waitstaff.html'" target="iframe3" onclick="create3()">Waitstaff</a>
+    
+</div>
+    
+    
+
+<iframe name ="iframe4" id="iframe4" src = "cart.html" style="position:fixed; top:0; left:950px; bottom:0; right:0; width:25.8%; height:559px; border:5px 5px black; background:white; margin:0; padding:0; overflow:hidden; z-index:999999; border-radius: 20px">   
+</iframe>
+    
+
+    
+    
+    
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

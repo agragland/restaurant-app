@@ -11,8 +11,7 @@ const dictionary = { menu_id: 0, price: 0.00, amountPurchased: 0, itemProfit: 0.
 //const currDate = new Date();
 
 //temp array for dsr for menu information
-let DSR = [];
-
+let DSR = []
 
 
 export default function DailySalesReport(){
@@ -21,10 +20,6 @@ export default function DailySalesReport(){
     const [ItemProfit, setItemProfit] = useState(0);
     const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        handleGetItems()
-    }, []);
-
     const handleDailySales = ({target}) => {
         if (target.dataset.index) {                  //ensures index is not undefined
             setItemProfit(() => (this.dict.price * this.dict.amountPurchased));
@@ -32,20 +27,10 @@ export default function DailySalesReport(){
         }
     }
 
-    const handleGetItems = async () => {
-        await api.getAllItems().then(items => {
-            DSR = items.data.data
-        })
-
-        console.log(DSR)
-    }
-
-    
     let totalProfit = 0.00; //the total found
     function setProfit(curDS){
         if(curDS !== undefined){
             //initially profit is set to $0.00, to show any errors
-            {}
             let profit = (curDS.dict.price * curDS.dict.amountPurchased);
             totalProfit = totalProfit + profit;
         } 

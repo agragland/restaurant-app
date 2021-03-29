@@ -19,6 +19,9 @@ createItem = async (req, res) => {
     menu_item
         .save()
         .then( () => {
+
+
+
             return res.status(201).json({
                 success: true,
                 id: menu_item._id,
@@ -60,6 +63,7 @@ updateItem = async (req, res) => {
         item
             .save()
             .then(() => {
+
                 return res.status(200).json({
                     success: true,
                     id: item._id,
@@ -86,6 +90,8 @@ deleteItem = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Customer not found` })
         }
+
+        //UPDATE IN CHANGELOG
 
         return res.status(200).json({ success: true, data: item })
     }).catch(err => console.log(err))

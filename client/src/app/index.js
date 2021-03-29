@@ -9,7 +9,6 @@ function App() {
         <div className="App">Taco Palace
             <div className="bg"></div>
             <Navbar />
-            <MenuList />
         </div>
     );
 }

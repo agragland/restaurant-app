@@ -5,7 +5,7 @@ class MenuInsert extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        let item = {
             name: '',
             category: '',
             ingredients: '',
@@ -17,7 +17,7 @@ class MenuInsert extends Component {
 
     handleChangeInputName = async event => {
         const name = event.target.value
-        this.setState({name})
+        this.item.name = name
     }
 
     handleChangeInputCategory = async event => {
@@ -54,7 +54,7 @@ class MenuInsert extends Component {
         await api.insertItem(payload).then(res => {
             window.alert(`Item inserted successfully`)
             this.setState({
-                name: '',
+                name: [],
                 category: '',
                 ingredients: '',
                 price: '',

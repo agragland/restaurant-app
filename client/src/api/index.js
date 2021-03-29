@@ -6,6 +6,7 @@ const api = axios.create({
 
 export const insertItem = payload => api.post(`/item`, payload)
 export const getAllItems = () => api.get(`/items`)
+export const insertCustomer = payload => api.post(`/customer`, payload)
 //export const updateMovieById = (id, payload) => api.put(`/movie/${id}`, payload)
 //export const deleteMovieById = id => api.delete(`/movie/${id}`)
 //export const getMovieById = id => api.get(`/movie/${id}`)
@@ -13,6 +14,7 @@ export const getAllItems = () => api.get(`/items`)
 const apis = {
     insertItem,
     getAllItems,
+    insertCustomer
 }
 
 export default apis

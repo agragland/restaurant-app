@@ -13,5 +13,10 @@ export const StaffPages = [
         title: "Manager",
         url: "#",
         cName: 'nav-links'
+    },
+    {
+        title: "Customer",
+        url: "#",
+        cName: 'nav-links'
     }
 ]
