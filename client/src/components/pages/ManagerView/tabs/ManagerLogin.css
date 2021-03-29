@@ -1,0 +1,35 @@
+.login{
+  background: linear-gradient(deg0, #F5853F, #440D0F);
+  font-size: 1rem;
+  justify-items: center;
+  background-color: transparent;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.login .login-title{
+  justify-self: center;
+  font-size: 2.5rem;
+  color: black;
+ /* background-color: lightgray;*/
+}
+
+.login .login-body{
+  justify-self: center;
+  height: 500px;
+  /*background-color: lightgray; */
+}
+
+.login-box{
+  border-radius: 25px;
+  padding: 20px;
+  height: 400px;
+  width: 300px;
+  margin-left: 30%;
+  background-color: lightgray;
+}
+
+.signin{
+  margin-bottom: 10px;
+}
+

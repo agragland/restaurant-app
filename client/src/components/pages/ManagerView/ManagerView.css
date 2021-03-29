@@ -1,0 +1,20 @@
+.manager{
+    font-size: 1rem;
+    justify-items: center;
+    background-color: transparent;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    height: 650px; /*Size for height is currently fixed*/
+    margin-bottom: 15px;
+}
+
+.manager .manager-title{
+    background: linear-gradient(0deg, #440D0F, #F5853F);
+    justify-self: center;
+    font-size: 2.5rem;
+    color: white;
+} 
+
+.maganer .manager-body{
+    justify-self: center;
+}

@@ -13,6 +13,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: url('./_img/taco-bg.jpg') center center;
+  background: url('../assets/taco-bg.jpg') center center;
   opacity: .4;
 }

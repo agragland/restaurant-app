@@ -1,0 +1,44 @@
+.DSR{
+    position: relative;
+    background-color: gray;
+    height: 500px;
+    margin: 0px;
+}
+
+.DSR-visual{
+    position: absolute;
+    float: left;
+    left: 10px;
+    height: 80%;
+    width: 70%;
+    background: white;
+    border: 1px solid #440D0F;
+}
+
+.DSR-visual .header{
+    background: lightgray;
+    border: 5px solid lightgray;
+}
+
+.DSR-visual .discription-bar{
+    background: lightgray;
+    border: 1px solid black;
+}
+
+
+.DSR-date{
+    position: absolute;
+    text-align: left;
+    float: right;
+    right: 10px;
+    height: 80%;
+    width: 25%;
+
+}
+
+.DSR-date .block{
+    height: 10%;
+    width: 100%;
+    background: white;
+    border: 1px solid #440D0F;
+}
