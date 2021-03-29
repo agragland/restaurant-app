@@ -7,7 +7,7 @@ import './Navbar.css'
 
 function Navbar() {
     const [clicked, setClicked] = useState(false);
-    const [component, setComponent] = useState(<LobbyView/>);
+    const [component, setComponent] = useState(<CustomerView/>);
     const [showPassword, setShowPassword] = useState(true);
 
     const handleClick = (e) => {
@@ -32,7 +32,6 @@ function Navbar() {
 
         return(
             <div>
-                <StaffMenu />
                 <Modal show={showPassword}>
                     <button onClick={handlePassword}>X</button>
                     <p>Insert Employee ID:</p>

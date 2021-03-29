@@ -1,0 +1,26 @@
+
+.menu-box {
+
+    position: relative;
+    bottom: 100px;
+}
+
+.full-menu-box {
+    position: relative;
+    top: 85px;
+}
+
+
+.grid-display {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 15px;
+    grid-column-gap: 20px;
+    grid-row-gap: 100px;
+}
+
+.item-display {
+    background: white;
+    width: 350px;
+    text-align: center;
+}

@@ -57,6 +57,7 @@ updateOrder = async (req, res) => {
         order.tip = body.tip
         order.total = body.total
         order.status = body.status
+        order.table = body.table
         order
             .save()
             .then(() => {

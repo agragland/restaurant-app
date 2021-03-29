@@ -6,9 +6,11 @@ import { MenuInsert, MenuList, Navbar } from '../components'
 
 function App() {
     return (
-        <div className="App">Taco Palace
-            <div className="bg"></div>
-            <Navbar />
+        <div className="App">
+            <div className="bg"/>
+                <Navbar />
+
+
         </div>
     );
 }

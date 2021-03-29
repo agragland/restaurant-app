@@ -8,7 +8,8 @@ const Order = new Schema(
         subtotal: { type: Number, required: false, default: 0.0 },
         tip: { type: Number, required: false, default: 0.0 },
         total: {type: Number, required: false, default: 0.0 },
-        status: {type: String, required: false, default: "Created"}
+        status: {type: String, required: false, default: "Created"},
+        table: {type: Number, required: true}
     },
     {timestamps: true},
 )

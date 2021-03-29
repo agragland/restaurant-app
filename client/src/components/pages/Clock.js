@@ -9,7 +9,7 @@ export default function Time(){
     return(
         <div className="Time">
             <h3>Current Time:{" "}
-            <Clock className="clock-display" format={'HH:mm:ss'} ticking={true} timezone={'CST'} />
+            <Clock className="clock-display" format={'HH:mm:ss'} ticking={true} />
             </h3> 
        </div>
     );
