@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import Modal from '../Modal';
+import StaffMenu from "../Navbar/StaffMenu";
+
 import './LobbyView.css';
 
 const classicTaco = {name: "Classic Taco", price: 7.99}
@@ -108,6 +110,7 @@ export default function TableView() {
     return (
         <div className="lobby">
             <p className="lobby-title">Lobby</p>
+            <StaffMenu level= {1} />
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}

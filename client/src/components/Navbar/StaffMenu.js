@@ -118,18 +118,8 @@ export default function StaffMenu({level}) {
     //--------------------------------------------------------------------------------------------------------------------------
         //ADD ITEM TO MENU vv
 
-    //Menu options that are avalible to passed in level
-    const [menuItem, setMenuItem] = useState('');
-    let avalibleMenu = [] 
-    let unavalibleMenu = []
-
-    //populate the menu from database - VERY FIRST THING TO HAPPEN  -- should it be useEffect??
-    const popMenu = () => {
-        //populate all data from database for menu
-        //place database data into appropriate menu array
-    }
-
     //add menu item
+    const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: '', img: '', avalibility: true})
     const [showAdd, setShowAdd] = useState(false);
     const handleAddClick = () => {
         setShowAdd((prev) => !prev);
@@ -194,7 +184,8 @@ export default function StaffMenu({level}) {
         <div>
             <button onClick={handleModalClick} className="menu-button">Menu</button>
             <Modal show={showModal}>
-                <button onClick={handleModalClick}>X</button>
+                <button onClick={handleModalClick}>X</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                {canAdd}
                 <p>
                     <button onClick={handleAppetizersClick}>Appetizers</button>
                     <DropMenu show={showAppetizers}>
@@ -202,12 +193,13 @@ export default function StaffMenu({level}) {
                             avail_menu_items.map((item, index) => {
                                 if(item.category === 'appetizers')
                                 {
-                                    return(<Item
+                                    return(<><Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                    />{canDelete}{canRemove}</>)
+                                    
                                 }
                                 else
                                     return null;
@@ -292,7 +284,7 @@ export default function StaffMenu({level}) {
     --------------------------------------------------------------------------------------------------
     ADD ITEM TO MENU vv */}    
 
-<AddModal show={showAdd}>
+            <AddModal show={showAdd}>
                 <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 <form onSubmit={AddMenu({menuItem})}>
                     {/*enter name*/}

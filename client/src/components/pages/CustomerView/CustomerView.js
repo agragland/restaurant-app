@@ -1,5 +1,7 @@
 
 import './CustomerView.css'
+
+import StaffMenu from '../../Navbar/StaffMenu'
 import api from '../../../api'
 
 export default function CustomerView() {
@@ -54,6 +56,7 @@ export default function CustomerView() {
 
     return (
         <form>
+            <StaffMenu level= {0} />
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name"
                    onChange={handleChangeInputName}

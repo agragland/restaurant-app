@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 //import ManagerLogin from './tabs/ManagerLogin';
-import Time from "../Clock"
+import StaffMenu from "../../Navbar/StaffMenu"
 import ChangeLog from './tabs/ChangeLog';
 import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';
@@ -17,7 +17,7 @@ export default function ManagerView (){
         <>
         <div className='manager'> 
            <Router>
-               <Time />
+               <StaffMenu level= {3} />
                 <div className='manager-title'>Manager</div>
                 <div className='manager-body'>
                         {/*manager log in page*/}

@@ -1,7 +1,6 @@
 //assitance from: https://www.youtube.com/watch?v=fL8cFqhTHwA
 import React, {useState} from 'react';
-import StaffMenu from "./StaffMenu";
-import { StaffPages, LobbyView, KitchenView, ManagerView, Time, CustomerView} from '../pages/index'
+import { StaffPages, LobbyView, KitchenView, ManagerView, CustomerView} from '../pages/index'
 import Modal from "../Modal";
 import './Navbar.css'
 
@@ -31,8 +30,8 @@ function Navbar() {
     }
 
         return(
+        
             <div>
-                <StaffMenu />
                 <Modal show={showPassword}>
                     <button onClick={handlePassword}>X</button>
                     <p>Insert Employee ID:</p>
