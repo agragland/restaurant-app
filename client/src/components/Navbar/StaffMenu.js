@@ -137,7 +137,9 @@ export default function AccessMenu({level}) {
         canAdd = <button onClick={handleAddClick}>Add Menu Item</button>;
     }
     //set the value of an input
+    const setValue = () => {
 
+    }
 
     //add item to database and menu
     const AddMenu = ({newItem}) => {

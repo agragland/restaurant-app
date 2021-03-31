@@ -5,29 +5,6 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
-<<<<<<< HEAD:package.json
-    "@testing-library/user-event": "^12.8.1",
-    "ag-grid-community": "^25.1.0",
-    "ag-grid-enterprise": "^25.1.0",
-    "ag-grid-react": "^25.1.0",
-    "file-saver": "^2.0.5",
-    "moment": "^2.29.1",
-    "moment-timezone": "^0.5.33",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.5.2",
-    "react-clock": "^3.0.0",
-    "react-dom": "^17.0.1",
-    "react-live-clock": "^5.0.16",
-    "react-math": "0.0.1",
-    "react-moment": "^1.1.1",
-    "react-real-math": "^1.0.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "react-select": "^4.3.0",
-    "react-simple-timefield": "^3.2.3",
-    "web-vitals": "^1.1.0",
-    "xlsx": "^0.16.9"
-=======
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
@@ -44,7 +21,6 @@
     "react-table": "^7.6.3",
     "styled-components": "^5.2.1",
     "web-vitals": "^1.1.1"
->>>>>>> 41439518d5306163d1b1b654d9718a9a3721282e:client/package.json
   },
   "scripts": {
     "start": "set PORT=8000 && react-scripts start",
