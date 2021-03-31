@@ -1,7 +1,7 @@
 //assitance from: https://www.youtube.com/watch?v=fL8cFqhTHwA
 import React, {useState} from 'react';
 import StaffMenu from "./StaffMenu";
-import { StaffPages, LobbyView, KitchenView, ManagerView, Time, CustomerView} from '../pages'
+import { StaffPages, LobbyView, KitchenView, ManagerView, Time, CustomerView} from '../pages/index'
 import Modal from "../Modal";
 import './Navbar.css'
 
