@@ -5,34 +5,29 @@ import TimeField from 'react-simple-timefield';
 import "./ConsumerSettings.css";
 
 export default function ConsumerSettings(){
-    const [startTime, setStartTime] = useState("0");
-    const [endTime, setEndTime] = useState("0");
+    const [storeHours, setStoreHours] = useState({ startTime: '', endTime: ''});
 
-
-    const changeStartTime=(time)=>{
-        this.setStartTime({time});
-    } 
-
-    const changeEndTime=(time)=>{
-        this.setEndTime({time});
-    }
+    const set = (startTime) => {
+        return({target: {value} }) => {
+            setStoreHours(storeHours => ({ ...storeHours, [startTime]: value}));
+        }
+    };
 
     return(
         <div className="ConsumerSettings">
-            <h1>Consumer Settings</h1>
-            <p>Adjust the time orders will be accepted</p>
-            <div>
-                {/*Starting Time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <TimeField value={startTime} onChange={this.changeStartTime} />
-                <input id="txtStartTime" type="text" name="startTime" placeholder="Enter Start Time" />
-                <button className="save-btn" onClick="saveStart()">Save</button>           
-            </div>
-            <p></p>
-            <div>
-                Ending Time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input id="txtEndTime" type="text" name="endTime" placeholder="Enter End Time"/>
-                <button className="save-btn" onClick="saveEnd()">Save</button>*/}
-            </div>
+                <form>
+                <h1>Consumer Settings</h1>
+                <p>To adjust the time orders will be accepted, <br/>
+                    type the new time in the text box provided. <br/>
+                    Use format '00:00:00' using time in 24 hours.
+                </p>
+
+                <div> Starting Time: &nbsp;&nbsp;&nbsp;&emsp; {storeHours.startTime}   </div> 
+                <input placeholder="00:00:00" value={storeHours.startTime} onChange={set('startTime')} />
+                <p></p>
+                <div>Ending Time: &emsp;&emsp; {storeHours.endTime} </div> 
+                <input placeholder="00:00:00" value={storeHours.endTime} onChange={set('endTime')}/>     
+            </form>  
         </div>
     );
 }

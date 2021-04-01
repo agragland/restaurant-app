@@ -114,7 +114,7 @@ export default function StaffMenu({level}) {
     const handleDrinksClick = () => {
         setShowDrinks((prev) => !prev);
     }
-        //ACCESSIBLE MENU ^^
+        //various dropdown menus based on menu categories ^^
     //--------------------------------------------------------------------------------------------------------------------------
         //ADD ITEM TO MENU vv
 
@@ -129,9 +129,11 @@ export default function StaffMenu({level}) {
         canAdd = <button onClick={handleAddClick}>Add Menu Item</button>;
     }
     //set the value of an input
-    const setValue = () => {
-
-    }
+    const setValue = (variable) => {
+        return({target: value}) => {
+            setMenuItem(menuItem => ({...menuItem, [variable]: value}));
+        }
+    };
 
     //add item to database and menu
     const AddMenu = ({newItem}) => {

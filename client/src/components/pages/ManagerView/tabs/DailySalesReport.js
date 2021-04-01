@@ -43,7 +43,7 @@ export default function DailySalesReport(){
 
     let current = new Date();
     function setDate(index){
-        const date = '${current.getDate()}/${current.getMonth()+1}/${current.getFulYear()}';
+        const date = '${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}';
        if(index>0)
        {
             //if((current.getDate() - index) > 0)
