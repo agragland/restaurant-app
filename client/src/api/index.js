@@ -6,9 +6,9 @@ const api = axios.create({
 
 export const insertItem = payload => api.post(`/item`, payload)
 export const getAllItems = () => api.get(`/items`)
-export const setMenuVariable = payload => api.put(`/item/:id`, payload)
-export const deleteItem = payload => api.delete(`/item/:id`, payload)
+export const deleteItem = payload => api.delete(`/item/:id`, payload) //testing
 export const insertCustomer = payload => api.post(`/customer`, payload)
+export const checkEmployeeID = payload => api.get(`/employee.:id`, payload) //check id of employee trying to log in
 //export const updateMovieById = (id, payload) => api.put(`/movie/${id}`, payload)
 //export const deleteMovieById = id => api.delete(`/movie/${id}`)
 //export const getMovieById = id => api.get(`/movie/${id}`)
@@ -16,9 +16,9 @@ export const insertCustomer = payload => api.post(`/customer`, payload)
 const apis = {
     insertItem,
     getAllItems,
-    setMenuVariable,
     deleteItem,
-    insertCustomer
+    insertCustomer,
+    checkEmployeeID
 }
 
 export default apis

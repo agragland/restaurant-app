@@ -117,9 +117,9 @@ export default function StaffMenu({level}) {
     //various dropdown menus based on menu categories ^^
 //--------------------------------------------------------------------------------------------------------------------------
     //ADD ITEM TO MENU vv
-
-    //add menu item
     const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: '', img: '', isAvailable: true})
+    
+    //add menu item
     const [showAdd, setShowAdd] = useState(false);
     const handleAddClick = () => {
         setShowAdd((prev) => !prev);
@@ -156,6 +156,7 @@ export default function StaffMenu({level}) {
 
         console.log(avail_menu_items)
         console.log(unavail_menu_items)
+        setShowModal((prev) => !prev);
     }
 
     //ADD ITEM TO MENU ^^
@@ -185,7 +186,10 @@ export default function StaffMenu({level}) {
 
 
     //deletes an item from the unavalible array - Manager ONLY
-    const DeleteMenu = () => {
+    const handleMenuItem = ({itemName}) => {
+        setMenuItem({itemName})
+    }
+    const DeleteMenu = async() => {
 
     }
     var canDelete; //button to access Delete - Manager ONLY
@@ -325,9 +329,16 @@ export default function StaffMenu({level}) {
                     </DropMenu>
                 </p>
             </Modal>
-    {/* ACCESSIBLE MENU ^^
+    
+    {/* ACCESSIBLE MENU ^^ 
     --------------------------------------------------------------------------------------------------
-    ADD ITEM TO MENU vv */}    
+        UNACCESSIBLE MENU vv */}
+        
+
+    
+    {/* UNACCESSIBLE MENU ^^
+    --------------------------------------------------------------------------------------------------
+        ADD ITEM TO MENU vv */}    
 
             <AddModal show={showAdd}>
                 <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
