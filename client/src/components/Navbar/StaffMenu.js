@@ -250,7 +250,7 @@ export default function StaffMenu({level}) {
         //log change to change log
 
     }
-    var canRemove = false; //button to access clickToRemove
+    var canRemove = false; //determines if page has access clickToRemove
     if (level > 0){
         canRemove = true;
     }
@@ -280,7 +280,7 @@ export default function StaffMenu({level}) {
         //log change to change log
 
     }
-    var canReplace = false; //button to access Replace - Manager ONLY
+    var canReplace = false; //determines if page has access Replace - Manager ONLY
     if (level > 1){
         canReplace = true;
     }
@@ -290,17 +290,24 @@ export default function StaffMenu({level}) {
     const handleMenuItem = ({itemName}) => {
         setMenuItem({itemName})
     }
-    const DeleteMenu = async({item}) => {
-        const payload = item
+    const DeleteMenu = ({target}) => {
+        const index = target.value
 
-        await api.deleteItem.then(res =>{
-            
-        })
+        //delete from database
+        handleDelete(unavailMenuItems[index])
+        
+        //remove from unavailible menu
+        let temp = [...unavailMenuItems]
+        temp.splice(index, 1)
+        setUnavailItems(() => temp)
     }
-    var canDelete = false; //button to access Delete - Manager ONLY
-    if (level > 1){
-        canDelete = true//<button onClick={DeleteMenu}>Delete Item</button> 
-    }   
+    const handleDelete = async(payload) => {
+        await api.deleteItem(payload._id).then(res =>{
+            window.alert('Item Deleted')
+        })
+
+        //log change to change log
+    }
     
     
     var unavailableMenu;//show unavailable menu option
@@ -479,7 +486,8 @@ export default function StaffMenu({level}) {
                                         category={item.category}
                                         price={item.price}
                                         />
-                                        <button value={index} onClick={clickToReplace}>Replace Item</button>  
+                                        <button value={index} onClick={clickToReplace}>Replace Item</button> 
+                                        <button value={index} onClick={DeleteMenu}>Delete Item</button>  
                                     </>)
                                     
                                 }
