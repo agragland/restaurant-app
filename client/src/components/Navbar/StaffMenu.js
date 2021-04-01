@@ -2,9 +2,6 @@ import React, {useState, useEffect} from 'react';
 import "./staffMenu.css"
 import api from "../../api";
 
-let avail_menu_items = []
-let unavail_menu_items = []
-
 const Item = ({name, price,}) => (
     <div>
         <div>
@@ -41,6 +38,20 @@ function DropMenu({show, children}) {
     );
 }
 
+//make modal for unavailable menu
+function UnavailableModal({show, children}) {
+    if (!show)
+        return null;
+
+    return (
+        <div className="modal-background">
+            <section className="modal-unavailible-menu">
+                {children}
+            </section>
+        </div>
+    );
+}
+
 //makes add menu modal
 function AddModal({show, children}) {
     if(!show)
@@ -60,6 +71,9 @@ function AddModal({show, children}) {
 
 export default function StaffMenu({level}) {
     const [showModal, setShowModal] = useState(false);
+    const [showUnavailableModal, setShowUnavailableModal] = useState(false);
+    const [availMenuItems, setAvailItems] = useState([]);
+    const [unavailMenuItems, setUnavailItems] = useState([]);
 
     useEffect(() => {
         handleGetItems()
@@ -68,14 +82,33 @@ export default function StaffMenu({level}) {
 
     const handleGetItems = async () => {
         await api.getAllItems().then(items => {
-            avail_menu_items = items.data.data
+            const curr_items = items.data.data
+            console.log(curr_items)
+            let temp_available = []
+            let temp_unavailable = []
+
+            curr_items.map((item) => {
+                if(item.isAvailable === true){
+                    temp_available = [...temp_available, item]
+                }
+                else{
+                    temp_unavailable = [...temp_unavailable, item]
+                }
+            })
+
+            //set states to temp
+            setAvailItems(temp_available)
+            setUnavailItems(temp_unavailable)
         })
-        console.log(avail_menu_items)
-        console.log(unavail_menu_items)
+        
     }
 
     const handleModalClick =  () => {
         setShowModal((prev) => !prev);
+    }
+
+    const handleUnavailableClick = () => {
+        setShowUnavailableModal((prev) => !prev);
     }
 
     //various dropdown menus based on menu categories vv   
@@ -84,11 +117,21 @@ export default function StaffMenu({level}) {
     const handleEntreesClick = () => {
         setShowEntrees((prev) => !prev);
     }
+    //UnavailableEntrees
+    const [showUnavailableEntrees, setShowUnavailableEntrees] = useState(false);
+    const handleUnavailableEntreesClick = () => {
+        setShowUnavailableEntrees((prev) => !prev);
+    }
 
     //Appetizers
     const [showAppetizers, setShowAppetizers] = useState(false);
     const handleAppetizersClick = () => {
         setShowAppetizers((prev) => !prev);
+    }
+    //UnavailableAppetizers
+    const [showUnavailableAppetizers, setShowUnavailableAppetizers] = useState(false);
+    const handleUnavailableAppetizersClick = () => {
+        setShowUnavailableAppetizers((prev) => !prev);
     }
 
     //Sides
@@ -96,11 +139,21 @@ export default function StaffMenu({level}) {
     const handleSidesClick = () => {
         setShowSides((prev) => !prev);
     }
+    //UnavailableSides
+    const [showUnavailableSides, setShowUnavailableSides] = useState(false);
+    const handleUnavailableSidesClick = () => {
+        setShowUnavailableSides((prev) => !prev);
+    }
 
     //Kids
     const [showKids, setShowKids] = useState(false);
     const handleKidsClick = () => {
         setShowKids((prev) => !prev);
+    }
+    //UnavailableKids
+    const [showUnavailableKids, setShowUnavailableKids] = useState(false);
+    const handleUnavailableKidsClick = () => {
+        setShowUnavailableKids((prev) => !prev);
     }
 
     //Desserts
@@ -108,11 +161,21 @@ export default function StaffMenu({level}) {
     const handleDessertsClick = () => {
         setShowDesserts((prev) => !prev);
     }
+    //UnavailableDesserts
+    const [showUnavailableDesserts, setShowUnavailableDesserts] = useState(false);
+    const handleUnavailableDessertsClick = () => {
+        setShowUnavailableDesserts((prev) => !prev);
+    }
 
     //Drinks
     const [showDrinks, setShowDrinks] = useState(false);
     const handleDrinksClick = () => {
         setShowDrinks((prev) => !prev);
+    }
+    //Unavailable Drinks
+    const [showUnavailableDrinks, setShowUnavailableDrinks] = useState(false);
+    const handleUnavailableDrinksClick = () => {
+        setShowUnavailableDrinks((prev) => !prev);
     }
     //various dropdown menus based on menu categories ^^
 //--------------------------------------------------------------------------------------------------------------------------
@@ -154,8 +217,8 @@ export default function StaffMenu({level}) {
             }
         }) 
 
-        console.log(avail_menu_items)
-        console.log(unavail_menu_items)
+        console.log(availMenuItems)
+        console.log(unavailMenuItems)
         setShowModal((prev) => !prev);
     }
 
@@ -165,23 +228,61 @@ export default function StaffMenu({level}) {
 
     //remove an item from avalible menu - NOTE: this removes an item from avalible array
     //and places it into the unavalible array
-    const RemoveMenu = () => {
+    const clickToRemove = ({target}) => {
+        //add item to unavailable menu
+        const index = target.value
+        availMenuItems[index].isAvailable = false;
+        setUnavailItems((prev) => prev.concat(availMenuItems[index]))
+
+        //update the database
+        handleRemove(availMenuItems[index])
+
+        //remove from availible menu
+        let temp = [...availMenuItems]
+        temp.splice(index, 1)
+        setAvailItems(() => temp)
+    }
+    const handleRemove = async (payload) => {
+        await api.updateItem(payload._id, payload).then(res => {
+            window.alert('Item No Longer Available')
+        })
+
+        //log change to change log
 
     }
-    var canRemove; //button to access RemoveMenu
+    var canRemove = false; //button to access clickToRemove
     if (level > 0){
-        canRemove = <button onClick={RemoveMenu}>Remove Item</button> 
+        canRemove = true;
     }
 
 
     //replace an item to avalible menu - NOTE: this removes an item form unavalible
     //array and places it into the avalible array
-    const ReplaceMenu = () => {
+    const clickToReplace = ({target}) => {
+        //add item to available menu
+        const index = target.value
+        unavailMenuItems[index].isAvailable = true;
+        setAvailItems((prev) => prev.concat(unavailMenuItems[index]))
+
+        //update the database
+        handleReplace(unavailMenuItems[index])
+
+        //remove from unavailible menu
+        let temp = [...unavailMenuItems]
+        temp.splice(index, 1)
+        setUnavailItems(() => temp)
+    }
+    const handleReplace = async (payload) => {
+        await api.updateItem(payload._id, payload).then(res => {
+            window.alert('Item Now Available')
+        })
+
+        //log change to change log
 
     }
-    var canReplace; //button to access Replace - Manager ONLY
+    var canReplace = false; //button to access Replace - Manager ONLY
     if (level > 1){
-        canReplace = <button onClick={ReplaceMenu}>Replace Item</button> 
+        canReplace = true;
     }
 
 
@@ -189,13 +290,23 @@ export default function StaffMenu({level}) {
     const handleMenuItem = ({itemName}) => {
         setMenuItem({itemName})
     }
-    const DeleteMenu = async() => {
+    const DeleteMenu = async({item}) => {
+        const payload = item
 
+        await api.deleteItem.then(res =>{
+            
+        })
     }
-    var canDelete; //button to access Delete - Manager ONLY
+    var canDelete = false; //button to access Delete - Manager ONLY
     if (level > 1){
-        canDelete = <button onClick={DeleteMenu}>Delete Item</button> 
-    }    
+        canDelete = true//<button onClick={DeleteMenu}>Delete Item</button> 
+    }   
+    
+    
+    var unavailableMenu;//show unavailable menu option
+    if(level>0){
+        unavailableMenu = <button onClick={handleUnavailableClick} className="menu-button">Unavailable Menu</button>
+    }
 
     //  OTHER MENU OPTIONS ^^
 //--------------------------------------------------------------------------------------------------
@@ -207,20 +318,35 @@ export default function StaffMenu({level}) {
             <Modal show={showModal}>
                 <button onClick={handleModalClick}>X</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 {canAdd}
+                <h3 style={{textAlign: 'center', fontSize: '20px'}}>Menu</h3>
                 <p>
                     <button onClick={handleAppetizersClick}>Appetizers</button>
                     <DropMenu show={showAppetizers}>
                         {
-                            avail_menu_items.map((item, index) => {
-                                if(item.category === 'appetizers')
+                            availMenuItems.map((item, index) => {
+                                if(item.category === 'appetizers' && canRemove)
                                 {
-                                    return(<><Item
+                                    return(
+                                    <>
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />{canDelete}{canRemove}</>)
+                                        />
+                                        <button value={index} onClick={clickToRemove}>Remove Item</button> 
+                                    </>)
                                     
+                                }
+                                else if(item.category === 'appetizers')
+                                {
+                                    return(
+                                        <Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                        />)
                                 }
                                 else
                                     return null;
@@ -232,7 +358,7 @@ export default function StaffMenu({level}) {
                     <button onClick={handleEntreesClick}>Entrees</button>
                     <DropMenu show={showEntrees}>
                         {
-                            avail_menu_items.map((item, index) => {
+                            availMenuItems.map((item, index) => {
                                 if(item.category === 'entrees')
                                 {
                                     return(<Item
@@ -252,7 +378,7 @@ export default function StaffMenu({level}) {
                     <button onClick={handleSidesClick}>Sides</button>
                     <DropMenu show={showSides}>
                         {
-                            avail_menu_items.map((item, index) => {
+                            availMenuItems.map((item, index) => {
                                 if(item.category === 'sides')
                                 {
                                     return(<Item
@@ -272,7 +398,7 @@ export default function StaffMenu({level}) {
                     <button onClick={handleKidsClick}>Kids Meals</button>
                     <DropMenu show={showKids}>
                         {
-                            avail_menu_items.map((item, index) => {
+                            availMenuItems.map((item, index) => {
                                 if(item.category === 'kids')
                                 {
                                     return(<Item
@@ -292,7 +418,7 @@ export default function StaffMenu({level}) {
                     <button onClick={handleDessertsClick}>Desserts</button>
                     <DropMenu show={showDesserts}>
                         {
-                            avail_menu_items.map((item, index) => {
+                            availMenuItems.map((item, index) => {
                                 if(item.category === 'dessert')
                                 {
                                     return(<Item
@@ -312,7 +438,7 @@ export default function StaffMenu({level}) {
                     <button onClick={handleDrinksClick}>Drinks</button>
                     <DropMenu show={showDrinks}>
                     {
-                            avail_menu_items.map((item, index) => {
+                            availMenuItems.map((item, index) => {
                                 if(item.category === 'drink')
                                 {
                                     return(<Item
@@ -328,12 +454,153 @@ export default function StaffMenu({level}) {
                         }
                     </DropMenu>
                 </p>
-            </Modal>
+                {unavailableMenu}
+            </Modal>    
+            
     
     {/* ACCESSIBLE MENU ^^ 
     --------------------------------------------------------------------------------------------------
         UNACCESSIBLE MENU vv */}
-        
+        <UnavailableModal show={showUnavailableModal}>
+            <button onClick={handleUnavailableClick}>Back To Menu</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <h3 style={{textAlign: 'center', fontSize: '20px'}}>Unavailable Menu</h3>
+                <p>
+                    <button onClick={handleUnavailableAppetizersClick}>Appetizers</button>
+                    <DropMenu show={showUnavailableAppetizers}>
+                        {
+                            unavailMenuItems.map((item, index) => {
+                                if(item.category === 'appetizers' && canReplace)
+                                {
+                                    return(
+                                    <>
+                                        <Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                        />
+                                        <button value={index} onClick={clickToReplace}>Replace Item</button>  
+                                    </>)
+                                    
+                                }
+                                else if(item.category === 'appetizers')
+                                {
+                                    return(
+                                        <Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                        />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
+                    </DropMenu>
+                </p>
+                <p>
+                    <button onClick={handleUnavailableEntreesClick}>Entrees</button>
+                    <DropMenu show={showUnavailableEntrees}>
+                        {
+                            unavailMenuItems.map((item, index) => {
+                                if(item.category === 'entrees')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
+                    </DropMenu>
+                </p>
+                <p>
+                    <button onClick={handleUnavailableSidesClick}>Sides</button>
+                    <DropMenu show={showUnavailableSides}>
+                        {
+                            unavailMenuItems.map((item, index) => {
+                                if(item.category === 'sides')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
+                    </DropMenu>
+                </p>
+                <p>
+                    <button onClick={handleUnavailableKidsClick}>Kids Meals</button>
+                    <DropMenu show={showUnavailableKids}>
+                        {
+                            unavailMenuItems.map((item, index) => {
+                                if(item.category === 'kids')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
+                    </DropMenu>
+                </p>
+                <p>
+                    <button onClick={handleUnavailableDessertsClick}>Desserts</button>
+                    <DropMenu show={showUnavailableDesserts}>
+                        {
+                            unavailMenuItems.map((item, index) => {
+                                if(item.category === 'dessert')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
+                    </DropMenu>
+                </p>
+                <p>
+                    <button onClick={handleUnavailableDrinksClick}>Drinks</button>
+                    <DropMenu show={showUnavailableDrinks}>
+                    {
+                            unavailMenuItems.map((item, index) => {
+                                if(item.category === 'drink')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
+                    </DropMenu>
+                </p>
+            </UnavailableModal>  
+               
 
     
     {/* UNACCESSIBLE MENU ^^
@@ -368,12 +635,6 @@ export default function StaffMenu({level}) {
                         <input type="text" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
                     </label>
                     <br/>
-                    {/*select if avaliable*/}
-                    <label>
-                        Avaliblility:
-                        <input type="text" value={menuItem.isAvailable} onChange={setValue('isAvailable')} />
-                    </label>
-                    <p>true: this item is visible to customers and employees <br/> false: this item is visible to employees only</p>
                     {/*collect image*/}
                     <br/>
                     <input type="submit" value="Create Menu Item" />
