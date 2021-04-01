@@ -1,9 +1,9 @@
 .kitchen{
     font-size: 1rem;
-    justify-items: center;
     background-color: lightgray;
     margin-left: 2rem;
     margin-right: 2rem;
+    height: 100%;
 }
 
 .kitchen-title{
@@ -13,12 +13,15 @@
     background-color: lightgray;
 }
 
+
 .active-orders{
     position: relative;
     outline: black solid 2px;
     width: 89%;
     background-color: white;
     float: right;
+    overflow-y: auto;
+    padding-bottom: 100px;
 }
 
 .queue-title{
@@ -36,6 +39,7 @@
     background-color: white;
     float: left;
     min-width: 75px;
+    padding-bottom: 100px;
 }
 
 .order{
