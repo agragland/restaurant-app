@@ -67,13 +67,12 @@ export default function StaffMenu({level}) {
         await api.getAllItems().then(items => {
             avail_menu_items = items.data.data
         })
-
         console.log(avail_menu_items)
+        console.log(unavail_menu_items)
     }
 
     const handleModalClick =  () => {
         setShowModal((prev) => !prev);
-
     }
 
         //MODALS ^^
@@ -114,23 +113,23 @@ export default function StaffMenu({level}) {
     const handleDrinksClick = () => {
         setShowDrinks((prev) => !prev);
     }
-        //various dropdown menus based on menu categories ^^
-    //--------------------------------------------------------------------------------------------------------------------------
-        //ADD ITEM TO MENU vv
+    //various dropdown menus based on menu categories ^^
+//--------------------------------------------------------------------------------------------------------------------------
+    //ADD ITEM TO MENU vv
 
     //add menu item
     const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: '', img: '', avalibility: true})
     const [showAdd, setShowAdd] = useState(false);
     const handleAddClick = () => {
         setShowAdd((prev) => !prev);
-    }     
+    }  
     var canAdd; //button to access AddMenu - Manager ONLY
     if (level > 1){
         canAdd = <button onClick={handleAddClick}>Add Menu Item</button>;
     }
     //set the value of an input
     const setValue = (variable) => {
-        return({target: value}) => {
+        return({target: {value}}) => {
             setMenuItem(menuItem => ({...menuItem, [variable]: value}));
         }
     };
@@ -157,6 +156,7 @@ export default function StaffMenu({level}) {
     if (level > 0){
         canRemove = <button onClick={RemoveMenu}>Remove Item</button> 
     }
+
 
     //replace an item to avalible menu - NOTE: this removes an item form unavalible
     //array and places it into the avalible array
@@ -272,13 +272,41 @@ export default function StaffMenu({level}) {
                 <p>
                     <button onClick={handleDessertsClick}>Desserts</button>
                     <DropMenu show={showDesserts}>
-                        I'm a drop menu :)
+                        {
+                            avail_menu_items.map((item, index) => {
+                                if(item.category === 'dessert')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
                     </DropMenu>
                 </p>
                 <p>
                     <button onClick={handleDrinksClick}>Drinks</button>
                     <DropMenu show={showDrinks}>
-                        I'm a drop menu :)
+                    {
+                            avail_menu_items.map((item, index) => {
+                                if(item.category === 'drink')
+                                {
+                                    return(<Item
+                                        key={index}
+                                        name={item.name}
+                                        category={item.category}
+                                        price={item.price}
+                                    />)
+                                }
+                                else
+                                    return null;
+                            })
+                        }
                     </DropMenu>
                 </p>
             </Modal>
@@ -287,22 +315,25 @@ export default function StaffMenu({level}) {
     ADD ITEM TO MENU vv */}    
 
             <AddModal show={showAdd}>
-                <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 <form onSubmit={AddMenu({menuItem})}>
                     {/*enter name*/}
                     <label>
                     Name: &emsp;
                     <input type="text" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
                     </label>
+                    <br/>
                     {/*select category*/}
                     <label>
                         Category:
+                        <input type="text" placeholder="Enter category of food item here" value={menuItem.category} onChange={setValue('category')} />
                     </label>
+                    <p>Enter one of the following Categories: entrees, appetizers, sides, kids, dessert, drink</p>
                     {/*enter ingredients*/}
                     <br/> 
                     <label>
-                    Ingredients: &emsp;
-                    <textarea placeholder="List all cooking ingredients here" value={menuItem.ingredients} onChange={setValue('ingredients')} />
+                        Ingredients: &emsp;
+                        <textarea placeholder="List all cooking ingredients here" value={menuItem.ingredients} onChange={setValue('ingredients')} />
                     </label>
                     {/*enter price*/}
                     <br/>
@@ -310,10 +341,13 @@ export default function StaffMenu({level}) {
                     Price: &emsp;
                     <input type="text" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('name')} />
                     </label>
+                    <br/>
                     {/*select if avaliable*/}
                     <label>
                         Avaliblility:
+                        <input type="text" value={menuItem.avalibility} onChange={setValue('avalibility')} />
                     </label>
+                    <p>true: this item is visible to customers and employees <br/> false: this item is visible to employees only</p>
                     {/*collect image*/}
                     <br/>
                     <input type="submit" value="Create Menu Item" />

@@ -27,6 +27,19 @@
     background-color: white;
 }
 
+.modal-add-item {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: white;
+    text-align: left;
+    font-size: 14px;
+}
+
 p {
     font-size: medium
 }
