@@ -53,7 +53,10 @@ function AddModal({show, children}) {
             </section>
         </div>
     ); 
-}
+} 
+  //MODALS ^^
+//--------------------------------------------------------------------------------------------------------------------------
+    //export funciton begin vv
 
 export default function StaffMenu({level}) {
     const [showModal, setShowModal] = useState(false);
@@ -75,9 +78,7 @@ export default function StaffMenu({level}) {
         setShowModal((prev) => !prev);
     }
 
-        //MODALS ^^
-    //--------------------------------------------------------------------------------------------------------------------------
-        //various dropdown menus based on menu categories vv
+    //various dropdown menus based on menu categories vv   
     //Entrees
     const [showEntrees, setShowEntrees] = useState(false);
     const handleEntreesClick = () => {
@@ -135,12 +136,17 @@ export default function StaffMenu({level}) {
     };
 
     //add item to database and menu
-    const AddMenu = ({newItem}) => {
+    const AddMenu = async ({newItem}) => {
         //add to database
-
+        await api.insertItem({newItem})
         //if avalible is true -> add to avalible menu
+       
+            avail_menu_items = newItem
+        
+        //else (avalible is false) -> add to unavalible menu 
 
-        //else (avalible is false) -> add to unavalible menu
+        console.log(avail_menu_items)
+        console.log(unavail_menu_items)
     }
 
     //ADD ITEM TO MENU ^^
@@ -338,8 +344,8 @@ export default function StaffMenu({level}) {
                     {/*enter price*/}
                     <br/>
                     <label>
-                    Price: &emsp;
-                    <input type="text" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('name')} />
+                        Price: &emsp;
+                        <input type="text" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
                     </label>
                     <br/>
                     {/*select if avaliable*/}
