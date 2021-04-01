@@ -119,7 +119,7 @@ export default function StaffMenu({level}) {
     //ADD ITEM TO MENU vv
 
     //add menu item
-    const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: '', img: '', avalibility: true})
+    const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: '', img: '', isAvailable: true})
     const [showAdd, setShowAdd] = useState(false);
     const handleAddClick = () => {
         setShowAdd((prev) => !prev);
@@ -136,14 +136,23 @@ export default function StaffMenu({level}) {
     };
 
     //add item to database and menu
-    const AddMenu = async ({newItem}) => {
+    const AddMenu = async () => {
+        const {name, category, ingredients, price, img, isAvailable} = menuItem
+        const payload = {name, category, ingredients, price, img, isAvailable}
+
+        console.log(payload)
         //add to database
-        await api.insertItem({newItem})
-        //if avalible is true -> add to avalible menu
-       
-            avail_menu_items = newItem
-        
-        //else (avalible is false) -> add to unavalible menu 
+        await api.insertItem(payload).then(res => {
+            window.alert(`Item inseted seccessfully`)
+            menuItem = {
+                name: '',
+                category: '',
+                ingredients: '',
+                price: 0.00,
+                img: '',
+                isAvailable: 1
+            }
+        }) 
 
         console.log(avail_menu_items)
         console.log(unavail_menu_items)
@@ -322,7 +331,7 @@ export default function StaffMenu({level}) {
 
             <AddModal show={showAdd}>
                 <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <form onSubmit={AddMenu({menuItem})}>
+                <form onSubmit={AddMenu}>
                     {/*enter name*/}
                     <label>
                     Name: &emsp;
@@ -351,7 +360,7 @@ export default function StaffMenu({level}) {
                     {/*select if avaliable*/}
                     <label>
                         Avaliblility:
-                        <input type="text" value={menuItem.avalibility} onChange={setValue('avalibility')} />
+                        <input type="text" value={menuItem.isAvailable} onChange={setValue('isAvailable')} />
                     </label>
                     <p>true: this item is visible to customers and employees <br/> false: this item is visible to employees only</p>
                     {/*collect image*/}
