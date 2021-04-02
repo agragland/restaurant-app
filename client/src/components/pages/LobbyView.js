@@ -55,6 +55,8 @@ export default function TableView() {
                         if(item.category === "drinks")
                             tempTables[tableNum].drinks = [...tempTables[tableNum].drinks, item]
                     })
+                    if (tempTables[order.table-1].status !== "Order Ready")
+                        tempTables[order.table-1].status = "Occupied"   //set status if table is not order ready
                     //adds order to array if ready
                     if(order.status === "Ready") {
                         tempTables[tableNum].orders = [...tempTables[tableNum].orders, order]
