@@ -17,6 +17,7 @@ export const getOrder = id => api.get(`/order/${id}`)
 //export const deleteMovieById = id => api.delete(`/movie/${id}`)
 //export const getMovieById = id => api.get(`/movie/${id}`)
 export const updateTable = (table_num, payload) => api.put(`/table/${table_num}`,payload)
+export const getTables = () => api.get(`/tables`)
 
 const apis = {
     insertItem,
@@ -28,6 +29,8 @@ const apis = {
     getOrder,
     updateOrder,
     deleteOrder,
+    updateTable,
+    getTables,
 }
 
 export default apis
