@@ -3,7 +3,7 @@ import Modal from '../Modal';
 import './LobbyView.css';
 import api from "../../api";
 
-const available = {status: "Available", orders: [[]], drinks: []}
+const available = {status: "Available", orders: [[]], drinks: [], assistance: false}
 
 //temporary array for items
 const globalTables = [
@@ -14,11 +14,13 @@ const globalTables = [
 export default function TableView() {
     const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
-    const [table, setTable] = useState({status: "Available", orders: []});
+    const [table, setTable] = useState({status: "Available", orders: [], drinks: [], assistance: false});
 
     useEffect(() => {
+        handleGetTables()
         handleGetOrders()
         // const intervalId = setInterval(() => {
+        //     handleGetTables()
         //     handleGetOrders()
         // }, 10000);
         //
@@ -27,39 +29,43 @@ export default function TableView() {
         // };
     }, []);
 
+    const handleGetTables = async () => {
+        await api.getTables().then(tables => {
+            const curr_tables = tables.data.data
+            console.log(curr_tables)
+
+            let tempTables = []
+            for(let i = 0; i < 20; i++)
+                tempTables = [...tempTables, {status: "Available", orders: [], drinks: [], assistance: false}]         //initializes array
+
+            curr_tables.map((table) => {
+                tempTables[table.table_num-1].status = table.status
+                tempTables[table.table_num-1].drinks = table.refills
+            })
+
+            setTables(tempTables)
+        })
+    }
+
     //gets all orders from database and sets states
     const handleGetOrders = async () => {
         await api.getAllOrders().then(orders => {
             const curr_orders = orders.data.data
             console.log(curr_orders)
-            let tempTables = []
 
+            let tempTables = []
             for(let i = 0; i < 20; i++)
-                tempTables = [...tempTables, {status: "Available", orders: [], drinks: []}]         //initializes array
+                tempTables = [...tempTables, {status: tables[i].status, orders: [], drinks: tables[i].drinks, assistance: false}]         //initializes array
 
             curr_orders.map((order) => {
                 let tableNum = order.table-1        //table number corresponding to the order
 
                 //add order to table if it's in the kitchen
-                if(order.status === "Created" || order.status === "Cooking") {
+                if(order.status === "Created" || order.status === "Cooking" || order.status === "Ready") {
                     tempTables[tableNum].orders = [...tempTables[tableNum].orders, order]
-                        if (tempTables[order.table-1].status !== "Order Ready")
-                            tempTables[order.table-1].status = "Occupied"   //set status if table is not order ready
-                }
-                //if table is ready or paid
-                else if(order.status === "Ready" || order.status === "Delivered") {
-                    //adds drinks to array if status is delivered or ready
-                    order.order_items.map(item => {
-                        if(item.category === "drinks")
-                            tempTables[tableNum].drinks = [...tempTables[tableNum].drinks, item]
-                    })
-                    if (tempTables[order.table-1].status !== "Order Ready")
-                        tempTables[order.table-1].status = "Occupied"   //set status if table is not order ready
-                    //adds order to array if ready
-                    if(order.status === "Ready") {
-                        tempTables[tableNum].orders = [...tempTables[tableNum].orders, order]
-                        tempTables[tableNum].status = "Order Ready"     //set table status
-                    }
+
+                    if(order.status === "Ready")
+                        tempTables[tableNum].status = "Order Ready"
                 }
             })
 
@@ -110,12 +116,22 @@ export default function TableView() {
                     tempOrders.splice(index, 1)
                     let tempTable = table
                     tempTable.orders = tempOrders
+                    tempTable.status = "Occupied"
                     setTable(tempTable)
                 }
             })
         }
+        else if(table.drinks.length !== 0){
+            let tempTable = table
+            tempTable.drinks = []
+            setTable(tempTable)
+        }
+        else if(table.assistance === true){
+            let tempTable = table
+            tempTable.assistance = false
+            setTable(tempTable)
+        }
         //check if table has other needs
-        table.status = "Occupied";                  //resets table status to occupied
 
         setTableShow(() => false);
     };
@@ -141,7 +157,14 @@ export default function TableView() {
 
         const table = tables[tableNum - 1];
         //displays the needs of the table
-        if (table.status === "Refill") {
+        if (table.status === "Order Ready") {
+            return(
+                <div>
+                    <p>Order ready to be delivered.</p>
+                </div>
+            )
+        }
+        else if (table.drinks.length !== 0) {
             return (
                 <div>
                     Refill requested for:
@@ -151,19 +174,12 @@ export default function TableView() {
                 </div>
             );
         }
-        else if (table.status === "Help") {
+        else if (table.assistance === true) {
             return(
                 <div>
                     <p>Wait staff requested.</p>
                 </div>
             );
-        }
-        else if (table.status === "Order Ready") {
-            return(
-                <div>
-                    <p>Order ready to be delivered.</p>
-                </div>
-            )
         }
         else
             return null;
@@ -176,16 +192,34 @@ export default function TableView() {
             const curStatus = curTable.status
 
             //sets button color based on status
-            if (curStatus === "Refill")
+            if (curStatus === "Order Ready")
+                tableColor = "pink"
+            else if (curTable.drinks.length !== 0)      //needs refill
                 tableColor = "lightblue"
+            else if (curTable.assistance === true)      //needs help
+                tableColor = "#ffc87c"        //light orange
             else if (curStatus === "Occupied")
                 tableColor = "lightgreen"
-            else if (curStatus === "Help")
-                tableColor = "#ffc87c"          //light orange
-            else if (curStatus === "Order Ready")
-                tableColor = "pink"
             else
                 tableColor = "white"
+        }
+    }
+
+    function setNeeds(curTable) {
+        if(curTable !== undefined) {    //ensures curTable is not undefined
+            const curStatus = curTable.status
+
+            //sets button text based on status
+            if (curStatus === "Order Ready")
+                return "Order Ready"
+            else if (curTable.drinks.length !== 0)      //needs refill
+                return "Refill"
+            else if (curTable.assistance === true)      //needs help
+                return "Assistance Requested"
+            else if (curStatus === "Occupied")
+                return "Occupied"
+            else
+                return "Available"
         }
     }
 
@@ -198,7 +232,7 @@ export default function TableView() {
                     <button className='tableButton' data-index={index+1} onClick={handleTableClick} style={{background: tableColor}}>
                         Table {index+1}
                         <br />
-                        {table.status}
+                        {setNeeds(table)}
                     </button>
                 </>
             ))}
