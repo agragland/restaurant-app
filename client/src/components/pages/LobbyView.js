@@ -3,8 +3,6 @@ import Modal from '../Modal';
 import './LobbyView.css';
 import api from "../../api";
 
-const classicTaco = {name: "Classic Taco", price: 7.99}
-const wackyTaco = {name: "Wacky Taco", price: 12.99}
 const available = {status: "Available", orders: [[]], drinks: []}
 
 //temporary array for items

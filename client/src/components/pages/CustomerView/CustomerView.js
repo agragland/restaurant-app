@@ -9,6 +9,7 @@ import Modal from "../../Modal";
 
 import MenuView from "./tabs/MenuView";
 import OrderView from "./tabs/OrderView";
+import PaymentView from "./tabs/PaymentView";
 
 export default function CustomerView() {
     const [showSignIn, setShowSignIn] = useState(true);
@@ -19,10 +20,7 @@ export default function CustomerView() {
 
     return (
         <>
-        <Modal show={showSignIn}>
-            <button onClick={handlePassword}>X</button>
-            <p>help</p>
-        </Modal>
+
         <div className='customer'>
             <Router>
                 <Time />
@@ -39,7 +37,7 @@ export default function CustomerView() {
                     {/*Change Log */}
                     <Route exact path="/Order" component={OrderView}  />
                     {/*Lobby View*/}
-                    <Route exact path="/Payment"   />
+                    <Route exact path="/Payment" component={PaymentView}  />
                 </div>
 
             </Router>

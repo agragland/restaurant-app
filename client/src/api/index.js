@@ -12,9 +12,11 @@ export const createOrder = payload => api.post(`/order`,payload)
 export const getAllOrders = () => api.get(`/orders`)
 export const updateOrder = (id, payload) => api.put(`/order/${id}`, payload)
 export const deleteOrder = id => api.delete(`/order/${id}`)
+export const getOrder = id => api.get(`/order/${id}`)
 //export const updateMovieById = (id, payload) => api.put(`/movie/${id}`, payload)
 //export const deleteMovieById = id => api.delete(`/movie/${id}`)
 //export const getMovieById = id => api.get(`/movie/${id}`)
+export const updateTable = (table_num, payload) => api.put(`/table/${table_num}`,payload)
 
 const apis = {
     insertItem,
@@ -23,8 +25,9 @@ const apis = {
     getItemById,
     createOrder,
     getAllOrders,
+    getOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
 }
 
 export default apis

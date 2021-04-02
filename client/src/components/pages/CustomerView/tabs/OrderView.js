@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import apis from "../../../../api";
-const mongoose = require('mongoose');
+import {preparePayment} from "./PaymentView";
 
 let payload = {
     items: [],
@@ -9,7 +9,12 @@ let payload = {
     tip: 0,
     total: 0,
     status: 'Waiting',
-    table: 20
+    table: 8
+}
+
+export const freeDessertOrder = (dessert) =>
+{
+    
 }
 
 
@@ -96,7 +101,7 @@ export default class OrderView extends React.Component{
         else if(payload.status === 'Created')
         {
             return(
-                <h1>Order Placed! Please Wait...</h1>
+                <h1>Order Placed! Ready for Payment</h1>
             )
         }
 
@@ -123,6 +128,7 @@ export default class OrderView extends React.Component{
         const final_payload = { order_items:items, comments, subtotal, total, status:'Created', table:payload.table }
         await apis.createOrder(final_payload).then(res => {
             window.alert(`Order created successfully`)
+            preparePayment(res.data.id)
         })
     }
 
@@ -141,8 +147,6 @@ export default class OrderView extends React.Component{
                 }
             </div>
             <h1>Subtotal {this.state.subtotal.toFixed(2)}</h1>
-            <h1>Tax {this.state.tax.toFixed(2)}</h1>
-            <h1>Total {this.state.total.toFixed(2)}</h1>
             {this.OrderStatusHandler()}
         </div>
 

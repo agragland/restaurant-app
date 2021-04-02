@@ -4,6 +4,7 @@ const EmpCtrl = require('../controllers/employee-ctrl')
 const ItemCtrl = require('../controllers/item-ctrl')
 const LoyaltyCtrl = require('../controllers/loyalty-ctrl')
 const OrderCtrl = require('../controllers/order-ctrl')
+const TableCtrl = require('../controllers/table-ctrl')
 
 const router = express.Router()
 
@@ -35,5 +36,12 @@ router.put('/order/:id',OrderCtrl.updateOrder)
 router.delete('/order/:id', OrderCtrl.deleteOrder)
 router.get('/order/:id', OrderCtrl.getOrderById)
 router.get('/orders', OrderCtrl.getOrders)
+
+//Table Commands
+router.post('/table',TableCtrl.createTable)
+router.put('/table/:id',TableCtrl.updateTable)
+router.get('/tables',TableCtrl.getTables)
+
+
 
 module.exports = router

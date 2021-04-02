@@ -6,7 +6,7 @@ import './MenuView.css'
 let menu_items = [];
 
 
-const Item = ({item}) => (
+export const Item = ({item}) => (
     <div className={"item-display"}>
         <div>
             <p>{item.name}</p>
