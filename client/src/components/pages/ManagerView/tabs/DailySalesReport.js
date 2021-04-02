@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
+import { DSR_COUMNS } from '../Columns'
+
 import "./DailySalesReport.css";
 import api from "../../../../api";
 
