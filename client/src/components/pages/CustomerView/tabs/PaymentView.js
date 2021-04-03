@@ -29,7 +29,8 @@ export default class PaymentView extends React.Component {
             order: {},
             paymentReady: false,
             cardModal: false,
-            modal_2: 0
+            modal_2: 0,
+            freeDessert: 0,
         }
     }
 
@@ -85,6 +86,7 @@ export default class PaymentView extends React.Component {
                 <Modal show={this.state.cardModal}>
                     <h1>You Paid ${this.state.order.total.toFixed(2)}</h1>
                     <h1>Time for a chance to win a free dessert!</h1>
+                    {this.freeDessertHandler()}
 
                 </Modal>
             )
@@ -92,6 +94,58 @@ export default class PaymentView extends React.Component {
 
     }
 
+    /*
+    *********
+    DESSERT HANDLING
+    *********
+    */
+    freeDessertHandler = () => {
+
+        if(this.state.freeDessert === 0)
+        {
+            return(
+                <button onClick={this.dessertRandomizer}>Click for a chance to win!</button>
+            )
+        }
+        else if(this.state.freeDessert === 1)
+        {
+            return(
+                <>
+                <h1>Congrats! You Won!</h1>
+                <h1>Please select a dessert from the list below!</h1>
+                </>
+            )
+        }
+        else if(this.state.freeDessert === 2)
+        {
+            return(
+                <>
+                    <h1>Sorry! You Did Not Win!</h1>
+                    <h1>Thanks for Visiting Taco Palace</h1>
+                    <button>Complete Order</button>
+                </>
+            )
+        }
+    }
+
+    dessertRandomizer = () => {
+        if(Math.random() <= 0.33)
+        {
+            this.setState({freeDessert: 1})
+        }
+        else
+        {
+           this.setState({freeDessert: 2})
+        }
+    }
+
+
+
+    /*
+    *********
+    TIP HANDLING
+    *********
+    */
     tipHandler = async (tipPerc) => {
         let temp = this.state.order
         temp.tip = temp.total * tipPerc
@@ -110,7 +164,10 @@ export default class PaymentView extends React.Component {
     }
 
     handleCustomTipValue = async event => {
+
     }
+
+
 
     cardPaymentHandler = () =>
     {

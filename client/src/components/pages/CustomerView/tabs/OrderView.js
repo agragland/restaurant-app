@@ -30,10 +30,19 @@ export const handleAddToOrder = (item) => {
     }
 }
 
-const OrderItem = ({item}) => {
+export const handleCustomAdd = (item, comment) => {
+    if(payload.status === 'Waiting')
+    {
+        payload.items.push(item._id)
+        payload.comments.push(comment)
+    }
+}
+
+const OrderItem = ({item, comment}) => {
     return (
         <div>
             <p>{item.name} {item.price}</p>
+            <p>{comment}</p>
         </div>
     )
 
@@ -69,6 +78,7 @@ export default class OrderView extends React.Component{
                 })
             })
         })
+        this.setState({comments: payload.comments})
     }
 
     handleRemoveFromOrder = (item) => {
