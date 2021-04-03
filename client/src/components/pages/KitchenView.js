@@ -40,7 +40,6 @@ export default function KitchenView (){
                     tempItemWorking = [...tempItemWorking, tempWorking]
                     tempWorking = []
                 }
-
             })
 
             //set states to temps
@@ -52,6 +51,10 @@ export default function KitchenView (){
 
     const handleUpdateOrder = async (payload) => {
         await api.updateOrder(payload._id, payload)
+    }
+
+    const handleUpdateTable = async (table_num) => {
+        await api.updateTable(table_num, {table_num: table_num, status: "Order Ready", refills: [], assistance: false})
     }
 
     const clickToActive = ({target}) => {
@@ -75,6 +78,7 @@ export default function KitchenView (){
 
         //updates database
         handleUpdateOrder(actives[index])
+        handleUpdateTable(actives[index].table)
 
         //removes order from active
         let temp = [...actives]

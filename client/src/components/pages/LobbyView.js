@@ -18,44 +18,41 @@ export default function TableView() {
 
     useEffect(() => {
         handleGetTables()
-        handleGetOrders()
-        // const intervalId = setInterval(() => {
-        //     handleGetTables()
-        //     handleGetOrders()
-        // }, 10000);
-        //
-        // return () => {
-        //     clearInterval(intervalId);
-        // };
+
+        const intervalId = setInterval(() => {
+            handleGetTables()
+        }, 10000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     const handleGetTables = async () => {
-        await api.getTables().then(tables => {
-            const curr_tables = tables.data.data
+        let tempTables = []
+        for(let i = 0; i < 20; i++)
+            tempTables = [...tempTables, {status: "Available", orders: [], drinks: [], assistance: false}]         //initializes array
+
+        await api.getTables().then(db_tables => {
+            const curr_tables = db_tables.data.data
             console.log(curr_tables)
 
-            let tempTables = []
-            for(let i = 0; i < 20; i++)
-                tempTables = [...tempTables, {status: "Available", orders: [], drinks: [], assistance: false}]         //initializes array
-
+            //sets status and drinks based on corresponding table in db
             curr_tables.map((table) => {
                 tempTables[table.table_num-1].status = table.status
                 tempTables[table.table_num-1].drinks = table.refills
             })
-
-            setTables(tempTables)
         })
+        //calls to then get orders
+        handleGetOrders(tempTables)
     }
 
     //gets all orders from database and sets states
-    const handleGetOrders = async () => {
+    const handleGetOrders = async (tempTables) => {
         await api.getAllOrders().then(orders => {
             const curr_orders = orders.data.data
             console.log(curr_orders)
 
-            let tempTables = []
-            for(let i = 0; i < 20; i++)
-                tempTables = [...tempTables, {status: tables[i].status, orders: [], drinks: tables[i].drinks, assistance: false}]         //initializes array
 
             curr_orders.map((order) => {
                 let tableNum = order.table-1        //table number corresponding to the order
@@ -63,9 +60,6 @@ export default function TableView() {
                 //add order to table if it's in the kitchen
                 if(order.status === "Created" || order.status === "Cooking" || order.status === "Ready") {
                     tempTables[tableNum].orders = [...tempTables[tableNum].orders, order]
-
-                    if(order.status === "Ready")
-                        tempTables[tableNum].status = "Order Ready"
                 }
             })
 
@@ -77,6 +71,10 @@ export default function TableView() {
     //updates database
     const handleUpdateOrder = async (payload) => {
         await api.updateOrder(payload._id, payload)
+    }
+
+    const handleUpdateTable = async (payload) => {
+        await api.updateTable(payload.table_num, payload)
     }
 
     //sets table and tableNum based on selected table button
@@ -131,7 +129,9 @@ export default function TableView() {
             tempTable.assistance = false
             setTable(tempTable)
         }
-        //check if table has other needs
+
+        //update database
+        handleUpdateTable({table_num: tableNum, status: "Occupied", refills: table.drinks, assistance: table.assistance})
 
         setTableShow(() => false);
     };
