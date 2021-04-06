@@ -53,6 +53,12 @@
     float: left;
 }
 
+.order-time{
+    position: absolute;
+    left: calc(1% + 5px);
+    bottom: -2%;
+}
+
 .ready-button{
     position: absolute;
     right: calc(1% + 5px);

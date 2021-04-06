@@ -9,13 +9,13 @@ export default function KitchenView (){
 
     useEffect(() => {
         handleGetOrders()
-        const intervalId = setInterval(() => {
-            handleGetOrders()
-        }, 10000);
-
-        return () => {
-            clearInterval(intervalId);
-        };
+        // const intervalId = setInterval(() => {
+        //     handleGetOrders()
+        // }, 10000);
+        //
+        // return () => {
+        //     clearInterval(intervalId);
+        // };
     }, []);
 
     //gets orders from the db
@@ -40,6 +40,8 @@ export default function KitchenView (){
                     tempItemWorking = [...tempItemWorking, tempWorking]
                     tempWorking = []
                 }
+                let date = new Date(order.createdAt)
+                console.log(new Date(order.createdAt).toLocaleString('en-US', {hour12: false}))
             })
 
             //set states to temps
@@ -112,7 +114,10 @@ export default function KitchenView (){
                     return(<button onClick={clickItem} data-activesindex={activesIndex} data-itemindex={itemIndex} className={itemWorking[activesIndex][itemIndex]}>&nbsp;</button>)
     }
 
-
+    const getTime = (creationTime) => {
+        const time = new Date(creationTime)     //gets Date based on when order was created
+        return time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()  //converts Date to 24 hour clock
+    }
 
     return (
         <div className='kitchen'>
@@ -121,7 +126,11 @@ export default function KitchenView (){
                 <h1 className="queue-title">Queue</h1>
                 {orderQueue.map((order, index) => (
                     <p>
-                        <button value={index} className="queue-button" onClick={clickToActive}>Table {order.table}</button>
+                        <button value={index} className="queue-button" onClick={clickToActive}>
+                            Table {order.table}
+                            <br/>
+                            {getTime(order.createdAt)}
+                        </button>
                     </p>
                 ))}
             </section>
@@ -142,6 +151,7 @@ export default function KitchenView (){
                             </div>
                         ))}
                         <br/>
+                        <p className="order-time">{getTime(order.createdAt)}</p>
                         <button value={activesIndex} className="ready-button" onClick={clickToReady}>Ready</button>
                     </section>
                 ))}

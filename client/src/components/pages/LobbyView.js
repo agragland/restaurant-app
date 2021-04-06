@@ -58,7 +58,7 @@ export default function TableView() {
                 let tableNum = order.table-1        //table number corresponding to the order
 
                 //add order to table if it's in the kitchen
-                if(order.status === "Created" || order.status === "Cooking" || order.status === "Ready") {
+                if(order.status === "Created" || order.status === "Cooking" || order.status === "Ready" || order.status === "Delivered") {
                     tempTables[tableNum].orders = [...tempTables[tableNum].orders, order]
                 }
             })
