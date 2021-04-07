@@ -17,10 +17,16 @@ export const freeDessertOrder = (dessert) =>
     
 }
 
-
+export const getItems = () => {
+    return payload.items
+}
 
 export const updateTableNum = (num) => {
     payload.table = num
+}
+
+export const getTableNum = () => {
+    return payload.table
 }
 
 export const handleAddToOrder = (item) => {
