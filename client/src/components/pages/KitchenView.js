@@ -116,7 +116,11 @@ export default function KitchenView (){
 
     const getTime = (creationTime) => {
         const time = new Date(creationTime)     //gets Date based on when order was created
-        return time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()  //converts Date to 24 hour clock
+        const hours = time.getHours()
+        const minutes = time.getMinutes()
+        const seconds = time.getSeconds()
+        //converts Date to 24 hour clock, adds leading zeros if needed
+        return ((hours < 10 ? '0' : '') + hours) + ":" + ((minutes < 10 ? '0' : '') + minutes) + ":" + ((seconds < 10 ? '0' : '') + seconds)
     }
 
     return (

@@ -106,7 +106,11 @@ export default function TableView() {
         if(table.status === "Order Ready"){
             table.orders.map((order, index) => {
                 if(order.status === "Ready"){
-                    order.status = "Delivered"      //sets order status to delivered
+                    if(order.subtotal === 0)
+                        order.status = "Paid"       //sets order status to paid if order's cost is $0.00
+                    else
+                        order.status = "Delivered"  //sets order status to delivered
+
                     handleUpdateOrder(order)        //updates db
 
                     //change state
