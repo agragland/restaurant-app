@@ -9,7 +9,8 @@ export const getAllItems = () => api.get(`/items`)
 export const updateItem = (id, payload) => api.put(`/item/:${id}`, payload) //update item
 export const deleteItem = id => api.delete(`/item/:${id}`) //delete item
 export const insertCustomer = payload => api.post(`/customer`, payload)
-export const checkEmployeeID = id => api.get(`/employee/:${id}`) //check id of employee trying to log in
+export const getEmployees = () => api.get(`/employees`) //check id of employee trying to log in
+export const getAllOrders = () => api.get(`/orders`)
 //export const updateMovieById = (id, payload) => api.put(`/movie/${id}`, payload)
 //export const deleteMovieById = id => api.delete(`/movie/${id}`)
 //export const getMovieById = id => api.get(`/movie/${id}`)
@@ -20,7 +21,8 @@ const apis = {
     updateItem,
     deleteItem,
     insertCustomer,
-    checkEmployeeID
+    getEmployees,
+    getAllOrders
 }
 
 export default apis

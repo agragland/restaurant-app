@@ -52,12 +52,20 @@
 }
 
 .category {
+    position: relative;
     width: 105%;
     left: -1px;
     padding: 16px 16px;
     margin-left: -20px;
     margin-right: -30px;
     text-align: center;
+    overflow: hidden;
+}
+
+.options {
+    justify-content: start;
+    width: 100px;
+    height: 100px;
 }
 
 p {

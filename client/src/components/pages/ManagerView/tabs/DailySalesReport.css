@@ -42,3 +42,31 @@
     background: white;
     border: 1px solid #440D0F;
 }
+
+.item {
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
+}
+
+.quantity {
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
+}
+
+.price {
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
+}
+
+.profit{
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
+}

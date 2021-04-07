@@ -1,7 +1,6 @@
 import React, {useState} from'react';
 import {Link} from 'react-router-dom';
 
-import ManagerLogin from "./tabs/ManagerLogin";
 import ChangeLog from './tabs/ChangeLog';
 import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';

@@ -226,30 +226,45 @@ export default function StaffMenu({level}) {
 //--------------------------------------------------------------------------------------------------------------------------
     //OTHER MENU OPTIONS vv
 
+    //to handle update and log the change
+    const handleUpdate = async (payload, button) => {
+        await api.updateItem(payload._id, payload).then(res => {
+            window.alert('Menu item change has been submitted')
+        })
+
+        //log change to change log
+        if(button === 0) //if the remove button was pressed
+        {
+            //mark item change as being removed
+        }
+        else if(button === 1) //if the replace button was pressed
+        {
+            //mark item change as being replaced
+        }
+        else //the delete button was pressed
+        {
+            //mark item change as being deleted
+        }
+
+    } 
+    
     //remove an item from avalible menu - NOTE: this removes an item from avalible array
     //and places it into the unavalible array
     const clickToRemove = ({target}) => {
         //add item to unavailable menu
         const index = target.value
-        availMenuItems[index].isAvailable = false;
+        availMenuItems[index].isAvailable = false
         setUnavailItems((prev) => prev.concat(availMenuItems[index]))
 
         //update the database
-        handleRemove(availMenuItems[index])
+        handleUpdate(availMenuItems[index])
 
         //remove from availible menu
         let temp = [...availMenuItems]
         temp.splice(index, 1)
         setAvailItems(() => temp)
     }
-    const handleRemove = async (payload) => {
-        await api.updateItem(payload._id, payload).then(res => {
-            window.alert('Item No Longer Available')
-        })
 
-        //log change to change log
-
-    }
     var canRemove = false; //determines if page has access clickToRemove
     if (level > 0){
         canRemove = true;
@@ -265,20 +280,12 @@ export default function StaffMenu({level}) {
         setAvailItems((prev) => prev.concat(unavailMenuItems[index]))
 
         //update the database
-        handleReplace(unavailMenuItems[index])
+        handleUpdate(unavailMenuItems[index])
 
         //remove from unavailible menu
         let temp = [...unavailMenuItems]
         temp.splice(index, 1)
         setUnavailItems(() => temp)
-    }
-    const handleReplace = async (payload) => {
-        await api.updateItem(payload._id, payload).then(res => {
-            window.alert('Item Now Available')
-        })
-
-        //log change to change log
-
     }
     var canReplace = false; //determines if page has access Replace - Manager ONLY
     if (level > 1){
@@ -294,7 +301,7 @@ export default function StaffMenu({level}) {
         const index = target.value
 
         //delete from database
-        handleDelete(unavailMenuItems[index])
+        handleUpdate(unavailMenuItems[index])
 
         //remove from unavailible menu
         let temp = [...unavailMenuItems]
@@ -305,12 +312,11 @@ export default function StaffMenu({level}) {
         await api.deleteItem(payload._id).then(res =>{
             window.alert('Item Deleted')
         })
-
         //log change to change log
     }
     
-    
-    var unavailableMenu;//show unavailable menu option
+    //show unavailable menu option
+    var unavailableMenu;
     if(level>0){
         unavailableMenu = <button onClick={handleUnavailableClick} style={{position: 'fixed', bottom: '11%', right: '11%'}}>Unavailable Menu</button>
     }
@@ -468,7 +474,7 @@ export default function StaffMenu({level}) {
                     <DropMenu show={showDesserts}>
                         {
                             availMenuItems.map((item, index) => {
-                                if(item.category === 'dessert' && canRemove)
+                                if(item.category === 'desserts' && canRemove)
                                 {
                                     return(
                                     <>
@@ -482,7 +488,7 @@ export default function StaffMenu({level}) {
                                     </>)
                                     
                                 }
-                                else if(item.category === 'dessert')
+                                else if(item.category === 'desserts')
                                 {
                                     return(<Item
                                         key={index}
@@ -502,7 +508,7 @@ export default function StaffMenu({level}) {
                     <DropMenu show={showDrinks}>
                     {
                             availMenuItems.map((item, index) => {
-                                if(item.category === 'drink' && canRemove)
+                                if(item.category === 'drinks' && canRemove)
                                 {
                                     return(
                                     <>
@@ -516,7 +522,7 @@ export default function StaffMenu({level}) {
                                     </>)
                                     
                                 }
-                                else if(item.category === 'drink')
+                                else if(item.category === 'drinks')
                                 {
                                     return(<Item
                                         key={index}
@@ -702,7 +708,7 @@ export default function StaffMenu({level}) {
                                     </>)
                                     
                                 }
-                                else if(item.category === 'dessert')
+                                else if(item.category === 'desserts')
                                 {
                                     return(<Item
                                         key={index}
@@ -722,7 +728,7 @@ export default function StaffMenu({level}) {
                     <DropMenu show={showUnavailableDrinks}>
                     {
                             unavailMenuItems.map((item, index) => {
-                                if(item.category === 'drink' && canReplace)
+                                if(item.category === 'drinks' && canReplace)
                                 {
                                     return(
                                     <>
@@ -737,7 +743,7 @@ export default function StaffMenu({level}) {
                                     </>)
                                     
                                 }
-                                else if(item.category === 'drink')
+                                else if(item.category === 'drinks')
                                 {
                                     return(<Item
                                         key={index}
@@ -772,9 +778,15 @@ export default function StaffMenu({level}) {
                     {/*select category*/}
                     <label>
                         Category:
-                        <input type="text" placeholder="Enter category of food item here" value={menuItem.category} onChange={setValue('category')} />
+                        <select value={menuItem.category} onChange={setValue('category')} >
+                            <option value="entrees">Entrees</option>
+                            <option value="appetizers">Appetizers</option>
+                            <option value="sides">Sides</option>
+                            <option value="kids">Kids</option>
+                            <option value="desserts">Desserts</option>
+                            <option value="drinks">Drink</option>
+                        </select>
                     </label>
-                    <p>Enter one of the following Categories: entrees, appetizers, sides, kids, dessert, drink</p>
                     {/*enter ingredients*/}
                     <br/> 
                     <label>
