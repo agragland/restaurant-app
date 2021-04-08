@@ -11,9 +11,8 @@ function Modal({show, children}) {
 
     return (
         <div className="modal-background">
-            <section className="modal-main-staff">
-                {children}
-            </section>
+            <section className="modal-main-staff"></section>
+                {children} 
         </div>
     );
 }
@@ -112,6 +111,7 @@ function Navbar() {
         }   
         else if(view === "Customer"){
             setComponent(() => <CustomerView />)
+            setShowModal(() => false)
         } 
     }
 
@@ -132,6 +132,8 @@ function Navbar() {
                         <input type="text" placeholder="Enter Employee ID here" value={employee.emp_id} onChange={setValue('emp_id')} />
                     </div>              
                     <input type='submit' value='LOGIN' />
+                    <br/>
+                    <button name={"Customer"} onClick={handleClick} >Back To Customer</button>
                 </div>
                 </form>  
             </Modal>

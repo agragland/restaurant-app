@@ -48,6 +48,20 @@
     transition: all 0.2s ease-out;
 }
 
+.modal-background{
+    background: transparent;
+}
+
+.modal-main-staff{
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: gray;
+    opacity: 0.5;
+    z-index: -1;
+}
+
 .signin-form{
     display: block;
     position: relative;
@@ -124,7 +138,7 @@
 
 .signin-form .form-inner input[type='submit'] {
     position: relative;
-    bottom: -30%;
+    bottom: 0%;
     right: -32%;
     display: inline-block;
     padding: 10px 15px;
@@ -139,6 +153,26 @@
 }
 
 .signin-form .form-inner input[type='submit']:hover {
+    background-position: 100% 0%;
+}
+
+.signin-form .form-inner button {
+    position: relative;
+    bottom: -45%;
+    right: -35%;
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #F5853F 50%, #F5853F 50%, #440D0F);
+    background-size: 200%;
+    background-position: 0%;
+    transition: 0.4s;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.signin-form .form-inner button:hover {
     background-position: 100% 0%;
 }
 
