@@ -9,13 +9,13 @@ export default function KitchenView (){
 
     useEffect(() => {
         handleGetOrders()
-        // const intervalId = setInterval(() => {
-        //     handleGetOrders()
-        // }, 10000);
-        //
-        // return () => {
-        //     clearInterval(intervalId);
-        // };
+        const intervalId = setInterval(() => {
+            handleGetOrders()
+        }, 10000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     //gets orders from the db
@@ -40,8 +40,6 @@ export default function KitchenView (){
                     tempItemWorking = [...tempItemWorking, tempWorking]
                     tempWorking = []
                 }
-                let date = new Date(order.createdAt)
-                console.log(new Date(order.createdAt).toLocaleString('en-US', {hour12: false}))
             })
 
             //set states to temps
@@ -51,11 +49,10 @@ export default function KitchenView (){
         })
     }
 
-    const handleUpdateOrder = async (payload) => {
+    const handleUpdateOrder = async (payload) => {      //updates order in database
         await api.updateOrder(payload._id, payload)
     }
-
-    const handleUpdateTable = async (table_num) => {
+    const handleUpdateTable = async (table_num) => {    //updates table in database
         await api.updateTable(table_num, {table_num: table_num, status: "Order Ready", refills: [], assistance: false})
     }
 
@@ -93,27 +90,6 @@ export default function KitchenView (){
         setItemWorking(() => tempWorking)
     }
 
-    const clickItem = ({target}) => {
-        let tempArr = [...itemWorking]
-        const activesIndex = target.dataset.activesindex
-        const itemIndex = target.dataset.itemindex
-
-        //toggles between working and done
-        if(tempArr[activesIndex][itemIndex] === "working")
-            tempArr[activesIndex][itemIndex] = "done"
-        else
-            tempArr[activesIndex][itemIndex] = "working"
-        setItemWorking(() => tempArr);
-    }
-
-    const giveItemWorking = (activesIndex, itemIndex) => {
-        //if itemWorking isn't empty, give the working/done button
-        if(itemWorking)
-            if(itemWorking[activesIndex])
-                if(itemWorking[activesIndex][itemIndex])
-                    return(<button onClick={clickItem} data-activesindex={activesIndex} data-itemindex={itemIndex} className={itemWorking[activesIndex][itemIndex]}>&nbsp;</button>)
-    }
-
     const getTime = (creationTime) => {
         const time = new Date(creationTime)     //gets Date based on when order was created
         const hours = time.getHours()
@@ -146,7 +122,6 @@ export default function KitchenView (){
                         {order.order_items.map((item, itemIndex) => (
                             <div className="item">
                                 <p className="item-name">
-                                    {/*giveItemWorking(activesIndex, itemIndex)*/}
                                     &emsp;&nbsp;
                                     {item.name}
                                 </p>
