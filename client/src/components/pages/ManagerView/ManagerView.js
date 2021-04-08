@@ -8,18 +8,21 @@ import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';
 import LobbyVisual from './tabs/LobbyView';
 import Navbar from './Navbar';
+import ManagerLogin from './tabs/ManagerLogin'
 
 import './ManagerView.css';
 
 {/*manager page hub*/}
 export default function ManagerView (){
-    const [managers, setManagers] = useState([]);
+    const [managers, setManagers] = useState([]); //to store all managers from database
     const [manager, setManager] = useState({ emp_id: '', password: ''});
+    const [error, setError] = useState('');
 
+    //data base 
     useEffect (() => {
         handleGetManger()
     }, []);
-
+    //get and store all manager employee info
     const handleGetManger = async () => {
         await api.getEmployees().then(employees => {
             const all_employees = employees.data.data
@@ -36,23 +39,28 @@ export default function ManagerView (){
         })
     }
 
-    const setValue = (variable) => {
-        return({target: {value}}) => {
-            setManager( manager => ({...manager, [variable]: value}));
-        }
-    };
-
-    const checkLog = () => {
+    //manager login 
+    const Login = details => {
+        console.log(details)
         managers.map((employee) => {
-            if(employee.emp_id === manager.emp_id){
-                if(employee.password === manager.password){
-                    handleLog();
+            if(details.emp_id == employee.emp_id){ //if the user name matches
+                if(details.password == employee.password){ //check the password
+                    handleLog()
+                }
+                else{ 
+                    console.log('details do not match')
                 }
             }
         })
+        
+        
+    }
+    //manager logout
+    const Logout = () => {
+        console.log("logout");
     }
 
-
+    //determines the view of the manager navbar
     const [isLogged, setIsLogged] = useState(false);
     const handleLog = () => {
         setIsLogged(!isLogged);
@@ -81,24 +89,17 @@ export default function ManagerView (){
                     <Route exact path="/LobbyView" component={LobbyVisual}  />  
                     
                 </Router>
+
+                <button onClick={handleLog}>LOGOUT</button>
                 
             </div> :  
             /*else, show manager log in page*/
             <div className='login' > 
                 <p><br/><br/></p>
-                <div className='login-box'>
-                    <h3 className='login-title'>Manager Login</h3>
-                    <form>
-                        <label style={{ fontSize: '16px', textAlign: 'left'}}>Employee ID:
-                        <input type="text" placeholder="Enter Employee ID here" value={manager.emp_id} onChange={setValue('emp_id')} />
-                        </label>
-                        <label style={{ fontSize: '16px', textAlign: 'left'}}>Password:
-                        <input type="text" placeholder="Enter Password here" value={manager.password} onChange={setValue('password')} />
-                        </label>
-                    </form>
-                    <button className='signin' onClick={handleLog}>Sign In</button>
-                </div>
+                <ManagerLogin Login={Login} error={error} />
+                
             </div>
+        
 
             }
         </div>

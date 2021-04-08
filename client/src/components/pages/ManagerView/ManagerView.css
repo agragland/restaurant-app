@@ -1,4 +1,4 @@
-.manager{
+.manager{ 
     font-size: 1rem;
     justify-items: center;
     background-color: transparent;
@@ -12,10 +12,11 @@
     background: linear-gradient(0deg, #440D0F, #F5853F);
     justify-self: center;
     font-size: 2.5rem;
-    color: white;
+    color: white;    
 } 
 
 .maganer .manager-body{
+    display: block;
     justify-self: center;
 }
 
@@ -33,6 +34,11 @@
     font-size: 2.5rem;
     color: black;
     /* background-color: lightgray;*/
+}
+
+.login .login-group {
+    text-align: left;
+    font-size: 16px;
 }
 
 .login-box{
