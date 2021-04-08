@@ -71,7 +71,7 @@ export default function ManagerView (){
     return (
         <>
         <div className='manager'> 
-            <StaffMenu level= {3} />
+            <StaffMenu level= {2} />
             <div className='manager-title'>Manager</div>
 
             {/*if manager is logged in, show the navbar */}        

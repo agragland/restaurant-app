@@ -99,6 +99,7 @@ export default function StaffMenu({level}) {
             //set states to temp
             setAvailItems(temp_available)
             setUnavailItems(temp_unavailable)
+            console.log(level)
         })
         
     }
@@ -189,7 +190,7 @@ export default function StaffMenu({level}) {
     }  
     var canAdd; //button to access AddMenu - Manager ONLY
     if (level > 1){
-        canAdd = <button onClick={handleAddClick} style={{position: 'fixed', right: '15%', top: '15%'}}>Add Menu Item</button>;
+        canAdd = <button onClick={handleAddClick} style={{position: 'fixed', bottom: '11%', right: '11%'}}>Add Menu Item</button>;
     }
     //set the value of an input
     const setValue = (variable) => {
@@ -231,20 +232,6 @@ export default function StaffMenu({level}) {
         await api.updateItem(payload._id, payload).then(res => {
             window.alert('Menu item change has been submitted')
         })
-
-        //log change to change log
-        if(button === 0) //if the remove button was pressed
-        {
-            //mark item change as being removed
-        }
-        else if(button === 1) //if the replace button was pressed
-        {
-            //mark item change as being replaced
-        }
-        else //the delete button was pressed
-        {
-            //mark item change as being deleted
-        }
 
     } 
     
@@ -330,7 +317,7 @@ export default function StaffMenu({level}) {
             <button onClick={handleModalClick} className="menu-button">Menu</button>
             <Modal show={showModal}>
                 <button onClick={handleModalClick} style={{position: 'fixed', left: '11%', top: '11%'}}>X</button>
-                {canAdd}
+                
                 <h3 style={{textAlign: 'center', fontSize: '20px'}}>Menu</h3>
                 <p>
                     <button onClick={handleAppetizersClick} className="category">Appetizers</button>
@@ -546,7 +533,8 @@ export default function StaffMenu({level}) {
         UNACCESSIBLE MENU vv */}
         <UnavailableModal show={showUnavailableModal}>
             <button onClick={handleUnavailableClick} style={{position: 'fixed', left: '11%', top: '11%'}}>Back To Menu</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <h3 style={{textAlign: 'center', fontSize: '20px'}}>Unavailable Menu</h3>
+            
+            <h3 style={{textAlign: 'center', fontSize: '20px'}}>Unavailable Menu</h3>
                 <p>
                     <button onClick={handleUnavailableAppetizersClick} className="category">Appetizers</button>
                     <DropMenu show={showUnavailableAppetizers}>
@@ -758,6 +746,7 @@ export default function StaffMenu({level}) {
                         }
                     </DropMenu>
                 </p>
+                {canAdd}
             </UnavailableModal>  
                
 
