@@ -2,24 +2,60 @@ import React, {useEffect, useState} from "react";
 import api from "../../../../api";
 import {handleAddToOrder} from "./OrderView"
 import './MenuView.css'
+import Modal from "../../../Modal";
 
 let menu_items = [];
 
 
-export const Item = ({item}) => (
-    <div className={"item-display"}>
-        <div>
-            <p>{item.name}</p>
-            <p>{item.price}</p>
-            <ul>
-                {item.ingredients.map((ingredient, index) =>
-                    <li key={index}>{ingredient}</li>
-                ) }
-            </ul>
-            <button onClick={() => handleAddToOrder(item)}>Add to Order</button>
+
+export const Item = ({item}) => {
+
+    const [customItem, showCustomItem] = useState(false);
+    let comment = ""
+
+    const handleCommentField = (e) => {
+        comment = e.target.value
+    }
+
+    return(
+    <>
+        <Modal show={customItem}>
+            <button onClick={() => showCustomItem(!customItem)} className="x-button">X</button>
+            <div>
+                <p>{item.name}</p>
+                <p>{item.price}</p>
+                <ul>
+                    {item.ingredients.map((ingredient, index) =>
+                        <li key={index}>{ingredient}</li>
+                    )}
+                </ul>
+                <form>
+                    <label>Comments:</label>
+                    <input type = "text" onChange={handleCommentField}/>
+                </form>
+                <button onClick={() => {
+                    handleAddToOrder(item, comment);
+                    showCustomItem(!customItem);
+                }}>Add to Order</button>
+
+            </div>
+        </Modal>
+        <div className={"item-display"}>
+            <div>
+                <p>{item.name}</p>
+                <p>{item.price}</p>
+                <ul>
+                    {item.ingredients.map((ingredient, index) =>
+                        <li key={index}>{ingredient}</li>
+                    )}
+                </ul>
+                <button onClick={() => handleAddToOrder(item, "")}>Add to Order</button>
+                <button onClick={() => showCustomItem(!customItem)}>Customize</button>
+            </div>
         </div>
-    </div>
-)
+    </>
+    )
+}
 
 
 function DropMenu({show, children}) {
@@ -110,10 +146,9 @@ export default function MenuView(){
                             menu_items.map((item, index) => {
                                 if(item.category === 'entrees')
                                 {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
+                                    return(
+                                        <Item key={index} item={item}/>
+                                        )
                                 }
                                 else
                                     return null;

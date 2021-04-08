@@ -41,6 +41,7 @@ router.get('/orders', OrderCtrl.getOrders)
 router.post('/table',TableCtrl.createTable)
 router.put('/table/:id',TableCtrl.updateTable)
 router.get('/tables',TableCtrl.getTables)
+router.get('/table/:id',TableCtrl.getTableByNum)
 
 
 

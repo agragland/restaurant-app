@@ -7,13 +7,15 @@ import api from "../../../api"
 
 export default function NavBar(){
     const handleGetTable = async () => {
-        await api.getTableByNum(getTableNum())
+        return await api.getTableByNum(getTableNum())
     }
     const handleUpdateTable = async (table) => {
-        await api.updateTable(table.table_num, table)
+        await api.updateTable(table.table_num, table).then((res) =>{
+            console.log(res)
+        })
     }
     const handleGetItemById = async (id) => {
-        await api.getItemById(id)
+        return await api.getItemById(id)
     }
 
     const [drinks, setDrinks] = useState([])
@@ -39,16 +41,24 @@ export default function NavBar(){
 
     const refillModalX = () => {
         setShowModalRefills(false)
+        handleGetTable().then((table) => {
+            let new_table = table.data.data
 
-        let table = handleGetTable()
-        table.refills = refills
-        handleUpdateTable(table)
+            new_table.refills = refills
+
+            handleUpdateTable(new_table).then()
+
+            refills = []
+        })
+
     }
 
     const handleClickHelp = () => {
-        let table = handleGetTable()
-        table.assistance = true
-        handleUpdateTable(table)
+        handleGetTable().then((table) => {
+            let new_table = table.data.data
+            new_table.assistance = true
+            handleUpdateTable(new_table)
+        })
     }
 
     const [showModalTableNums, setShowModalTableNums] = useState(false)
@@ -88,7 +98,7 @@ export default function NavBar(){
                 <br/>
                 {drinks.map((drink, index)=> (
                     <>
-                        <button onClick={handleClickRefill} value={index}>{drink.name}</button>
+                        <button onClick={handleClickRefill} value={drink.name}>{drink.name}</button>
                         <br/>
                     </>
                 ))}

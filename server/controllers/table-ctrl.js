@@ -53,6 +53,8 @@ updateTable = async (req, res) => {
         }
         table.table_num = body.table_num
         table.status = body.status
+        table.refills = body.refills
+        table.assistance = body.assistance
         table
             .save()
             .then(() => {
@@ -85,8 +87,23 @@ getTables = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+getTableByNum = async (req, res) => {
+    await Table.findOne({table_num: req.params.id}, (err, table) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!table) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Movie not found` })
+        }
+        return res.status(200).json({ success: true, data: table })
+    }).catch(err => console.log(err))
+    }
+
 module.exports = {
     createTable,
     updateTable,
-    getTables
+    getTables,
+    getTableByNum
 }

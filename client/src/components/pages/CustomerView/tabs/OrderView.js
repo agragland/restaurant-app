@@ -29,14 +29,7 @@ export const getTableNum = () => {
     return payload.table
 }
 
-export const handleAddToOrder = (item) => {
-    if(payload.status === 'Waiting')
-    {
-        payload.items.push(item._id)
-    }
-}
-
-export const handleCustomAdd = (item, comment) => {
+export const handleAddToOrder = (item, comment) => {
     if(payload.status === 'Waiting')
     {
         payload.items.push(item._id)
@@ -72,10 +65,11 @@ export default class OrderView extends React.Component{
     }
 
     componentDidMount = async () =>{
-        payload.items.map((item) => {
+        payload.items.map((item, index) => {
             apis.getItemById(item).then(item_info => {
                 this.setState(prevState => ({
                     items: [...prevState.items, item_info.data.data],
+                    comments: [...prevState.comments,payload.comments[index]],
                     subtotal: prevState.subtotal + item_info.data.data.price
                 }))
                 this.setState({
@@ -84,18 +78,21 @@ export default class OrderView extends React.Component{
                 })
             })
         })
-        this.setState({comments: payload.comments})
     }
 
     handleRemoveFromOrder = (item) => {
         let arr = [...this.state.items]
+        let comms = [...this.state.comments]
         let index = arr.indexOf(item)
         if(index !== -1)
         {
             arr.splice(index,1)
+            comms.splice(index,1)
             payload.items.splice(payload.items.indexOf(item._id),1)
+            payload.comments.splice(payload.items.indexOf(item._id),1)
             this.setState(prevState => ({
                 items: arr,
+                comments: comms,
                 subtotal: prevState.subtotal - item.price
             }))
             this.setState(prevState => ({
@@ -156,8 +153,9 @@ export default class OrderView extends React.Component{
             <div>
                 {this.state.items.map((item_test,index) => (
                     <div>
-                    <OrderItem key={index} item={item_test} />
+                    <OrderItem key={index} item={item_test} comment={this.state.comments[index]} />
                         {this.EditRemoveButtons(item_test)}
+
                     </div>
                 ))
                 }

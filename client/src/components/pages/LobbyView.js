@@ -40,6 +40,7 @@ export default function TableView() {
             //sets status and drinks based on corresponding table in db
             curr_tables.map((table) => {
                 tempTables[table.table_num-1].status = table.status
+                tempTables[table.table_num-1].assistance = table.assistance
                 tempTables[table.table_num-1].drinks = table.refills
             })
         })
@@ -247,7 +248,7 @@ export default function TableView() {
                     Table {tableNum}
                 </p>
                 <Needs tableNum={tableNum}/>
-                <button onClick={handleCompleteClick} disabled={table.status === "Available" || table.status === "Occupied"}>Complete Request</button>
+                <button onClick={handleCompleteClick} disabled={!(table.status === "Order Ready" || table.drinks.length !== 0 || table.assistance)}>Complete Request</button>
             </Modal>
             <Modal show={orderShow}>
                 <button onClick={handleOrderClick}>X</button>
