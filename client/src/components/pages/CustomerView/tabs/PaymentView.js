@@ -12,7 +12,15 @@ export const preparePayment = (id) => {
     payload.paymentReady = true
 }
 
-const PaymentItem = ({item}) => {
+const PaymentItem = ({item, comp}) => {
+    if(comp)
+    {
+        return (
+            <div>
+                <p>{item.name} 0.00</p>
+            </div>
+        )
+    }
     return (
         <div>
             <p>{item.name} {item.price}</p>
@@ -190,7 +198,7 @@ export default class PaymentView extends React.Component {
                 <div>
                     {this.state.order.order_items.map((item_test,index) => (
                         <div>
-                            <PaymentItem key={index} item={item_test} />
+                            <PaymentItem key={index} item={item_test} comp={this.state.order.commped[index]} />
                         </div>
                     ))
                     }

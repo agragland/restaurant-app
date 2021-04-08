@@ -145,11 +145,13 @@ export default function TableView() {
     const handleRemoveClick = ({target}) => {
         let order = table.orders[target.dataset.orderindex]
         let price = order.order_items[target.dataset.itemindex].price
+
+        order.commped[target.dataset.itemindex] = true
         order.subtotal -= price
         order.tax -= 0.0825 * price
         order.total -= 1.085 * price
 
-        //handleUpdateOrder(order)      re-enable when ready
+        handleUpdateOrder(order)      //re-enable when ready
 
         setOrderShow(() => false);
         setTableShow(() => true);
@@ -257,7 +259,7 @@ export default function TableView() {
                     order.order_items.map((item, itemIndex) => (
                         <p>
                             {item.name}, ${item.price}
-                            <button data-orderindex={orderIndex} data-itemindex={itemIndex} onClick={handleRemoveClick}>Remove</button>
+                            <button data-orderindex={orderIndex} data-itemindex={itemIndex} disabled = {order.commped[itemIndex]} onClick={handleRemoveClick}>Remove</button>
                         </p>
                     ))
                 ))}

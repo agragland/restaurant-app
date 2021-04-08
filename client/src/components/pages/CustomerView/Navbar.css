@@ -11,7 +11,7 @@
 
 .cst-nav-tab{
     display: grid;
-    grid-template-columns: repeat(8,auto);
+    grid-template-columns: repeat(9,auto);
     grid-gap: 10px;
     list-style: none;
     width: 70vw;
@@ -40,6 +40,12 @@
     background-color: #ffc87c;
     height: 50px;
     width: 100px;
+}
+
+.cst-table {
+    color: black;
+    font-weight: bold;
+    font-size: x-large;
 }
 
 .x-button{

@@ -53,6 +53,7 @@ updateOrder = async (req, res) => {
         }
         order.order_items = body.order_items
         order.comments = body.comments
+        order.commped = body.commped
         order.subtotal = body.subtotal
         order.tip = body.tip
         order.total = body.total

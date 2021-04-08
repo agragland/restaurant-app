@@ -68,10 +68,11 @@ export default function NavBar(){
 
     const handleClickNum = (tableNum) => {
         updateTableNum(tableNum)
+
         setShowModalTableNums(false)
     }
 
-    const tableNums = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    const tableNums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
     return(
         <>
             <nav className="CstNavbarTabs">
@@ -85,6 +86,7 @@ export default function NavBar(){
                     <li className="cst-nav-link"><Link className="cst-tab-text" to="/KidsCorner">Kids Corner</Link></li>
                     <li><button className="cst-nav-button" onClick={handleClickTable}>Change table</button> </li>
                 </ul>
+                <label className="cst-table">Table: {getTableNum()}</label>
             </nav>
             <Modal show={showModalTableNums}>
                 <button onClick={handleClickTable} className="x-button">X</button>

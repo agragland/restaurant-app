@@ -5,6 +5,7 @@ import {preparePayment} from "./PaymentView";
 let payload = {
     items: [],
     comments: [],
+    commped: [],
     subtotal: 0.00,
     tip: 0,
     total: 0,
@@ -34,16 +35,28 @@ export const handleAddToOrder = (item, comment) => {
     {
         payload.items.push(item._id)
         payload.comments.push(comment)
+        payload.commped.push(false)
     }
+    console.log(payload)
 }
 
-const OrderItem = ({item, comment}) => {
+const OrderItem = ({item, comment, comp}) => {
+    if(comp)
+    {
+        return (
+            <div>
+                <p>{item.name} 0.00</p>
+                <p>{comment}</p>
+            </div>
+        )
+    }
     return (
         <div>
             <p>{item.name} {item.price}</p>
             <p>{comment}</p>
         </div>
     )
+
 
 }
 
@@ -56,6 +69,7 @@ export default class OrderView extends React.Component{
         this.state = {
             items: [],
             comments: [],
+            commped: [],
             subtotal: 0,
             tax: 0,
             total: 0,
@@ -70,6 +84,7 @@ export default class OrderView extends React.Component{
                 this.setState(prevState => ({
                     items: [...prevState.items, item_info.data.data],
                     comments: [...prevState.comments,payload.comments[index]],
+                    commped: [...prevState.commped,payload.commped[index]],
                     subtotal: prevState.subtotal + item_info.data.data.price
                 }))
                 this.setState({
@@ -83,16 +98,20 @@ export default class OrderView extends React.Component{
     handleRemoveFromOrder = (item) => {
         let arr = [...this.state.items]
         let comms = [...this.state.comments]
+        let comp = [...this.state.commped]
         let index = arr.indexOf(item)
         if(index !== -1)
         {
             arr.splice(index,1)
             comms.splice(index,1)
+            comp.splice(index,1)
             payload.items.splice(payload.items.indexOf(item._id),1)
             payload.comments.splice(payload.items.indexOf(item._id),1)
+            payload.commped.splice(payload.items.indexOf(item._id), 1)
             this.setState(prevState => ({
                 items: arr,
                 comments: comms,
+                commped: comp,
                 subtotal: prevState.subtotal - item.price
             }))
             this.setState(prevState => ({
@@ -137,8 +156,8 @@ export default class OrderView extends React.Component{
         //set up order payload and submit
         payload.status = 'Created'
         this.setState({status: 'Created'})
-        const { items, comments, subtotal, total,  } = this.state
-        const final_payload = { order_items:items, comments, subtotal, total, status:'Created', table:payload.table }
+        const { items, comments, commped, subtotal, total,  } = this.state
+        const final_payload = { order_items:items, comments, commped, subtotal, total, status:'Created', table:payload.table }
         await apis.createOrder(final_payload).then(res => {
             window.alert(`Order created successfully`)
             preparePayment(res.data.id)
@@ -153,14 +172,14 @@ export default class OrderView extends React.Component{
             <div>
                 {this.state.items.map((item_test,index) => (
                     <div>
-                    <OrderItem key={index} item={item_test} comment={this.state.comments[index]} />
+                    <OrderItem key={index} item={item_test} comment={this.state.comments[index]} comp={this.state.commped[index]} />
                         {this.EditRemoveButtons(item_test)}
 
                     </div>
                 ))
                 }
             </div>
-            <h1>Subtotal {this.state.subtotal.toFixed(2)}</h1>
+            <h1>Subtotal: ${this.state.subtotal.toFixed(2)}</h1>
             {this.OrderStatusHandler()}
         </div>
 
