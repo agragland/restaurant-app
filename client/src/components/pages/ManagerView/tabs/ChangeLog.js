@@ -16,8 +16,6 @@ const change = {
 export default function ChangeLog(){
     const [changeLog, setChangeLog] = useState(change);
     
-    
-
     return(
         <div className="ChangeLog">
             <h1>Change Log</h1>
@@ -25,7 +23,7 @@ export default function ChangeLog(){
                 <p className="date-time">
                    <h3 style={{top: '0px', left: '0px'}}>Date</h3>
                    {
-                        
+                    
                    }
                </p>
                <p className="date-time">

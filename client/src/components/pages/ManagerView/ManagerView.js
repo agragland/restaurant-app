@@ -43,12 +43,13 @@ export default function ManagerView (){
     const Login = details => {
         console.log(details)
         managers.map((employee) => {
+            //split into two seperate if statements to avoid multiple login errors
             if(details.emp_id == employee.emp_id){ //if the user name matches
                 if(details.password == employee.password){ //check the password
-                    handleLog()
+                    handleLog();
                 }
                 else{ 
-                    console.log('details do not match')
+                    setError('Credentials do not match. Please try again.');
                 }
             }
         })
@@ -58,6 +59,7 @@ export default function ManagerView (){
     //manager logout
     const Logout = () => {
         console.log("logout");
+        handleLog();
     }
 
     //determines the view of the manager navbar
@@ -90,17 +92,14 @@ export default function ManagerView (){
                     
                 </Router>
 
-                <button onClick={handleLog}>LOGOUT</button>
+                <button className='logout' onClick={Logout}>LOGOUT</button>
                 
             </div> :  
             /*else, show manager log in page*/
             <div className='login' > 
                 <p><br/><br/></p>
-                <ManagerLogin Login={Login} error={error} />
-                
+                <ManagerLogin Login={Login} error={error} />  
             </div>
-        
-
             }
         </div>
         </>

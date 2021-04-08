@@ -20,37 +20,22 @@
     justify-self: center;
 }
 
-.login{
-    background: linear-gradient(deg0, #F5853F, #440D0F);
-    font-size: 1rem;
-    justify-items: center;
-    background-color: transparent;
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
-  
-.login .login-title{
-    justify-self: center;
-    font-size: 2.5rem;
-    color: black;
-    /* background-color: lightgray;*/
-}
-
-.login .login-group {
-    text-align: left;
-    font-size: 16px;
-}
-
-.login-box{
+.logout{
+    position: relative;
+    bottom: -30%;
+    right: -45%;
     display: inline-block;
-    border-radius: 25px;
-    padding: 20px;
-    height: 400px;
-    width: 300px;
-    left: 50%;
-    background-color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #F5853F 50%, #F5853F 50%, #440D0F);
+    background-size: 200%;
+    background-position: 0%;
+    transition: 0.4s;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.login .signin{
-    bottom: 10px;
+.logout:hover {
+    background-position: 100% 0%;
 }

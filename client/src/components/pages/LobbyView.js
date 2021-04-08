@@ -17,7 +17,7 @@ const globalTables = [
     available,
 ]
 
-export default function TableView() {
+export default function TableView({transformation}) {
     const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
     const [table, setTable] = useState({status: "Available", orders: []});
@@ -114,7 +114,7 @@ export default function TableView() {
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}
-                    <button className='tableButton' data-index={index+1} onClick={handleTableClick} style={{background: tableColor}}>
+                    <button className='tableButton' data-index={index+1} onClick={handleTableClick} style={{background: tableColor, transform: {transformation}}}>
                         Table {index+1}
                         <br />
                         {table.status}
