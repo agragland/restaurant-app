@@ -27,9 +27,9 @@ export default function CustomerView() {
             const all_customers = customers.data.data
 
             let tempCustomers = []
-            all_customers.map((employee) => {
-                if(employee.role === 'customer'){
-                    tempCustomers = [...tempCustomers, employee]
+            all_customers.map((loyal) => {
+                if(loyal.role === 'customer'){
+                    tempCustomers = [...tempCustomers, loyal]
                 }
             })
             //set state to temp
@@ -58,6 +58,10 @@ export default function CustomerView() {
     //customer logout
     const Logout = () => {
         console.log("logout");
+        handleLog();
+    }
+    //guest login
+    const LoginGuest = () => {
         handleLog();
     }
 
@@ -97,7 +101,7 @@ export default function CustomerView() {
                 /*else, show customer log in page*/
                 <div className='login' > 
                 <p><br/><br/></p>
-                <CustomerLogin Login={Login} error={error} />  
+                <CustomerLogin Login={Login} Guest={LoginGuest} error={error} />  
                 </div>
             }
 
