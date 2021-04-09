@@ -49,13 +49,6 @@ export default function CustomerView() {
                 setError('Credentials do not match. Please try again.');
             }
         })
-        
-        
-    }
-    //customer logout
-    const Logout = () => {
-        console.log("logout");
-        handleLog();
     }
     //guest login
     const LoginGuest = () => {

@@ -7,14 +7,14 @@ import "./DailySalesReport.css";
 
 
 //dictionary for manu id and the amount purchased
-const individualOrder = { createdAt: "", item_name: "", price: 0.00, qty: 0}
+const individualOrder = {  name: "", price: 0.00, qty: 0}
 
 //temp array for dsr for menu information
-const DSR = { items: [], numOrder: 0, totalProfit: 0.00, date: ""}
+const DSR = { createdAt: "", items: [], numOrder: 0, totalProfit: 0.00, date: ""}
 
 export default function DailySalesReport(){
-    const [sales, setSales] = useState([]);             //to store all the sales to sort through
-    const [dailySales, setDailySales] = useState(DSR);  //to store all values shown by dsr 
+    const [sales, setSales] = useState([]);             //to store all items that have sold
+    const [dailySales, setDailySales] = useState([]);  //to store all values shown by dsr 
 
     useEffect(() => {
         handleGetOrders()
@@ -39,30 +39,23 @@ export default function DailySalesReport(){
                 }
             })
             console.log(tempOrders)
-            let tempItem = individualOrder
-            tempOrders.map((orders) => { //shift through all orders
-                tempItem.createdAt = orders.createdAt
-                orders.order_items.map((order, index) => {  
-                    //if an item has not been added, then add it
-                    if(sales.indexOf(order.name) < 0){
-                        tempItem.item_name = order.name
-                        tempItem.price = order.price
-                        tempItem.qty = 1;
 
-                        //set new item into sales
-                        setSales([...sales, tempItem])
-                    }
-                    else{
-                        handleQuantityIncrease(order.name)
-                    }                   
-                   
+            //reset profit
+            setTotalProfit((prev) => (0.00))
+            let tempItems = []
+            tempOrders.map((order) => {
+                //calculate profit
+                handleProfit(order.total)
+                //store each item ordered
+                order.order_items.map((item) => {
+                    tempItems = [...tempItems, item]
                 })
             })
-            console.log(sales)
-
+                
+            
             //set states to temps 
-
-            //calculate total profit
+            setSales(tempItems);
+            console.log(sales)
 
             //calculate number of items ordered
              
@@ -77,13 +70,10 @@ export default function DailySalesReport(){
         })
     }
 
-    let totalProfit = 0.00; //the total found
-    const setProfit = () => {
-        let tempProfit = 0
-        sales.map((item) => {
-        
-        })
-        
+    const [totalProfit, setTotalProfit] = useState(0.00); //the total found
+    const handleProfit = (amount) => {
+        setTotalProfit((prev) => (prev + amount))   
+        console.log("Profit: " + totalProfit)     
     }
 
     let offset=0;
@@ -109,9 +99,12 @@ export default function DailySalesReport(){
             <div className="DSR-visual">
                <p className="item">
                    <h3 style={{top: '0px'}}>Item</h3>
-                   {
-                        
+                   
+                   { sales.map((item) => {
+                       <p>{item.name}</p>
+                    })
                    }
+                   
                </p>
                <p className="quantity">
                     <h3 style={{top: '0px', textAlign: 'center'}}>Qty</h3>
@@ -139,7 +132,7 @@ export default function DailySalesReport(){
                 </p>
                 <p >Total Profit:<br/>
                     <p className="block">
-                        ${dailySales.totalProfit.toFixed(2)}
+                        ${totalProfit.toFixed(2)}
                     </p>
                 </p>
             </div>
