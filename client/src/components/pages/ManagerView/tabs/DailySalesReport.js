@@ -38,27 +38,43 @@ export default function DailySalesReport(){
 
             //reset profit - this prevents profit from constantly increasing
             setTotalProfit((prev) => (0.00))
-            let tempItems = []
             console.log(curr_orders)
+            let tempItems = []
             tempOrders.map((order) => {
                 //calculate profit
                 handleProfit(order.total)
                 //store each item ordered
+                
+                let tempBool = false
                 order.order_items.map((item) => {
-                    let tempSale = individualOrder
-
-                    tempSale.name = item.name
-                    tempSale.price = item.price
-                    tempSale.quantity = 1
-                    tempItems = [...tempItems, tempSale]
+                    let tempDate = order.createdAt.slice(0, 10)
+                    let tempSale = {name: '', price: '', quantity: 1, date: tempDate}
+        
+                    tempBool = false;
+                    for(let i=0; i<tempItems.length; i++) {
+                        if(item.name === tempItems[i].name)
+                        {
+                            tempItems[i].quantity++;
+                            tempBool = true;
+                            break;
+                        }
+                    }
+                    if(!tempBool)
+                    {
+                        tempSale.name = item.name
+                        tempSale.price = item.price
+                        tempSale.quantity = 1
+                        tempItems = [...tempItems, tempSale]  
+                    } 
                 })
             })
                 
-            
+            console.log(tempItems)
             //set states to temps 
-            setSales(tempItems);
+            setSales(tempItems)
             console.log(sales)
-
+            //reset number of items ordered
+            setTotalNumItems((prev) => (0))
             //calculate number of items ordered
             handleQuantityIncrease()
         })
@@ -71,8 +87,8 @@ export default function DailySalesReport(){
             <tr key={index}>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
-                <td>{item.price}</td>
-                <td>{item.price * item.quantity}</td>
+                <td>{item.price.toFixed(2)}</td>
+                <td>{(item.price * item.quantity).toFixed(2)}</td>
             </tr>
         )
     }
