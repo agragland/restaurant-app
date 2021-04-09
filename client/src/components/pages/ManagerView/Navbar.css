@@ -1,5 +1,5 @@
 .NavbarTabs{
-    background: linear-gradient(180deg, #440D0F, #F5853F);
+    background-color: #440D0F;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +25,7 @@
 }
 
 .nav-link:hover{
-    background-color: #F5853F;
+    background-color: #6F1518;
     border-radius: 4px;
     transition: all 0.2s ease-out;
 }

@@ -4,6 +4,7 @@
     background-color: lightgray;
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 2rem;
 }
 
 .tableButton{
@@ -21,26 +22,6 @@
 .lobby-title{
     justify-self: center;
     font-size: 2.5rem;
-    color: black;
-    background-color: lightgray;
-}
-
-.btn--primary{
-    background-color: gray;
-}
-
-.btn--occupied{
-    background-color: #77CB77;
-}
-
-.btn--help{
-    background-color: #E3EA7C;
-}
-
-.btn--refill{
-    background-color: #63B4DC;
-}
-
-.btn--ready{
-    background-color: #8D1D1D;
+    color:aliceblue;
+    background-color: #0091AD;
 }

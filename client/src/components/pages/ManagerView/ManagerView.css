@@ -9,7 +9,7 @@
 }
 
 .manager .manager-title{
-    background: linear-gradient(0deg, #440D0F, #F5853F);
+    background-color: #440D0F;
     justify-self: center;
     font-size: 2.5rem;
     color: white;    

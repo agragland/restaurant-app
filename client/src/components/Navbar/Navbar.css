@@ -48,18 +48,21 @@
     transition: all 0.2s ease-out;
 }
 
-.modal-background{
-    background: transparent;
+.employee-modal-background{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-main-staff{
+.employee-modal-main-staff{
     height: 100%;
     width: 100%;
     top: 0px;
     left: 0px;
-    background-color: gray;
-    opacity: 0.5;
-    z-index: -1;
 }
 
 .signin-form{

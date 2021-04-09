@@ -10,9 +10,10 @@ function Modal({show, children}) {
         return null;
 
     return (
-        <div className="modal-background">
-            <section className="modal-main-staff"></section>
+        <div className="employee-modal-background">
+            <section className="employee-modal-main-staff">
                 {children} 
+            </section>
         </div>
     );
 }
@@ -140,7 +141,7 @@ function Navbar() {
             {component}
             <nav className="NavbarPages">
                 <h1 className="employee-id">Taco Palace</h1> {/* Still need to add inputed employee id*/}
-                <ul className={clicked ? 'nav-page active' : 'nav-page'}>
+                <ul className={clicked ? 'nav-page active' : 'nav-page'} >
                     {StaffPages.map((item, index) => {
                         return(
                             <li key={index}>
