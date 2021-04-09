@@ -1,6 +1,7 @@
 import React from "react"
 import apis from "../../../../api"
 import Modal from "../../../Modal"
+import "./PaymentView.css"
 
 let payload = {
     order_id: '',
@@ -187,8 +188,8 @@ export default class PaymentView extends React.Component {
         {
             return (
                 <>
-                <h1>No order placed</h1>
-                <h1>Go place an order!</h1>
+                <p className="big-text">No order placed</p>
+                <p className="big-text">Go place an order!</p>
                 </>
             )
         }
@@ -202,9 +203,9 @@ export default class PaymentView extends React.Component {
                         </div>
                     ))
                     }
-                    <h1>Subtotal: {this.state.order.subtotal.toFixed(2)}</h1>
-                    <h1>Tax: {(this.state.order.subtotal * 0.0825).toFixed(2)}</h1>
-                    <h1>Total: {this.state.order.total.toFixed(2)}</h1>
+                    <p className="big-text">Subtotal: {this.state.order.subtotal.toFixed(2)}</p>
+                    <p className="big-text">Tax: {(this.state.order.subtotal * 0.0825).toFixed(2)}</p>
+                    <p className="big-text">Total: {this.state.order.total.toFixed(2)}</p>
                     <button onClick={this.cardPaymentHandler}>Pay with Card</button>
                     <button>Pay with Cash</button>
                     <button>Split Check</button>
@@ -216,11 +217,13 @@ export default class PaymentView extends React.Component {
 
     render() {
         return (
-            <>
-            <h1>Payment</h1>
-            {this.paymentStatusHandler()}
-            {this.cardModal()}
-            </>
+            <section>
+                <div  className="pay-container">
+                    <h1>Payment</h1>
+                    {this.paymentStatusHandler()}
+                </div>
+                {this.cardModal()}
+            </section>
         )
     }
 

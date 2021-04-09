@@ -1,6 +1,7 @@
 import React from "react";
 import apis from "../../../../api";
 import {preparePayment} from "./PaymentView";
+import "./OrderView.css"
 
 let payload = {
     items: [],
@@ -40,25 +41,7 @@ export const handleAddToOrder = (item, comment) => {
     console.log(payload)
 }
 
-const OrderItem = ({item, comment, comp}) => {
-    if(comp)
-    {
-        return (
-            <div>
-                <p>{item.name} 0.00</p>
-                <p>{comment}</p>
-            </div>
-        )
-    }
-    return (
-        <div>
-            <p>{item.name} {item.price}</p>
-            <p>{comment}</p>
-        </div>
-    )
 
-
-}
 
 
 
@@ -139,7 +122,32 @@ export default class OrderView extends React.Component{
 
     }
 
+    OrderItem = ({item, comment, comp}) => {
+        if(comp)
+        {
+            return (
+                <div>
+                    {item.name} $0.00
+                    {comment}
+                    &nbsp;
+                    {this.EditRemoveButtons(item)}
+                </div>
+            )
+        }
+        return (
+            <div>
+                {item.name} ${item.price}
+                {comment}
+                &nbsp;
+                {this.EditRemoveButtons(item)}
+            </div>
+        )
+
+
+    }
+
     EditRemoveButtons = (item_test) => {
+        console.log(payload.status)
         if(payload.status === 'Waiting')
         {
             return(
@@ -167,19 +175,17 @@ export default class OrderView extends React.Component{
 
     render() {
     return(
-        <div>
+        <div className="order-container">
             <h1>Your Order</h1>
             <div>
                 {this.state.items.map((item_test,index) => (
                     <div>
-                    <OrderItem key={index} item={item_test} comment={this.state.comments[index]} comp={this.state.commped[index]} />
-                        {this.EditRemoveButtons(item_test)}
-
+                        <this.OrderItem key={index} item={item_test} comment={this.state.comments[index]} comp={this.state.commped[index]} />
                     </div>
                 ))
                 }
             </div>
-            <h1>Subtotal: ${this.state.subtotal.toFixed(2)}</h1>
+            <p className="big-text">Subtotal: ${this.state.subtotal.toFixed(2)}</p>
             {this.OrderStatusHandler()}
         </div>
 

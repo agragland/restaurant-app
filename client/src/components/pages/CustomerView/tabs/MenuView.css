@@ -1,8 +1,13 @@
 
 .menu-box {
-
     position: relative;
     bottom: 100px;
+    padding-bottom: 5px;
+    background-color: white;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    outline: black solid 3px;
 }
 
 .full-menu-box {
@@ -13,14 +18,34 @@
 
 .grid-display {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, calc(300px + 5%));
     padding: 15px;
     grid-column-gap: 20px;
-    grid-row-gap: 100px;
+    grid-row-gap: 50px;
 }
 
 .item-display {
     background: white;
     width: 350px;
     text-align: center;
+    outline: black solid 2px;
+    padding-bottom: 2px;
+}
+
+
+.menu-container{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding-bottom: 100px;
+}
+
+.category-button{
+    height: 50px;
+    width: 100px;
+    margin: 1px;
+}
+
+.item-name{
+    font-weight: bold;
 }
