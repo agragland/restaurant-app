@@ -48,21 +48,14 @@ function CustomerLogin({ Login, Guest, error }) {
         const {name, email, phoneNumber, birthday, rewards, stampCount} = customer
         const payload = {name, email, phoneNumber, birthday, rewards, stampCount}
 
-        console.log(payload)
         //add to database
         await api.insertCustomer(payload).then(res => {
-            window.alert(`Item inserted seccessfully`)
-            customer = {
-                name: '',
-                email: '',
-                phoneNumber: '',
-                birthday: '',
-                rewards: [],
-                stampCount: 0
-            }
+           window.alert(`Item inserted seccessfully`)
+            
         }) 
-
-        return({submitHandler})
+        handleAddClick();
+        console.log(customer)
+        Login(customer)        
     }
 
 

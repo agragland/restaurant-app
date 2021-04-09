@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useTable } from 'react-table';
+import * as ReactBootStrap from 'react-bootstrap';
 
 import api from '../../../../api'
 
@@ -14,34 +14,38 @@ const change = {
 }
 
 export default function ChangeLog(){
-    const [changeLog, setChangeLog] = useState(change);
+    const [changeLog, setChangeLog] = useState([]);
+
+    //render all sales
+    const renderChange = (change, index) => {
+        return(
+            <tr key={index}>
+                <td>{change.name}</td>
+                <td>{change.price}</td>
+                <td>{change.quantity}</td>
+                <td>{change.price * change.quantity}</td>
+            </tr>
+        )
+    }
     
     return(
         <div className="ChangeLog">
             <h1>Change Log</h1>
             <div className="logDisplay">
-                <p className="date-time">
-                   <h3 style={{top: '0px', left: '0px'}}>Date</h3>
-                   {
-                    
-                   }
-               </p>
-               <p className="date-time">
-                    <h3 style={{top: '0px'}}>Time</h3>
-
-               </p>
-               <p className="emp_ID">
-                   <h3 style={{top: '0px'}}>Employee ID</h3>
-
-               </p>
-               <p className="item">
-                   <h3 style={{top: '0px'}}>Item</h3>
-
-               </p>
-               <p className="status">
-                   <h3 style={{top: '0px'}}>Status</h3>
-
-               </p>
+                <ReactBootStrap.Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Employee ID</th>
+                        <th>Item</th>
+                        <th>Change Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {changeLog.map(renderChange)}
+                    </tbody>
+                </ReactBootStrap.Table>
                 
             </div>
         </div>

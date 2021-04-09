@@ -10,32 +10,6 @@
     width: 90%;
     background: white;
     margin-left: 5%;
+    overflow-y: auto; 
 }
 
-.item {
-    height: 100%;
-    width: 25%;
-    justify-self: start;
-    float: left;
-}
-
-.emp_ID {
-    height: 100%;
-    width: 25%;
-    justify-self: start;
-    float: left;
-}
-
-.status {
-    height: 100%;
-    width: 25%;
-    justify-self: start;
-    float: left;
-}
-
-.date-time{
-    height: 100%;
-    width: 12.5%;
-    justify-self: start;
-    float: left;
-}

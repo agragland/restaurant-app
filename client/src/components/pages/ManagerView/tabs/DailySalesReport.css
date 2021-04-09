@@ -13,6 +13,7 @@
     width: 70%;
     background: white;
     border: 1px solid #440D0F;
+    overflow-y: auto; 
 }
 
 .DSR-visual .header{

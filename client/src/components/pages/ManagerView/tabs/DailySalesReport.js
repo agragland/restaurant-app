@@ -1,16 +1,13 @@
 import React, {useState, useEffect, useMemo } from 'react';
-import { render } from 'react-dom';
-import { useTable } from 'react-table';
+import * as ReactBootStrap from 'react-bootstrap';
 import api from "../../../../api";
 
 import "./DailySalesReport.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 //dictionary for manu id and the amount purchased
-const individualOrder = {  name: "", price: 0.00, qty: 0}
-
-//temp array for dsr for menu information
-const DSR = { createdAt: "", items: [], numOrder: 0, totalProfit: 0.00, date: ""}
+const individualOrder = {name: '', price: '', quantity: 1};
 
 export default function DailySalesReport(){
     const [sales, setSales] = useState([]);             //to store all items that have sold
@@ -38,17 +35,22 @@ export default function DailySalesReport(){
                     tempOrders = [...tempOrders, order]           //adds orders to the inactive queue
                 }
             })
-            console.log(tempOrders)
 
-            //reset profit
+            //reset profit - this prevents profit from constantly increasing
             setTotalProfit((prev) => (0.00))
             let tempItems = []
+            console.log(curr_orders)
             tempOrders.map((order) => {
                 //calculate profit
                 handleProfit(order.total)
                 //store each item ordered
                 order.order_items.map((item) => {
-                    tempItems = [...tempItems, item]
+                    let tempSale = individualOrder
+
+                    tempSale.name = item.name
+                    tempSale.price = item.price
+                    tempSale.quantity = 1
+                    tempItems = [...tempItems, tempSale]
                 })
             })
                 
@@ -58,22 +60,34 @@ export default function DailySalesReport(){
             console.log(sales)
 
             //calculate number of items ordered
-             
+            handleQuantityIncrease()
         })
         
     }
 
+    //render all sales
+    const renderSales = (item, index) => {
+        return(
+            <tr key={index}>
+                <td>{item.name}</td>
+                <td>{item.quantity}</td>
+                <td>{item.price}</td>
+                <td>{item.price * item.quantity}</td>
+            </tr>
+        )
+    }
+
     //increase quantity of item by 1
-    const handleQuantityIncrease = (val) => {
+    const [totalNumItems, setTotalNumItems] = useState(0);
+    const handleQuantityIncrease = () => {
         sales.map((order) => {
-            
+            setTotalNumItems((prev) => (prev + order.quantity))
         })
     }
 
     const [totalProfit, setTotalProfit] = useState(0.00); //the total found
     const handleProfit = (amount) => {
-        setTotalProfit((prev) => (prev + amount))   
-        console.log("Profit: " + totalProfit)     
+        setTotalProfit((prev) => (prev + amount))      
     }
 
     let offset=0;
@@ -89,35 +103,25 @@ export default function DailySalesReport(){
        current = date;
        console.log(current);
     }
-
-    let totalItemsSold = 0;
     
 
     return(
         <div className="DSR">
             <h1>DSR</h1>
             <div className="DSR-visual">
-               <p className="item">
-                   <h3 style={{top: '0px'}}>Item</h3>
-                   
-                   { sales.map((item) => {
-                       <p>{item.name}</p>
-                    })
-                   }
-                   
-               </p>
-               <p className="quantity">
-                    <h3 style={{top: '0px', textAlign: 'center'}}>Qty</h3>
-
-               </p>
-               <p className="price">
-                   <h3 style={{top: '0px'}}>Price</h3>
-
-               </p>
-               <p className="profit">
-                   <h3 style={{top: '0px'}}>Profit</h3>
-
-               </p>
+                <ReactBootStrap.Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {sales.map(renderSales)}
+                    </tbody>
+                </ReactBootStrap.Table>
             </div>
             <div className="DSR-date">
                 <p>Date:<br/>
@@ -127,7 +131,7 @@ export default function DailySalesReport(){
                 </p>
                 <p >Number of Items Ordered:<br/>
                     <p className="block">
-                        {dailySales.numOrder}
+                        {totalNumItems}
                     </p>
                 </p>
                 <p >Total Profit:<br/>
