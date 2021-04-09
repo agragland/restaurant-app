@@ -9,10 +9,9 @@ import Modal from "../../Modal";
 import CustomerLogin from './tabs/CustomerLogin'
 import MenuView from "./tabs/MenuView";
 import OrderView from "./tabs/OrderView";
-import PaymentView from "./tabs/PaymentView";
+import PaymentView from "./tabs/PaymentView"; 
 
 export default function CustomerView() {
-    const [showSignIn, setShowSignIn] = useState(true);
     const [customers, setCustomers] = useState([]); //to store all customers from database
     const [error, setError] = useState('');
 
@@ -59,10 +58,6 @@ export default function CustomerView() {
     const [isLogged, setIsLogged] = useState(false);
     const handleLog = () => {
         setIsLogged(!isLogged);
-    }
-
-    const handlePassword = () => {
-        setShowSignIn(() => !showSignIn)
     }
 
     return (

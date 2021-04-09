@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from 'react';
+import api from '../../../../api'
 
 import './CustomerLogin.css'
 
@@ -17,44 +18,70 @@ function AddModal({show, children}) {
 } 
 
 function CustomerLogin({ Login, Guest, error }) {
-    const [customer, setCustomer] = useState({ name: '', email: '', phoneNumber: ''}); //login credentials for customer
+    const [customer, setCustomer] = useState({ name: '', email: '', phoneNumber: '', birthday: '', stampCount: 0}); //login credentials for customer
 
+    //customer login
+    const submitHandler = e => {
+        e.preventDefault(); //prevents duplicate entries
+
+        Login(customer)
+        console.log(error)
+    } 
+
+    //set the value of an input 
+    const setValue = (variable) => {
+        return({target: {value}}) => {
+            setCustomer(customer => ({...customer, [variable]: value}));
+        }
+    };
+
+    //for add modal vv-----------------------------------------------------------------------------------------------
+       
     //add customer option
     const [showAdd, setShowAdd] = useState(false);
     const handleAddClick = () => {
         setShowAdd((prev) => !prev);
     }
 
-    //save user inputed data
-    const setValue = (variable) => {
-        return({target: {value}}) => {
-            setCustomer( customer => ({...customer, [variable]: value}));
-        }
-    };
+    //add item to database and menu
+    const AddCustomer = async () => {
+        const {name, category, ingredients, price, img, isAvailable} = customer
+        const payload = {name, category, ingredients, price, img, isAvailable}
 
-    const submitHandler = e => {
-        e.preventDefault(); //prevents duplicate entries
+        console.log(payload)
+        //add to database
+        await api.insertItem(payload).then(res => {
+            window.alert(`Item inserted seccessfully`)
+            customer = {
+                name: '',
+                email: '',
+                phoneNumber: '',
+                birthday: '',
+            }
+        }) 
 
-        Login(customer)
-        console.log(error)
+        setShowAdd((prev) => !prev);
     }
 
+
+
     return (
+        <>
         <form className="signin-form" onSubmit={submitHandler}>
             <div className='form-inner'>
                 <h2>Customer Login</h2>
                 {error}
                 <div className='form-group'>
-                    <label  htmlFor='empoyee id'>Name:</label>
-                    <input type="text" placeholder="Enter Employee ID here" value={customer.name} onChange={setValue('name')} />
+                    <label  htmlFor='name'>Name:</label>
+                    <input type="text" placeholder="Enter name here" value={customer.name} onChange={setValue('name')} />
                 </div>
                 <div className='form-group'>
-                    <label  htmlFor='password'>E-mail:</label>
-                    <input type="text" placeholder="Enter Password here" value={customer.email} onChange={setValue('email')} />
+                    <label  htmlFor='email'>E-mail:</label>
+                    <input type="text" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
                 </div> 
                 <div className='form-group'>
-                    <label  htmlFor='password'>Phone Number:</label>
-                    <input type="text" placeholder="Enter Password here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                    <label  htmlFor='phoneNumber'>Phone Number:</label>
+                    <input type="text" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                 </div>             
                 
                 <input type='submit' value='LOGIN' /> <br/>
@@ -64,6 +91,37 @@ function CustomerLogin({ Login, Guest, error }) {
                 </div>
             </div>
         </form>
+        <AddModal show={showAdd}>
+         <button onClick={handleAddClick}>Back</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <form className='signin-form' onSubmit={AddCustomer}>
+                <div className='form-inner'>
+                    <h2>Create Customer Account</h2>
+                    {/*enter name*/}
+                    <div className='form-group'>
+                        <label  htmlFor='name'>Name:</label>
+                        <input type="text" placeholder="Enter name here" value={customer.name} onChange={setValue('name')} />
+                    </div>
+                    {/*enter email*/}
+                    <div className='form-group'>
+                        <label  htmlFor='email'>E-mail:</label>
+                        <input type="text" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
+                    </div> 
+                    {/*enter phone number*/}
+                    <div className='form-group'>
+                        <label  htmlFor='phoneNumber'>Phone Number:</label>
+                        <input type="text" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                    </div>   
+                    {/*enter phone number*/}
+                    <div className='form-group'>
+                        <label  htmlFor='birthday'>Birthday:</label>
+                        <input type="text" placeholder="Enter birthday here" value={customer.birthday} onChange={setValue('birthday')} />
+                    </div>           
+                    
+                    <input type='submit' value='Create Account' /> <br/>
+                </div>
+            </form>
+        </AddModal>
+        </>
     )
 }
 
