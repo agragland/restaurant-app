@@ -99,7 +99,6 @@ export default function StaffMenu({level}) {
             //set states to temp
             setAvailItems(temp_available)
             setUnavailItems(temp_unavailable)
-            console.log(level)
         })
         
     }

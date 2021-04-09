@@ -14,7 +14,6 @@ import PaymentView from "./tabs/PaymentView";
 export default function CustomerView() {
     const [showSignIn, setShowSignIn] = useState(true);
     const [customers, setCustomers] = useState([]); //to store all customers from database
-    const [customer, setCustomer] = useState({ emp_id: '', password: ''});
     const [error, setError] = useState('');
 
     //data base 
@@ -23,17 +22,17 @@ export default function CustomerView() {
     }, []);
     //get and store all customer employee info
     const handleGetCustomer = async () => {
-        await api.getAllCustomers().then(customers => {
-            const all_customers = customers.data.data
+        await api.getAllCustomers().then(loyals => {
+            const all_customers = loyals.data.data
+            let temp_customers = []
 
-            let tempCustomers = []
             all_customers.map((loyal) => {
-                if(loyal.role === 'customer'){
-                    tempCustomers = [...tempCustomers, loyal]
-                }
+
+                //add to the temp array
+                temp_customers = [...temp_customers, loyal] 
             })
             //set state to temp
-            setCustomers(tempCustomers)
+            setCustomers(temp_customers)
             console.log(customers)
         })
     }
@@ -41,15 +40,13 @@ export default function CustomerView() {
     //customer login 
     const Login = details => {
         console.log(details)
-        customers.map((employee) => {
+        customers.map((worker) => {
             //split into two seperate if statements to avoid multiple login errors
-            if(details.emp_id == employee.emp_id){ //if the user name matches
-                if(details.password == employee.password){ //check the password
-                    handleLog();
-                }
-                else{ 
-                    setError('Credentials do not match. Please try again.');
-                }
+            if((details.name == worker.name) && (details.email == worker.email) && (details.phoneNumber == worker.phoneNumber)){ //if the user name matches
+                handleLog();
+            }
+            else{ 
+                setError('Credentials do not match. Please try again.');
             }
         })
         
@@ -100,7 +97,6 @@ export default function CustomerView() {
                 </div> :
                 /*else, show customer log in page*/
                 <div className='login' > 
-                <p><br/><br/></p>
                 <CustomerLogin Login={Login} Guest={LoginGuest} error={error} />  
                 </div>
             }

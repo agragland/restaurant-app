@@ -50,11 +50,11 @@ function CustomerLogin({ Login, Guest, error }) {
                 </div>
                 <div className='form-group'>
                     <label  htmlFor='password'>E-mail:</label>
-                    <input type="password" placeholder="Enter Password here" value={customer.email} onChange={setValue('email')} />
+                    <input type="text" placeholder="Enter Password here" value={customer.email} onChange={setValue('email')} />
                 </div> 
                 <div className='form-group'>
                     <label  htmlFor='password'>Phone Number:</label>
-                    <input type="password" placeholder="Enter Password here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                    <input type="text" placeholder="Enter Password here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                 </div>             
                 
                 <input type='submit' value='LOGIN' /> <br/>
