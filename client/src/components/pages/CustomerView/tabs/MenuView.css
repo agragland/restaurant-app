@@ -1,20 +1,14 @@
 
 .menu-box {
-    position: relative;
-    bottom: 100px;
-    padding-bottom: 5px;
-    background-color: white;
-    width: 50%;
+    position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
+    background-color: white;
+    width: 50%;
+    margin-top: 1%;
+    padding: 5px;
     outline: black solid 3px;
 }
-
-.full-menu-box {
-    position: relative;
-    top: 85px;
-}
-
 
 .grid-display {
     display: grid;

@@ -133,109 +133,106 @@ export default function MenuView(){
     }
 
     return(
-
-        <div className={"full-menu-box"}>
-            <div className={"menu-box"}>
-                <h1>Menu</h1>
-                <div className="button-container">
-                    <button className="category-button" onClick={handleAppetizersClick} disabled={showAppetizers}>Appetizers</button>
-                    <button className="category-button" onClick={handleEntreesClick} disabled={showEntrees}>Entrees</button>
-                    <button className="category-button" onClick={handleSidesClick} disabled={showSides}>Sides</button>
-                    <button className="category-button" onClick={handleKidsClick} disabled={showKids}>Kids Meals</button>
-                    <button className="category-button" onClick={handleDessertsClick} disabled={showDesserts}>Desserts</button>
-                    <button className="category-button" onClick={handleDrinksClick} disabled={showDrinks}>Drinks</button>
-                </div>
-                <div className="menu-container">
-                    <DropMenu show={showAppetizers}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'appetizers')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <DropMenu show={showEntrees}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'entrees')
-                                {
-                                    return(
-                                        <Item key={index} item={item}/>
-                                    )
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <DropMenu show={showSides}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'sides')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <DropMenu show={showKids}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'kids')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <DropMenu show={showDesserts}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'desserts')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <DropMenu show={showDrinks}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'drinks')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                </div>
+        <div className={"menu-box"}>
+            <h1>Menu</h1>
+            <div className="button-container">
+                <button className="category-button" onClick={handleAppetizersClick} disabled={showAppetizers}>Appetizers</button>
+                <button className="category-button" onClick={handleEntreesClick} disabled={showEntrees}>Entrees</button>
+                <button className="category-button" onClick={handleSidesClick} disabled={showSides}>Sides</button>
+                <button className="category-button" onClick={handleKidsClick} disabled={showKids}>Kids Meals</button>
+                <button className="category-button" onClick={handleDessertsClick} disabled={showDesserts}>Desserts</button>
+                <button className="category-button" onClick={handleDrinksClick} disabled={showDrinks}>Drinks</button>
+            </div>
+            <div className="menu-container">
+                <DropMenu show={showAppetizers}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'appetizers')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showEntrees}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'entrees')
+                            {
+                                return(
+                                    <Item key={index} item={item}/>
+                                )
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showSides}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'sides')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showKids}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'kids')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showDesserts}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'desserts')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showDrinks}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'drinks')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
             </div>
         </div>
     );
