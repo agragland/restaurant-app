@@ -4,6 +4,7 @@
     background-color: lightgray;
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 2rem;
 }
 
 .tableButton{
@@ -21,6 +22,6 @@
 .lobby-title{
     justify-self: center;
     font-size: 2.5rem;
-    color: black;
-    background-color: lightgray;
+    color:aliceblue;
+    background-color: #0091AD;
 }

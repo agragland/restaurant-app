@@ -1,8 +1,8 @@
-import { StaffPages } from "../pages/Pages";
-import LobbyView from "../pages/LobbyView";
-import KitchenView from "../pages/KitchenView";
-import ManagerView from "../pages/ManagerView/ManagerView";
+import { StaffPages } from "./Pages";
+import LobbyView from "./LobbyView";
+import KitchenView from "./KitchenView";
+import ManagerView from "./ManagerView/ManagerView";
 import CustomerView from "./CustomerView/CustomerView";
-import Time from "./Clock"
 
-export { StaffPages, LobbyView, KitchenView, ManagerView, Time, CustomerView}
+
+export { StaffPages, LobbyView, KitchenView, ManagerView, CustomerView}

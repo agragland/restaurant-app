@@ -1,39 +1,109 @@
-import React, {useState, useEffect} from 'react';
-
-import "./DailySalesReport.css";
+import React, {useState, useEffect, useMemo } from 'react';
+import * as ReactBootStrap from 'react-bootstrap';
 import api from "../../../../api";
 
+import "./DailySalesReport.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 //dictionary for manu id and the amount purchased
-const taco1 = { menu_id: 'Taco 1', price: 10.00, amountPurchased: 12, itemProfit: 0.0}
-const taco2 = {menu_id: 'Taco 2', price: 7.99, amountPurchased:3, itemProfit: 0.0}
-const tacotaco = {menu_id: 'TacoTaco', price: 13.99, amountPurchased:20, itemProfit: 0.0}
-const dictionary = { menu_id: 0, price: 0.00, amountPurchased: 0, itemProfit: 0.0}
-//const currDate = new Date();
-
-//temp array for dsr for menu information
-let DSR = []
-
+const individualOrder = {name: '', price: '', quantity: 1};
 
 export default function DailySalesReport(){
-    const [dailySales, setDailySales] = useState(DSR);
-    const [dailySale, setDailySale] = useState({dict: dictionary});
-    const [ItemProfit, setItemProfit] = useState(0);
-    const [count, setCount] = useState(0);
+    const [sales, setSales] = useState([]);             //to store all items that have sold
+    const [dailySales, setDailySales] = useState([]);  //to store all values shown by dsr 
 
-    const handleDailySales = ({target}) => {
-        if (target.dataset.index) {                  //ensures index is not undefined
-            setItemProfit(() => (this.dict.price * this.dict.amountPurchased));
-            setDailySale(() => dailySales[target.dataset.index - 1]);
-        }
+    useEffect(() => {
+        handleGetOrders()
+        const intervalId = setInterval(() => {
+            handleGetOrders()
+        }, 10000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
+
+    //gets orders from the db
+    const handleGetOrders = async () => {
+        await api.getAllOrders().then(orders => {
+            const curr_orders = orders.data.data
+                
+            let tempOrders = []
+            curr_orders.map((order) => {
+                if (order.status === "Paid") {
+                    tempOrders = [...tempOrders, order]           //adds orders to the inactive queue
+                }
+            })
+
+            //reset profit - this prevents profit from constantly increasing
+            setTotalProfit((prev) => (0.00))
+            console.log(curr_orders)
+            let tempItems = []
+            tempOrders.map((order) => {
+                //calculate profit
+                handleProfit(order.total)
+                //store each item ordered
+                
+                let tempBool = false
+                order.order_items.map((item) => {
+                    let tempDate = order.createdAt.slice(0, 10)
+                    let tempSale = {name: '', price: '', quantity: 1, date: tempDate}
+        
+                    tempBool = false;
+                    for(let i=0; i<tempItems.length; i++) {
+                        if(item.name === tempItems[i].name)
+                        {
+                            tempItems[i].quantity++;
+                            tempBool = true;
+                            break;
+                        }
+                    }
+                    if(!tempBool)
+                    {
+                        tempSale.name = item.name
+                        tempSale.price = item.price
+                        tempSale.quantity = 1
+                        tempItems = [...tempItems, tempSale]  
+                    } 
+                })
+            })
+                
+            console.log(tempItems)
+            //set states to temps 
+            setSales(tempItems)
+            console.log(sales)
+            //reset number of items ordered
+            setTotalNumItems((prev) => (0))
+            //calculate number of items ordered
+            handleQuantityIncrease()
+        })
+        
     }
 
-    let totalProfit = 0.00; //the total found
-    function setProfit(curDS){
-        if(curDS !== undefined){
-            //initially profit is set to $0.00, to show any errors
-            let profit = (curDS.dict.price * curDS.dict.amountPurchased);
-            totalProfit = totalProfit + profit;
-        } 
+    //render all sales
+    const renderSales = (item, index) => {
+        return(
+            <tr key={index}>
+                <td>{item.name}</td>
+                <td>{item.quantity}</td>
+                <td>{item.price.toFixed(2)}</td>
+                <td>{(item.price * item.quantity).toFixed(2)}</td>
+            </tr>
+        )
+    }
+
+    //increase quantity of item by 1
+    const [totalNumItems, setTotalNumItems] = useState(0);
+    const handleQuantityIncrease = () => {
+        sales.map((order) => {
+            setTotalNumItems((prev) => (prev + order.quantity))
+        })
+    }
+
+    const [totalProfit, setTotalProfit] = useState(0.00); //the total found
+    const handleProfit = (amount) => {
+        setTotalProfit((prev) => (prev + amount))      
     }
 
     let offset=0;
@@ -42,48 +112,47 @@ export default function DailySalesReport(){
     }
 
     let current = new Date();
-    function setDate(index){
-        const date = '${current.getDate()}/${current.getMonth()+1}/${current.getFulYear()}';
-       if(index>0)
-       {
-            //if((current.getDate() - index) > 0)
-       }
+    const setDate = () => {
+        var today = new Date(),
+        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        
        current = date;
+       console.log(current);
     }
-
-    let totalItemsSold = 0;
     
 
     return(
         <div className="DSR">
             <h1>DSR</h1>
             <div className="DSR-visual">
-                <h3 className="header">Item&emsp;&emsp;&emsp;|&emsp;&ensp;Qty&ensp;&emsp;|&emsp;&ensp;Price&ensp;&emsp;|&emsp;&emsp;Total Profit&ensp;</h3>
-                <div className="body">
-                    { dailySales.map((dailySale, index) =>
-                        <>
-                            {setProfit(dailySale)}
-                                
-                                
-                        </>
-                        
-                    )}
-                </div>
+                <ReactBootStrap.Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {sales.map(renderSales)}
+                    </tbody>
+                </ReactBootStrap.Table>
             </div>
             <div className="DSR-date">
                 <p>Date:<br/>
                     <p className="block">
-                        TIME
+                        {current.getMonth()+1}/{current.getDate()}/{current.getFullYear()}
                     </p>    
                 </p>
                 <p >Number of Items Ordered:<br/>
                     <p className="block">
-
+                        {totalNumItems}
                     </p>
                 </p>
                 <p >Total Profit:<br/>
                     <p className="block">
-                        ${totalProfit}
+                        ${totalProfit.toFixed(2)}
                     </p>
                 </p>
             </div>

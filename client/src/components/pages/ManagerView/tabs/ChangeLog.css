@@ -10,4 +10,6 @@
     width: 90%;
     background: white;
     margin-left: 5%;
+    overflow-y: auto; 
 }
+
