@@ -31,6 +31,7 @@ export default function CustomerView() {
                 temp_customers = [...temp_customers, loyal] 
             })
             //set state to temp
+            console.log(temp_customers)
             setCustomers(temp_customers)
             console.log(customers)
         })

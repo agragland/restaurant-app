@@ -54,9 +54,9 @@ input {
 
 .signin-form .form-inner h2{
     color: black;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 500 bold;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .signin-form .form-inner .form-group {
@@ -114,7 +114,7 @@ input {
 .signin-form .form-inner button {
     display: inline-block;
     left: 0%;
-    padding: 10px 15px;
+    padding: 10px 10px;
     border-radius: 8px;
     background-image: linear-gradient(to right, #F5853F 50%, #F5853F 50%, #440D0F);
     background-size: 200%;
@@ -156,28 +156,3 @@ input {
     background-color: transparent;
 }
 
-
-.AddModal h2{
-    font-size: 28px;
-    text-align: center;
-}
-
-.AddModal .add-form input[type='submit'] {
-    position: relative;
-    bottom: 2%;
-    right: -32%;
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 8px;
-    background-image: linear-gradient(to right, #F5853F 50%, #F5853F 50%, #440D0F);
-    background-size: 200%;
-    background-position: 0%;
-    transition: 0.4s;
-    color: #fff;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.AddModal .add-form input[type='submit']:hover {
-    background-position: 100% 0%;
-}

@@ -9,8 +9,8 @@ function AddModal({show, children}) {
         return null;
 
     return (
-        <div className="modal-background">
-            <section className="modal-add-item">
+        <div className="add-modal-background">
+            <section className="add-modal-add-item">
                 {children}
             </section>
         </div>
@@ -18,7 +18,7 @@ function AddModal({show, children}) {
 } 
 
 function CustomerLogin({ Login, Guest, error }) {
-    const [customer, setCustomer] = useState({ name: '', email: '', phoneNumber: '', birthday: '', stampCount: 0}); //login credentials for customer
+    const [customer, setCustomer] = useState({ name: '', email: '', phoneNumber: '', birthday: '', rewards: [], stampCount: 0}); //login credentials for customer
 
     //customer login
     const submitHandler = e => {
@@ -45,8 +45,8 @@ function CustomerLogin({ Login, Guest, error }) {
 
     //add item to database and menu
     const AddCustomer = async () => {
-        const {name, category, ingredients, price, img, isAvailable} = customer
-        const payload = {name, category, ingredients, price, img, isAvailable}
+        const {name, email, phoneNumber, birthday, rewards, stampCount} = customer
+        const payload = {name, email, phoneNumber, birthday, rewards, stampCount}
 
         console.log(payload)
         //add to database
@@ -57,10 +57,13 @@ function CustomerLogin({ Login, Guest, error }) {
                 email: '',
                 phoneNumber: '',
                 birthday: '',
+                rewards: [],
+                stampCount: 0
             }
         }) 
 
         setShowAdd((prev) => !prev);
+        Login(customer)
     }
 
 
@@ -71,14 +74,17 @@ function CustomerLogin({ Login, Guest, error }) {
             <div className='form-inner'>
                 <h2>Customer Login</h2>
                 {error}
+                {/*enter name*/}
                 <div className='form-group'>
                     <label  htmlFor='name'>Name:</label>
                     <input type="text" placeholder="Enter name here" value={customer.name} onChange={setValue('name')} />
                 </div>
+                {/*enter email*/}
                 <div className='form-group'>
                     <label  htmlFor='email'>E-mail:</label>
                     <input type="text" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
                 </div> 
+                {/*enter phone number*/}
                 <div className='form-group'>
                     <label  htmlFor='phoneNumber'>Phone Number:</label>
                     <input type="text" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
@@ -92,10 +98,10 @@ function CustomerLogin({ Login, Guest, error }) {
             </div>
         </form>
         <AddModal show={showAdd}>
-         <button onClick={handleAddClick}>Back</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            <form className='signin-form' onSubmit={AddCustomer}>
+         
+            <form className='signin-form' onSubmit={AddCustomer} >
                 <div className='form-inner'>
-                    <h2>Create Customer Account</h2>
+                    <h2 style={{fontSize: "18px"}}>Create Customer Account</h2>
                     {/*enter name*/}
                     <div className='form-group'>
                         <label  htmlFor='name'>Name:</label>
@@ -115,9 +121,11 @@ function CustomerLogin({ Login, Guest, error }) {
                     <div className='form-group'>
                         <label  htmlFor='birthday'>Birthday:</label>
                         <input type="text" placeholder="Enter birthday here" value={customer.birthday} onChange={setValue('birthday')} />
-                    </div>           
-                    
-                    <input type='submit' value='Create Account' /> <br/>
+                    </div>  
+                    <div style={{position: 'relative', left: '-15%'}}>
+                        <button onClick={handleAddClick}>Back</button> 
+                        <input type='submit' value='Create Account' /> 
+                    </div>            
                 </div>
             </form>
         </AddModal>
