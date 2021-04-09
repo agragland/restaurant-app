@@ -50,7 +50,7 @@ function CustomerLogin({ Login, Guest, error }) {
 
         console.log(payload)
         //add to database
-        await api.insertItem(payload).then(res => {
+        await api.insertCustomer(payload).then(res => {
             window.alert(`Item inserted seccessfully`)
             customer = {
                 name: '',
@@ -62,8 +62,7 @@ function CustomerLogin({ Login, Guest, error }) {
             }
         }) 
 
-        setShowAdd((prev) => !prev);
-        Login(customer)
+        return({submitHandler})
     }
 
 
