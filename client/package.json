@@ -25,7 +25,7 @@
   "scripts": {
     "start": "set PORT=8000 && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --silent",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "rewire": "^5.0.0"
   }
 }

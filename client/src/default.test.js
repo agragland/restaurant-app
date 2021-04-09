@@ -3,79 +3,117 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
-import {cleanup, fireEvent, render} from '@testing-library/react';
-import {CustomerView} from "./components/pages";
-import {Navbar} from "./components/pages/CustomerView/Navbar"
-//import React from "react";
+import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
+import {act, cleanup, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import { unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-//import ReactDOM from 'react-dom';
 import App from "./app";
+import {StaffMenu,Item} from "./components/Navbar/StaffMenu";
+import {Navbar} from "./components";
+import userEvent from "@testing-library/user-event";
+import api from "./api"
 
 
-let container = null;
-beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement("div");
-    document.body.appendChild(container);
-});
+// Examples: https://reactjs.org/docs/testing-recipes.html
 
-afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-});
 
-/*
-expect(Item("abc",123)).stringMatching(
-    <div>
-        <div>
-            <p>abc</p>
-            <p>123</p>
-        </div>
-    </div>
-)
- */
 describe("help button tests",  () => {
-    test("renders without crashing", () => {
-        render(<App/>)
+    let container = null;
+    beforeEach(() => {
+        // setup a DOM element as a render target
+        container = document.createElement("div");
+        document.body.appendChild(container);
+        jest.useFakeTimers();
     });
-    test("help button visible", () => {
 
+    afterEach(() => {
+        // cleanup on exiting
+        unmountComponentAtNode(container);
+        container.remove();
+        container = null;
+        jest.runOnlyPendingTimers();
+        jest.useRealTimers();
+    });
+
+
+    test("Help button is visible", () => {
+        render(<App/>)
+        expect(screen.getByText('Call Staff')).toBeInTheDocument();
+    });
+    test("clicking help button fires handler", () => {
+        const handleClick = jest.fn();
+        render(<button onClick={handleClick}>Call Staff</button>);
+        fireEvent.click(screen.getByText(/call staff/i));
+        expect(handleClick).toHaveBeenCalledTimes(1);
+        //expect(window.localStorage.getItem('table'))
+    });
+
+
+    test("Clicking help updates table.assistance", async () => {
+        // THIS DOES NOT WORK, async issues
+        let table = {
+            table_num: 1,
+            status: "Occupied",
+            refills: '',
+            assistance: false
+        }
+        jest.spyOn(api,"getTableByNum").mockImplementation(() =>
+            Promise.resolve({
+                json: () => Promise.resolve(table)
+            })
+        );
+        jest.spyOn(api,"updateTable").mockImplementation((new_table) =>
+            Promise.resolve(table = new_table)
+        );
+        render(<Navbar />);
+        fireEvent.click(screen.getByText(/call staff/i));
+        await waitFor(()=>screen.getByRole(""))
+        expect(table.assistance).toBe(true);
+
+        // remove the mock to ensure tests are completely isolated
+        global.fetch.mockRestore();
     });
 });
+
+
 describe('Addition', () => {
     it('knows that 2 and 2 make 4', () => {
         expect(2 + 2).toBe(4);
     });
 });
-/*
-it('Table.Assistance is set to true when customer requests for help', () => {
-    const navbar = Navbar()
-    /*const {queryByLabelText, getByLabelText} = render(
-        <CheckboxWithLabel labelOn="On" labelOff="Off" />,
-    );
-    const table = render(<CustomerView></CustomerView>)
-
-    expect(Navbar.handleGetItems())
-    expect(queryByLabelText(/off/i)).toBeTruthy();
-
-    fireEvent.click(getByLabelText(/off/i));
-
-    expect(queryByLabelText(/on/i)).toBeTruthy();
-});
-
-*/
 
 describe('StaffMenu Item returns values', () => {
-    const expected = [
-        expect.stringMatching('abc'),
-        expect.stringMatching('123'),
-    ];
-    it('matches even if received contains additional elements', () => {
-        expect(['abc', 123, 'Evelina']).toEqual(
-            expect.arrayContaining(expected),
-        );
+    let container = null;
+    beforeEach(() => {
+        // setup a DOM element as a render target
+        container = document.createElement("div");
+        document.body.appendChild(container);
     });
+
+    afterEach(() => {
+        // cleanup on exiting
+        unmountComponentAtNode(container);
+        container.remove();
+        container = null;
+    });
+
+    it('StaffMenu returns values', () => {
+        const price = 123;
+        const name = 'asdf';
+        const props = ['asdf','123'];
+        act(()=> {
+            render(<Item {...props}/>, container)
+        });
+
+        expect(container.Item).not.toBeNull()
+        expect(container.textContent).toBe("asdf")
+        //expect(Item({name,price})).toHaveTextContent('asdf 123')
+        //expect(Item({name, price})).toContain(name);
+        //expect(Item({name, price})).toContain(price);
+
+    });
+});
+
+describe("Api tests", () => {
+
 });

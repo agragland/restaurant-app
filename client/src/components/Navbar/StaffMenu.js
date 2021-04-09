@@ -4,7 +4,7 @@ import api from "../../api";
 
 let menu_items = []
 
-const Item = ({name, price,}) => (
+export const Item = ({name, price,}) => (
     <div>
         <div>
             <p>{name}</p>
