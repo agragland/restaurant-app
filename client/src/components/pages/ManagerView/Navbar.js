@@ -7,7 +7,7 @@ import DailySalesReport from './tabs/DailySalesReport';
 import LobbyView from './tabs/LobbyView';
 import {Tabs} from './tabs/Tabs'
 
-import "./Navbar.css"
+import "./MgrNavbar.css"
 import "../ManagerView/MgrNavbar.css"
 
 export default function NavBar(){

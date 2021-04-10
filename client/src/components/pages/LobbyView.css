@@ -8,12 +8,13 @@
 }
 
 .tableButton{
+    color: black;
     width: 200px;
     height: 100px;
     padding: 16px 16px;
     margin-left: 10px;
     margin-bottom: 10px;
-} 
+}
 
 .orderButton{
     margin-inline-end: 0;

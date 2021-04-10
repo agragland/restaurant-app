@@ -128,6 +128,7 @@ export default class OrderView extends React.Component{
             return (
                 <div>
                     {item.name} $0.00
+                    &nbsp;
                     {comment}
                     &nbsp;
                     {this.EditRemoveButtons(item)}
@@ -137,6 +138,7 @@ export default class OrderView extends React.Component{
         return (
             <div>
                 {item.name} ${item.price}
+                &nbsp;
                 {comment}
                 &nbsp;
                 {this.EditRemoveButtons(item)}

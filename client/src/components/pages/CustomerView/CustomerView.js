@@ -2,7 +2,7 @@
 import './CustomerView.css'
 import api from '../../../api'
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import Time from "../Clock";
+import Time from "../../Clock";
 import Navbar from "./Navbar";
 import React, {useState, useEffect} from "react";
 import Modal from "../../Modal";

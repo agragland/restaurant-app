@@ -121,7 +121,7 @@ export default function KitchenView (){
                         <h3 className="order-table">Table {order.table}</h3>
                         {order.order_items.map((item, itemIndex) => (
                             <div className="item">
-                                <p className="item-name">
+                                <p className="kchn-item-name">
                                     &emsp;&nbsp;
                                     {item.name}
                                 </p>
