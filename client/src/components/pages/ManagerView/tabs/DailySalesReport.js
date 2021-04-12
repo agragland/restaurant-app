@@ -38,13 +38,13 @@ export default function DailySalesReport(){
 
             //reset profit - this prevents profit from constantly increasing
             setTotalProfit((prev) => (0.00))
-            console.log(curr_orders)
+            //reset number of items ordered
+            setTotalNumItems((prev) => (0))
             let tempItems = []
             tempOrders.map((order) => {
                 //calculate profit
                 handleProfit(order.total)
                 //store each item ordered
-                
                 let tempBool = false
                 order.order_items.map((item) => {
                     let tempDate = order.createdAt.slice(0, 10)
@@ -56,6 +56,8 @@ export default function DailySalesReport(){
                         {
                             tempItems[i].quantity++;
                             tempBool = true;
+                            //calculate number of items ordered
+                            handleQuantityIncrease();
                             break;
                         }
                     }
@@ -65,18 +67,15 @@ export default function DailySalesReport(){
                         tempSale.price = item.price
                         tempSale.quantity = 1
                         tempItems = [...tempItems, tempSale]  
+                        //calculate number of items ordered
+                        handleQuantityIncrease();
                     } 
                 })
             })
                 
-            console.log(tempItems)
             //set states to temps 
             setSales(tempItems)
-            console.log(sales)
-            //reset number of items ordered
-            setTotalNumItems((prev) => (0))
-            //calculate number of items ordered
-            handleQuantityIncrease()
+            console.log("DSR Sales: " + sales)          
         })
         
     }
@@ -96,14 +95,12 @@ export default function DailySalesReport(){
     //increase quantity of item by 1
     const [totalNumItems, setTotalNumItems] = useState(0);
     const handleQuantityIncrease = () => {
-        sales.map((order) => {
-            setTotalNumItems((prev) => (prev + order.quantity))
-        })
+        setTotalNumItems((prev) => (prev + 1))
     }
 
     const [totalProfit, setTotalProfit] = useState(0.00); //the total found
     const handleProfit = (amount) => {
-        setTotalProfit((prev) => (prev + amount))      
+        setTotalProfit((prev) => (prev + amount))  
     }
 
     let offset=0;
