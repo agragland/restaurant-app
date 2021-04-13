@@ -235,7 +235,7 @@ export default function TableView() {
     return (
         <div className="lobby">
             <p className="lobby-title">Lobby</p>
-            <StaffMenu level= {1} />
+            <StaffMenu level={1} />
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}

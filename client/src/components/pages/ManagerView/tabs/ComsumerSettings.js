@@ -15,18 +15,22 @@ export default function ConsumerSettings(){
 
     return(
         <div className="ConsumerSettings">
-                <form>
+            <form>
                 <h1>Consumer Settings</h1>
                 <p>To adjust the time orders will be accepted, <br/>
                     type the new time in the text box provided. <br/>
                     Use format '00:00:00' using time in 24 hours.
                 </p>
 
-                <div> Starting Time: &nbsp;&nbsp;&nbsp;&emsp; {storeHours.startTime}   </div> 
-                <input placeholder="00:00:00" value={storeHours.startTime} onChange={set('startTime')} />
-                <p></p>
-                <div>Ending Time: &emsp;&emsp; {storeHours.endTime} </div> 
-                <input placeholder="00:00:00" value={storeHours.endTime} onChange={set('endTime')}/>     
+                <div>
+                    Starting Time: &emsp; {storeHours.startTime}
+                    <input className="time-input" placeholder="00:00:00" value={storeHours.startTime} onChange={set('startTime')} />
+                </div>
+                <br/>
+                <div>
+                    Ending Time: &ensp;&emsp; {storeHours.endTime}
+                    <input className="time-input" placeholder="00:00:00" value={storeHours.endTime} onChange={set('endTime')}/>
+                </div>
             </form>  
         </div>
     );
