@@ -6,9 +6,13 @@ import "./DailySalesReport.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function DailySalesReport(){
-    const [sales, setSales] = useState([]);             //to store all items that have sold
-    const [saleDays, setSaleDays] = useState([]);       //to store all values shown by dsr 
-    const [currentDay, setCurrentDay] = useState("");
+    const [sales, setSales] = useState([]);                 //to store all items that have sold
+    const [saleDays, setSaleDays] = useState([]);           //to store all values shown by dsr 
+    const [saleTips, setSaleTips] = useState([]);           //to store all days with their tip amount
+    const [currentDay, setCurrentDay] = useState("");       //active day DSR is on
+    const [totalNumItems, setTotalNumItems] = useState(0);  //store number of items for that day
+    const [totalProfit, setTotalProfit] = useState(0.00);   //the total profit for that day
+    const [totalTips, setTotalTips] = useState(0.00);       //amount of tips earned for that day
 
     useEffect(() => {
         handleGetOrders()
@@ -36,14 +40,18 @@ export default function DailySalesReport(){
             //temp arrays
             let tempItems = []
             let tempDays = ["Select Date",] //first variable is for select option
+            let tempTips = []
             tempOrders.map((order) => {
                 //store each item ordered
                 let tempBool = false
-                
-                order.order_items.map((item) => {
-                    let tempDate = order.createdAt.slice(0, 10)
-                    let tempSale = {name: '', price: '', quantity: 1, date: tempDate}
+                let tempDate = order.createdAt.slice(0, 10)
 
+                //calculate tip from order
+                let tempTip = {date: tempDate, tip: (order.total-order.subtotal)}
+                tempTips = [...tempTips, tempTip]
+
+                order.order_items.map((item) => {
+                    let tempSale = {name: '', price: '', quantity: 1, date: tempDate}
                     //check if the data has been added, if not -> add
                     if((tempDays).indexOf(tempDate) === -1){
                         tempDays = [...tempDays, tempDate]
@@ -76,7 +84,9 @@ export default function DailySalesReport(){
             setSales(tempItems)
             console.log("DSR Sales: "); console.log(sales)  
             setSaleDays(tempDays)
-            console.log("DSR Days: "); console.log(saleDays)   
+            console.log("DSR Days: "); console.log(saleDays)  
+            setSaleTips(tempTips) 
+            console.log("DSR Tips: "); console.log(tempTips)
         })
         
     }
@@ -97,14 +107,16 @@ export default function DailySalesReport(){
     }
 
     //increase quantity of item by 1
-    const [totalNumItems, setTotalNumItems] = useState(0);
     const handleQuantity = (amount) => {
         setTotalNumItems((prev) => (prev + amount))        
     }
 
-    const [totalProfit, setTotalProfit] = useState(0.00); //the total found
     const handleProfit = (amount) => {
         setTotalProfit((prev) => (prev + amount)) 
+    }
+
+    const handleTips = (amount) => {
+        setTotalTips((prev) => (prev + amount))
     }
 
     const handleDate = ({target}) => {
@@ -112,6 +124,15 @@ export default function DailySalesReport(){
     }
 
     const calculateTotals = ({target}) => {
+        //reset tip total
+        setTotalTips((prev) => (0.00))
+        saleTips.map((info) => {
+            //if current date, add to totals
+            if(info.date === target.value){
+                handleTips(info.tip)
+            }
+        })
+        
         //reset profit and number of items ordered
         setTotalProfit((prev) => (0.00))
         setTotalNumItems((prev) => (0))
@@ -166,9 +187,14 @@ export default function DailySalesReport(){
                         {totalNumItems}
                     </p>
                 </p>
+                <p >Daily Tips:<br/>
+                    <p className="block">
+                        ${totalTips.toFixed(2)}
+                    </p>
+                </p>
                 <p >Gross Income:<br/>
                     <p className="block"> 
-                        ${totalProfit.toFixed(2)}
+                        ${(totalProfit+totalTips).toFixed(2)}
                     </p>
                 </p>
             </div>
