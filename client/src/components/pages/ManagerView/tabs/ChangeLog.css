@@ -1,8 +1,8 @@
 .ChangeLog{
     position: relative;
     background-color: gray;
-    height: 500px;
-    margin: 0;
+    height: 650px;
+    margin: 0px;
 }
 
 .logDisplay{
@@ -10,6 +10,5 @@
     width: 90%;
     background: white;
     margin-left: 5%;
-    overflow-y: auto;
+    overflow-y: auto; 
 }
-

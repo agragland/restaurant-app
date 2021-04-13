@@ -6,7 +6,7 @@ import StaffMenu from "../../Navbar/StaffMenu"
 import ChangeLog from './tabs/ChangeLog';
 import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';
-import LobbyVisual from './tabs/LobbyView';
+import LobbyVisual from './tabs/LobbyVisual';
 import Navbar from './Navbar';
 import ManagerLogin from './tabs/ManagerLogin'
 
