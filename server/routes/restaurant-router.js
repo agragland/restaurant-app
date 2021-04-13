@@ -6,6 +6,7 @@ const LoyaltyCtrl = require('../controllers/loyalty-ctrl')
 const OrderCtrl = require('../controllers/order-ctrl')
 const TableCtrl = require('../controllers/table-ctrl')
 const ChangeCtrl = require('../controllers/change-ctrl')
+const SettingCtrl = require('../controllers/settings-ctrl')
 
 const router = express.Router()
 
@@ -47,6 +48,10 @@ router.get('/table/:id',TableCtrl.getTableByNum)
 //Change Commands
 router.post('/change',ChangeCtrl.createChange)
 router.get('/changes',ChangeCtrl.getChanges)
+
+//Consumer Settings Commands
+router.put('/setting/:id',SettingCtrl.updateSettings)
+router.get('/settings',SettingCtrl.getSettings)
 
 
 module.exports = router
