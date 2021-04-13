@@ -43,7 +43,7 @@
 .signin-form .form-inner h2{
     color: black;
     font-size: 24px;
-    font-weight: 500 bold;
+    font-weight: bold;
     margin-bottom: 20px;
 }
 
@@ -73,6 +73,7 @@
     background-color: #f8f8f8;
     border-radius: 8px;
     transition: 0.4s;
+    border: black solid 1px;
 }
 
 .signin-form .form-inner .form-group input:focus {

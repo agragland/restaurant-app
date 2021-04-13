@@ -130,7 +130,7 @@ function Navbar() {
                     {error}
                     <div className='form-group'>
                         <label  htmlFor='empoyee id'>Employee ID:</label>
-                        <input type="text" placeholder="Enter Employee ID here" value={employee.emp_id} onChange={setValue('emp_id')} />
+                        <input type="text" placeholder="Enter Employee ID here" onChange={setValue('emp_id')} />
                     </div>
                     <input type='submit' value='LOGIN' />
                     <br/>

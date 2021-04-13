@@ -45,25 +45,11 @@ export default class PaymentView extends React.Component {
             modal_2: 0,
             freeDessert: 0,
             customTip: 0,
-            customItem: false
+            customItem: false,
+            splitNum: 1,
+            splitCheck: false,
+            splitTotal: 0
         }
-    }
-
-    handleGetItems = async () => {
-        await api.getAllItems().then(items => {
-            menu_items = items.data.data
-        })
-
-        console.log(menu_items)
-    }
-
-    orderFreeDessert = async (item, comments) => {
-        //set up order payload and submit
-        const final_payload = { order_items: [item], comments, commped: [true], subtotal: 0, total: 0, status:'Created', table:getTableNum() }
-        await apis.createOrder(final_payload).then(res => {
-            window.alert(`Order created successfully`)
-            preparePayment(res.data.id)
-        })
     }
 
     componentDidMount = async () => {
@@ -87,6 +73,26 @@ export default class PaymentView extends React.Component {
         console.log(this.state)
     }
 
+    handleGetItems = async () => {
+        await api.getAllItems().then(items => {
+            menu_items = items.data.data
+        })
+
+        console.log(menu_items)
+    }
+
+    handleUpdateOrder = async (payload) => {
+        await api.updateOrder(payload._id, payload)
+    }
+
+    orderFreeDessert = async (item, comments) => {
+        //set up order payload and submit
+        const final_payload = { order_items: [item], comments, commped: [true], subtotal: 0, total: 0, status:'Created', table:getTableNum() }
+        await apis.createOrder(final_payload).then(res => {
+            window.alert(`Order created successfully`)
+            preparePayment(res.data.id)
+        })
+    }
 
     Item = ({item}) => {
         let comment = ""
@@ -140,44 +146,72 @@ export default class PaymentView extends React.Component {
         )
     }
 
+    continueSplit = () => {
+        if(this.state.splitNum === 1) {
+            this.tipModalHandler(3)
+        }
+        else {
+            this.setState(prevState => ({
+                splitNum: prevState.splitNum-1,
+                splitTotal: prevState.splitTotal-prevState.order.tip
+            }))
+            this.tipModalHandler(1)
+        }
+    }
+
     cardModal = () =>
     {
-        if(this.state.modal_2 === 0)
-        {
-            return(
+        if (this.state.modal_2 === 0) {
+            return (
                 <Modal show={this.state.cardModal}>
                     <button onClick={this.cardPaymentHandler}>X</button>
                     <p>Please insert Card</p>
-                    <button onClick={() => {this.tipModalHandler(1)}}>Insert Card</button>
+                    <button onClick={() => {
+                        this.tipModalHandler(1)
+                    }}>Insert Card
+                    </button>
                 </Modal>
             )
-        }
-        else if(this.state.modal_2 === 1)
-        {
-            return(
+        } else if (this.state.modal_2 === 1) {
+            return (
                 <Modal show={this.state.cardModal}>
                     <button onClick={this.cardPaymentHandler}>X</button>
                     <h1>Select your tip</h1>
-                    <button onClick={() => {this.tipHandler(0.1)}}>10% tip</button>
-                    <button onClick={() => {this.tipHandler(0.15)}}>15% tip</button>
-                    <button onClick={() => {this.tipHandler(0.2)}}>20% tip</button>
-                    <input type='number' value={this.state.customTip} onChange={this.handleCustomTipValue}/>
-                    <button onClick={() => {this.tipHandler(this.state.customTip/100)}}>Submit Custom Tip</button>
+                    <button onClick={() => {
+                        this.tipHandler(0.1)
+                    }}>10% tip
+                    </button>
+                    <button onClick={() => {
+                        this.tipHandler(0.15)
+                    }}>15% tip
+                    </button>
+                    <button onClick={() => {
+                        this.tipHandler(0.2)
+                    }}>20% tip
+                    </button>
+                    <br/>
+                    <input type='number' className="payment-input" value={this.state.customTip} onChange={this.handleCustomTipValue}/>
+                    <button onClick={() => {
+                        this.tipHandler(this.state.customTip / 100)
+                    }}>Submit Custom Tip
+                    </button>
                 </Modal>
             )
-        }
-        else if(this.state.modal_2 === 2)
-        {
-            return(
+        } if (this.state.modal_2 === 2) {
+            return (
                 <Modal show={this.state.cardModal}>
-                    <h1>You Paid ${this.state.order.total.toFixed(2)}</h1>
+                    <h1>You Paid ${this.state.splitTotal.toFixed(2)}</h1>
+                    <button onClick={this.continueSplit}>Continue</button>
+                </Modal>
+            )
+        } else if (this.state.modal_2 === 3) {
+            return (
+                <Modal show={this.state.cardModal}>
                     <h1>Time for a chance to win a free dessert!</h1>
                     {this.freeDessertHandler()}
-
                 </Modal>
             )
         }
-
     }
 
     /*
@@ -186,6 +220,9 @@ export default class PaymentView extends React.Component {
     *********
     */
     freeDessertHandler = () => {
+        let temp = this.state.order
+        temp.status = "paid"
+        this.handleUpdateOrder(temp)
 
         if(this.state.freeDessert === 0)
         {
@@ -238,8 +275,6 @@ export default class PaymentView extends React.Component {
         }
     }
 
-
-
     /*
     *********
     TIP HANDLING
@@ -247,14 +282,11 @@ export default class PaymentView extends React.Component {
     */
     tipHandler = async (tipPerc) => {
         let temp = this.state.order
-        temp.tip = temp.total * tipPerc
-        temp.total = temp.total + temp.tip
-        temp.status = 'Paid'
-        this.setState({order: temp})
+        temp.tip = this.state.splitTotal * tipPerc
+        temp.total += temp.tip
+        this.setState(prevState => ({order: temp, splitTotal: prevState.splitTotal+temp.tip}))
+        this.tipModalHandler(2)
 
-        await apis.updateOrder(temp._id,temp).then(res =>
-            this.tipModalHandler(2)
-        )
         console.log(this.state)
     }
 
@@ -268,11 +300,23 @@ export default class PaymentView extends React.Component {
         })
     }
 
+    handleChangeSplit = (e) => {
+        this.setState({
+            splitNum: e.target.value
+        })
+    }
 
+    handleClickSplit = () => {
+        this.setState(prevState => ({splitCheck: !prevState.splitCheck}))
+    }
 
     cardPaymentHandler = () =>
     {
-        this.setState(prevState => ({cardModal: !prevState.cardModal}))
+
+        this.setState(prevState => ({
+            cardModal: !prevState.cardModal, splitCheck: false,
+            splitTotal: prevState.order.total/prevState.splitNum
+        }))
     }
 
     paymentStatusHandler = () => {
@@ -300,7 +344,7 @@ export default class PaymentView extends React.Component {
                     <p className="big-text">Total: {this.state.order.total.toFixed(2)}</p>
                     <button onClick={this.cardPaymentHandler}>Pay with Card</button>
                     <button>Pay with Cash</button>
-                    <button>Split Check</button>
+                    <button onClick={this.handleClickSplit}>Split Check</button>
                 </div>
 
             )
@@ -315,6 +359,10 @@ export default class PaymentView extends React.Component {
                     {this.paymentStatusHandler()}
                 </div>
                 {this.cardModal()}
+                <Modal show={this.state.splitCheck}>
+                    <input type='number' className="payment-input" value={this.state.splitNum} onChange={this.handleChangeSplit}/>
+                    <button onClick={() => {this.cardPaymentHandler()}}>Continue</button>
+                </Modal>
             </section>
         )
     }
