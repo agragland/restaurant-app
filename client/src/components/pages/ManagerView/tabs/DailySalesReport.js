@@ -5,13 +5,10 @@ import api from "../../../../api";
 import "./DailySalesReport.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-//dictionary for manu id and the amount purchased
-const individualOrder = {name: '', price: '', quantity: 1};
-
 export default function DailySalesReport(){
     const [sales, setSales] = useState([]);             //to store all items that have sold
-    const [dailySales, setDailySales] = useState([]);  //to store all values shown by dsr 
+    const [saleDays, setSaleDays] = useState([]);       //to store all values shown by dsr 
+    const [currentDay, setCurrentDay] = useState("");
 
     useEffect(() => {
         handleGetOrders()
@@ -32,7 +29,7 @@ export default function DailySalesReport(){
             let tempOrders = []
             curr_orders.map((order) => {
                 if (order.status === "Paid") {
-                    tempOrders = [...tempOrders, order]           //adds orders to the inactive queue
+                    tempOrders = [...tempOrders, order]  //adds orders to the inactive queue
                 }
             })
 
@@ -41,6 +38,7 @@ export default function DailySalesReport(){
             //reset number of items ordered
             setTotalNumItems((prev) => (0))
             let tempItems = []
+            let tempDays = []
             tempOrders.map((order) => {
                 //calculate profit
                 handleProfit(order.total)
@@ -49,7 +47,13 @@ export default function DailySalesReport(){
                 order.order_items.map((item) => {
                     let tempDate = order.createdAt.slice(0, 10)
                     let tempSale = {name: '', price: '', quantity: 1, date: tempDate}
-        
+
+                    //check if the data has been added, if not -> add
+                    if((tempDays).indexOf(tempDate) === -1){
+                        tempDays = [...tempDays, tempDate]
+                    }
+
+                    //populate all unique items that have been ordered (or increase quantity)
                     tempBool = false;
                     for(let i=0; i<tempItems.length; i++) {
                         if(item.name === tempItems[i].name)
@@ -75,21 +79,28 @@ export default function DailySalesReport(){
                 
             //set states to temps 
             setSales(tempItems)
-            console.log("DSR Sales: " + sales)          
+            console.log("DSR Sales: "); console.log(sales)  
+            setSaleDays(tempDays)
+            console.log("DSR Days: "); console.log(saleDays)     
         })
         
     }
 
     //render all sales
     const renderSales = (item, index) => {
-        return(
+        //console.log(item.date)
+        //console.log(currentDay)
+        if(item.date === currentDay){
+             return(
             <tr key={index}>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
                 <td>{item.price.toFixed(2)}</td>
                 <td>{(item.price * item.quantity).toFixed(2)}</td>
             </tr>
-        )
+            )
+        }
+       
     }
 
     //increase quantity of item by 1
@@ -103,18 +114,20 @@ export default function DailySalesReport(){
         setTotalProfit((prev) => (prev + amount))  
     }
 
-    let offset=0;
-    function adjustOffset(number){
-        offset = offset + number;
+    const handleDate = ({target}) => {
+        setCurrentDay((prev) => (target.value));
+        console.log(currentDay)
     }
 
-    let current = new Date();
-    const setDate = () => {
-        var today = new Date(),
-        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        
-       current = date;
-       console.log(current);
+    const displayDate = (date) => {
+        //split up currentDay array into day, month, and year
+        //let day = date.slice(7, 8)
+        //let month = date.slice(5, 6)
+        //let year = date.slice(0, 3)
+        //console.log("date strings")
+        //console.log(day)
+        //console.log(month)
+        //console.log(year)
     }
     
 
@@ -139,7 +152,17 @@ export default function DailySalesReport(){
             <div className="DSR-date">
                 <p>Date:<br/>
                     <p className="block">
-                        {current.getMonth()+1}/{current.getDate()}/{current.getFullYear()}
+                        <select value={currentDay} onChange={handleDate}>
+                            { saleDays.map((date, index) => {
+                                return(
+                                    <option key={index} value={saleDays.index}>
+                                    {date}
+                                    </option>
+                                )
+                            })
+
+                            }
+                        </select>
                     </p>    
                 </p>
                 <p >Number of Items Ordered:<br/>
