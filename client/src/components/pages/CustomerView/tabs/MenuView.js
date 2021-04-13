@@ -7,7 +7,6 @@ import Modal from "../../../Modal";
 let menu_items = [];
 
 export const Item = ({item}) => {
-
     const [customItem, showCustomItem] = useState(false);
     let comment = ""
 

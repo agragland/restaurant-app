@@ -22,6 +22,10 @@
 
 button {
   border: black solid 2px;
-  background-color: rgba(0, 145, 173, 0.82);
+  background-color: #00a1bf;
   color: white;
+}
+
+button:disabled {
+  background-color: #005965;
 }

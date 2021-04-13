@@ -1,7 +1,10 @@
-import React from "react"
+import React, {useState} from "react"
 import apis from "../../../../api"
 import Modal from "../../../Modal"
 import "./PaymentView.css"
+import api from "../../../../api";
+import {getTableNum} from "./OrderView";
+import {handleAddToOrder} from "./OrderView";
 
 let payload = {
     order_id: '',
@@ -29,6 +32,7 @@ const PaymentItem = ({item, comp}) => {
     )
 }
 
+let menu_items = []
 export default class PaymentView extends React.Component {
     constructor(props) {
         super(props);
@@ -40,7 +44,26 @@ export default class PaymentView extends React.Component {
             cardModal: false,
             modal_2: 0,
             freeDessert: 0,
+            customTip: 0,
+            customItem: false
         }
+    }
+
+    handleGetItems = async () => {
+        await api.getAllItems().then(items => {
+            menu_items = items.data.data
+        })
+
+        console.log(menu_items)
+    }
+
+    orderFreeDessert = async (item, comments) => {
+        //set up order payload and submit
+        const final_payload = { order_items: [item], comments, commped: [true], subtotal: 0, total: 0, status:'Created', table:getTableNum() }
+        await apis.createOrder(final_payload).then(res => {
+            window.alert(`Order created successfully`)
+            preparePayment(res.data.id)
+        })
     }
 
     componentDidMount = async () => {
@@ -60,7 +83,61 @@ export default class PaymentView extends React.Component {
             })
         })
 
+        this.handleGetItems()
         console.log(this.state)
+    }
+
+
+    Item = ({item}) => {
+        let comment = ""
+
+        const handleCommentField = (e) => {
+            comment = e.target.value
+        }
+
+        return(
+            <>
+            <Modal show={this.customItem}>
+            <button onClick={() => this.setState(prevState => ({customItem: !prevState.customItem}))} className="x-button">X</button>
+            <div>
+                <p className="item-name">{item.name}</p>
+                <p>${item.price}</p>
+                <ul>
+                    {item.ingredients.map((ingredient, index) =>
+                        <li key={index}>{ingredient}</li>
+                    )}
+                </ul>
+                <form>
+                    <label>Comments:</label>
+                    <input type = "text" onChange={handleCommentField}/>
+                </form>
+                <button onClick={() => {
+                    this.orderFreeDessert(item, comment);
+                    this.setState(prevState => ({customItem: !prevState.customItem}))
+                    this.setState(prevState => ({cardModal: !prevState.cardModal}))
+                }}>Add to Order</button>
+
+            </div>
+            </Modal>
+            <div className={"item-display"}>
+                <div>
+                    <p className="item-name">{item.name}</p>
+                    <p>${item.price}</p>
+                    <ul>
+                        {item.ingredients.map((ingredient, index) =>
+                            <li key={index}>{ingredient}</li>
+                        )}
+                    </ul>
+                    <button onClick={() => {
+                        this.orderFreeDessert(item, "")
+                        this.setState(prevState => ({cardModal: !prevState.cardModal}))
+                    }}>Add to Order</button>
+                    &nbsp;
+                    <button onClick={() => this.setState(prevState => ({customItem: !prevState.customItem}))}>Customize</button>
+                </div>
+            </div>
+            </>
+        )
     }
 
     cardModal = () =>
@@ -84,8 +161,8 @@ export default class PaymentView extends React.Component {
                     <button onClick={() => {this.tipHandler(0.1)}}>10% tip</button>
                     <button onClick={() => {this.tipHandler(0.15)}}>15% tip</button>
                     <button onClick={() => {this.tipHandler(0.2)}}>20% tip</button>
-                    <input type='number' onChange={this.handleCustomTipValue}/>
-                    <button>Submit Custom Tip</button>
+                    <input type='number' value={this.state.customTip} onChange={this.handleCustomTipValue}/>
+                    <button onClick={() => {this.tipHandler(this.state.customTip/100)}}>Submit Custom Tip</button>
                 </Modal>
             )
         }
@@ -122,6 +199,19 @@ export default class PaymentView extends React.Component {
                 <>
                 <h1>Congrats! You Won!</h1>
                 <h1>Please select a dessert from the list below!</h1>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'desserts')
+                            {
+                                return(<this.Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
                 </>
             )
         }
@@ -131,7 +221,7 @@ export default class PaymentView extends React.Component {
                 <>
                     <h1>Sorry! You Did Not Win!</h1>
                     <h1>Thanks for Visiting Taco Palace</h1>
-                    <button>Complete Order</button>
+                    <button onClick={this.cardPaymentHandler}>Complete Order</button>
                 </>
             )
         }
@@ -172,8 +262,10 @@ export default class PaymentView extends React.Component {
         this.setState({modal_2: state})
     }
 
-    handleCustomTipValue = async event => {
-
+    handleCustomTipValue = (e) => {
+        this.setState({
+            customTip: e.target.value
+        })
     }
 
 
