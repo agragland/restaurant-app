@@ -33,15 +33,13 @@ export default function DailySalesReport(){
                 }
             })
 
-            //reset profit - this prevents profit from constantly increasing
+            //reset profit and number of items ordered
             setTotalProfit((prev) => (0.00))
-            //reset number of items ordered
             setTotalNumItems((prev) => (0))
+            //temp arrays
             let tempItems = []
-            let tempDays = []
+            let tempDays = ["Select Date",] //first variable is for select option
             tempOrders.map((order) => {
-                //calculate profit
-                handleProfit(order.total)
                 //store each item ordered
                 let tempBool = false
                 order.order_items.map((item) => {
@@ -56,27 +54,37 @@ export default function DailySalesReport(){
                     //populate all unique items that have been ordered (or increase quantity)
                     tempBool = false;
                     for(let i=0; i<tempItems.length; i++) {
-                        if(item.name === tempItems[i].name)
+                        if(item.name === tempItems[i].name && tempDate === tempItems[i].date) 
                         {
+                            //if current date, add to totals
+                            if(item.date === currentDay){
+                                handleProfit(item.price)
+                                handleQuantity()
+                            }
+                            
+                            //increase quantity, set bool to true
                             tempItems[i].quantity++;
                             tempBool = true;
-                            //calculate number of items ordered
-                            handleQuantityIncrease();
                             break;
                         }
                     }
                     if(!tempBool)
                     {
+                        //if current date, add to totals
+                        console.log(tempDate)
+                        if(tempDate === currentDay){
+                            handleProfit(item.price)
+                            handleQuantity()
+                        }
+                        //set values
                         tempSale.name = item.name
                         tempSale.price = item.price
                         tempSale.quantity = 1
                         tempItems = [...tempItems, tempSale]  
-                        //calculate number of items ordered
-                        handleQuantityIncrease();
                     } 
                 })
             })
-                
+                console.log("All Paid Orders: "); console.log(tempOrders)
             //set states to temps 
             setSales(tempItems)
             console.log("DSR Sales: "); console.log(sales)  
@@ -88,46 +96,32 @@ export default function DailySalesReport(){
 
     //render all sales
     const renderSales = (item, index) => {
-        //console.log(item.date)
-        //console.log(currentDay)
         if(item.date === currentDay){
-             return(
-            <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price.toFixed(2)}</td>
-                <td>{(item.price * item.quantity).toFixed(2)}</td>
-            </tr>
+            return(
+                <tr key={index}>
+                    <td>{item.name}</td>
+                    <td>{item.quantity}</td>
+                    <td>{item.price.toFixed(2)}</td>
+                    <td>{(item.price * item.quantity).toFixed(2)}</td>  
+                    
+                </tr>
             )
         }
-       
     }
 
     //increase quantity of item by 1
     const [totalNumItems, setTotalNumItems] = useState(0);
-    const handleQuantityIncrease = () => {
-        setTotalNumItems((prev) => (prev + 1))
+    const handleQuantity = () => {
+        setTotalNumItems((prev) => (prev + 1))        
     }
 
     const [totalProfit, setTotalProfit] = useState(0.00); //the total found
     const handleProfit = (amount) => {
-        setTotalProfit((prev) => (prev + amount))  
+        setTotalProfit((prev) => (prev + amount)) 
     }
 
     const handleDate = ({target}) => {
         setCurrentDay((prev) => (target.value));
-        console.log(currentDay)
-    }
-
-    const displayDate = (date) => {
-        //split up currentDay array into day, month, and year
-        //let day = date.slice(7, 8)
-        //let month = date.slice(5, 6)
-        //let year = date.slice(0, 3)
-        //console.log("date strings")
-        //console.log(day)
-        //console.log(month)
-        //console.log(year)
     }
     
 
@@ -152,7 +146,7 @@ export default function DailySalesReport(){
             <div className="DSR-date">
                 <p>Date:<br/>
                     <p className="block">
-                        <select value={currentDay} onChange={handleDate}>
+                        <select value={currentDay} onChange={handleDate} style={{ width: '100%' }}>
                             { saleDays.map((date, index) => {
                                 return(
                                     <option key={index} value={saleDays.index}>
@@ -171,7 +165,7 @@ export default function DailySalesReport(){
                     </p>
                 </p>
                 <p >Total Profit:<br/>
-                    <p className="block">
+                    <p className="block"> 
                         ${totalProfit.toFixed(2)}
                     </p>
                 </p>
