@@ -6,7 +6,7 @@ import StaffMenu from "../../Navbar/StaffMenu"
 import ChangeLog from './tabs/ChangeLog';
 import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';
-import LobbyVisual from './tabs/LobbyView';
+import LobbyVisual from './tabs/LobbyVisual';
 import Navbar from './Navbar';
 import ManagerLogin from './tabs/ManagerLogin'
 
@@ -17,6 +17,7 @@ export default function ManagerView (){
     const [managers, setManagers] = useState([]); //to store all managers from database
     const [manager, setManager] = useState({ emp_id: '', password: ''});
     const [error, setError] = useState('');
+    const [isLogged, setIsLogged] = useState(false); //allows access to manager menu when true 
 
     //data base 
     useEffect (() => {
@@ -63,7 +64,6 @@ export default function ManagerView (){
     }
 
     //determines the view of the manager navbar
-    const [isLogged, setIsLogged] = useState(false);
     const handleLog = () => {
         setIsLogged(!isLogged);
     }
@@ -71,13 +71,12 @@ export default function ManagerView (){
     return (
         <>
         <div className='manager'> 
-            <StaffMenu level= {2} />
             <div className='manager-title'>Manager</div>
 
             {/*if manager is logged in, show the navbar */}        
             { isLogged ?
             <div className='manager-body'>
-               
+               <StaffMenu level= {2} />
                 <Router>
                     <Navbar/>
                     

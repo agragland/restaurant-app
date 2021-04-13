@@ -6,10 +6,7 @@ import Modal from "../../../Modal";
 
 let menu_items = [];
 
-
-
 export const Item = ({item}) => {
-
     const [customItem, showCustomItem] = useState(false);
     let comment = ""
 
@@ -50,6 +47,7 @@ export const Item = ({item}) => {
                     )}
                 </ul>
                 <button onClick={() => handleAddToOrder(item, "")}>Add to Order</button>
+                &nbsp;
                 <button onClick={() => showCustomItem(!customItem)}>Customize</button>
             </div>
         </div>

@@ -4,10 +4,9 @@ import {Link} from 'react-router-dom';
 import ChangeLog from './tabs/ChangeLog';
 import ConsumerSettings from './tabs/ComsumerSettings';
 import DailySalesReport from './tabs/DailySalesReport';
-import LobbyView from './tabs/LobbyView';
-import {Tabs} from './tabs/Tabs'
+import LobbyView from './tabs/LobbyVisual';
 
-import "./Navbar.css"
+import "./MgrNavbar.css"
 import "../ManagerView/MgrNavbar.css"
 
 export default function NavBar(){

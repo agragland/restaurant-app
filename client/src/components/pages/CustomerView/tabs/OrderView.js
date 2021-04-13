@@ -116,7 +116,7 @@ export default class OrderView extends React.Component{
         else if(payload.status === 'Created')
         {
             return(
-                <h1>Order Placed! Ready for Payment</h1>
+                <p className="big-text">Order Placed!</p>
             )
         }
 
@@ -128,6 +128,7 @@ export default class OrderView extends React.Component{
             return (
                 <div>
                     {item.name} $0.00
+                    &nbsp;
                     {comment}
                     &nbsp;
                     {this.EditRemoveButtons(item)}
@@ -137,6 +138,7 @@ export default class OrderView extends React.Component{
         return (
             <div>
                 {item.name} ${item.price}
+                &nbsp;
                 {comment}
                 &nbsp;
                 {this.EditRemoveButtons(item)}
@@ -167,7 +169,6 @@ export default class OrderView extends React.Component{
         const { items, comments, commped, subtotal, total,  } = this.state
         const final_payload = { order_items:items, comments, commped, subtotal, total, status:'Created', table:payload.table }
         await apis.createOrder(final_payload).then(res => {
-            window.alert(`Order created successfully`)
             preparePayment(res.data.id)
         })
     }

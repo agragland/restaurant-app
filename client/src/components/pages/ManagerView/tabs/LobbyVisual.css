@@ -1,0 +1,8 @@
+.MgrLobby{
+    position: relative;
+    background-color: gray;
+    height: 650px;
+    margin: 0px;
+    border: 1px solid #440D0F;
+    overflow-y: auto;
+}

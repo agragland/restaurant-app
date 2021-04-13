@@ -1,7 +1,7 @@
 .ChangeLog{
     position: relative;
     background-color: gray;
-    height: 500px;
+    height: 650px;
     margin: 0px;
 }
 
@@ -12,4 +12,3 @@
     margin-left: 5%;
     overflow-y: auto; 
 }
-
