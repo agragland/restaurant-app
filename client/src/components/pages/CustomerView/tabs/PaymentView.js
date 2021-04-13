@@ -164,7 +164,6 @@ export default class PaymentView extends React.Component {
         if (this.state.modal_2 === 0) {
             return (
                 <Modal show={this.state.cardModal}>
-                    <button onClick={this.cardPaymentHandler}>X</button>
                     <p>Please insert Card</p>
                     <button onClick={() => {
                         this.tipModalHandler(1)
@@ -175,7 +174,6 @@ export default class PaymentView extends React.Component {
         } else if (this.state.modal_2 === 1) {
             return (
                 <Modal show={this.state.cardModal}>
-                    <button onClick={this.cardPaymentHandler}>X</button>
                     <h1>Select your tip</h1>
                     <button onClick={() => {
                         this.tipHandler(0.1)
@@ -302,7 +300,7 @@ export default class PaymentView extends React.Component {
 
     handleChangeSplit = (e) => {
         this.setState({
-            splitNum: e.target.value
+            splitNum: Math.ceil(e.target.value)
         })
     }
 
@@ -360,12 +358,10 @@ export default class PaymentView extends React.Component {
                 </div>
                 {this.cardModal()}
                 <Modal show={this.state.splitCheck}>
-                    <input type='number' className="payment-input" value={this.state.splitNum} onChange={this.handleChangeSplit}/>
-                    <button onClick={() => {this.cardPaymentHandler()}}>Continue</button>
+                    <input type='number' step="1" min="1" className="payment-input" value={this.state.splitNum} onChange={this.handleChangeSplit}/>
+                    <button onClick={() => {this.cardPaymentHandler()}} disabled={this.state.splitNum < 1}>Continue</button>
                 </Modal>
             </section>
         )
     }
-
-
 }
