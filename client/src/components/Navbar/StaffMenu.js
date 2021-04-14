@@ -223,6 +223,7 @@ export default function StaffMenu({Change, level}) {
 
     //to handle update and log the change
     const handleUpdate = async (payload, button) => {
+        console.log(payload)
         await api.updateItem(payload._id, payload).then(res => {
             window.alert('Menu item change has been submitted')
         })
@@ -354,6 +355,7 @@ export default function StaffMenu({Change, level}) {
                                             category={item.category}
                                             price={item.price}
                                             />
+                                            <button value={index} onClick={clickToRemove}>Remove Item</button>
                                         </div>
                                     )
                                 }
@@ -392,6 +394,7 @@ export default function StaffMenu({Change, level}) {
                                         category={item.category}
                                         price={item.price}
                                         />
+                                        <button value={index} onClick={clickToRemove}>Remove Item</button>
                                     </div>)
                                 }
                                 else

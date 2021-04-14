@@ -8,8 +8,8 @@ const api = axios.create({
 export const insertItem = payload => api.post(`/item`, payload)
 export const getAllItems = () => api.get(`/items`)
 export const getItemById = id => api.get(`/item/${id}`)
-export const updateItem = (id, payload) => api.put(`/item/:${id}`, payload) //update item
-export const deleteItem = id => api.delete(`/item/:${id}`) //delete item
+export const updateItem = (id, payload) => api.put(`/item/${id}`, payload) //update item
+export const deleteItem = id => api.delete(`/item/${id}`) //delete item
 //customer
 export const insertCustomer = payload => api.post(`/customer`, payload)
 export const getAllCustomers = () => api.get(`/customers`)
