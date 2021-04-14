@@ -5,14 +5,6 @@ import api from '../../../../api'
 
 import "./ChangeLog.css";
 
-const change = {
-    date: '',
-    time: '',
-    emp_ID: '',
-    item: '',
-    status: '',
-}
-
 export default function ChangeLog(){
     const [changeLog, setChangeLog] = useState([]);
 
@@ -29,12 +21,24 @@ export default function ChangeLog(){
     }, []);
 
     const handleGetChanges = async() => {
-        await api.getChanges.then(changes => {
+        await api.getChanges().then(changes => {
             const curr_changes = changes.data.data
             console.log(curr_changes)
-            curr_changes.map((changes) => {
+            
+            let tempChanges = []
+            curr_changes.map((change) => {
+                let tempChange = {date: '', time: '', emp_id: '', item: '', change: ''}
+                tempChange.date = change.createdAt.slice(0,10)
+                tempChange.time = change.createdAt.slice(11,19)
+                tempChange.emp_id = change.emp.emp_id
+                tempChange.item = change.item
+                tempChange.change = change.action
 
+                tempChanges = [...tempChanges, tempChange]
             })
+            //set states
+            setChangeLog(tempChanges) 
+            console.log(tempChanges)
         })
     }
 
@@ -42,10 +46,11 @@ export default function ChangeLog(){
     const renderChange = (change, index) => {
         return(
             <tr key={index}>
-                <td>{change.name}</td>
-                <td>{change.price}</td>
-                <td>{change.quantity}</td>
-                <td>{change.price * change.quantity}</td>
+                <td>{change.date}</td>
+                <td>{change.time}</td>
+                <td>{change.emp_id}</td>
+                <td>{change.item}</td>
+                <td>{change.change}</td>
             </tr>
         )
     }
