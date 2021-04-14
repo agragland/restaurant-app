@@ -65,11 +65,11 @@ function AddModal({show, children}) {
         </div>
     ); 
 } 
-  //MODALS ^^
+    //MODALS ^^
 //--------------------------------------------------------------------------------------------------------------------------
     //export funciton begin vv
 
-export default function StaffMenu({level}) {
+export default function StaffMenu({Change, level}) {
     const [showModal, setShowModal] = useState(false);
     const [showUnavailableModal, setShowUnavailableModal] = useState(false);
     const [availMenuItems, setAvailItems] = useState([]);
@@ -239,6 +239,7 @@ export default function StaffMenu({level}) {
     const clickToRemove = ({target}) => {
         //add item to unavailable menu
         const index = target.value
+        let tempItem = availMenuItems[index]
         availMenuItems[index].isAvailable = false
         setUnavailItems((prev) => prev.concat(availMenuItems[index]))
 
@@ -249,6 +250,10 @@ export default function StaffMenu({level}) {
         let temp = [...availMenuItems]
         temp.splice(index, 1)
         setAvailItems(() => temp)
+
+        //record in changelog
+        let tempChange = {item: tempItem.name, action: "remove"}
+        Change(tempChange);
     }
 
     var canRemove = false; //determines if page has access clickToRemove
@@ -262,6 +267,7 @@ export default function StaffMenu({level}) {
     const clickToReplace = ({target}) => {
         //add item to available menu
         const index = target.value
+        let tempItem = unavailMenuItems[index]; //used for change log
         unavailMenuItems[index].isAvailable = true;
         setAvailItems((prev) => prev.concat(unavailMenuItems[index]))
 
@@ -272,6 +278,10 @@ export default function StaffMenu({level}) {
         let temp = [...unavailMenuItems]
         temp.splice(index, 1)
         setUnavailItems(() => temp)
+
+        //record in changelog
+        let tempChange = {item: tempItem.name, action: "replace"}
+        Change(tempChange);
     }
     var canReplace = false; //determines if page has access Replace - Manager ONLY
     if (level > 1){
@@ -280,11 +290,9 @@ export default function StaffMenu({level}) {
 
 
     //deletes an item from the unavalible array - Manager ONLY
-    const handleMenuItem = ({itemName}) => {
-        setMenuItem({itemName})
-    }
     const DeleteMenu = ({target}) => {
         const index = target.value
+        let tempItem = unavailMenuItems[index] //used for change log
 
         //delete from database
         handleUpdate(unavailMenuItems[index])
@@ -293,6 +301,10 @@ export default function StaffMenu({level}) {
         let temp = [...unavailMenuItems]
         temp.splice(index, 1)
         setUnavailItems(() => temp)
+
+        //record in changelog
+        let tempChange = {item: tempItem.name, action: "delete"}
+        Change(tempChange);
     }
     const handleDelete = async(payload) => {
         await api.deleteItem(payload._id).then(res =>{

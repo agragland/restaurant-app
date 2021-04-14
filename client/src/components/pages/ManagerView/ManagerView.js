@@ -15,7 +15,7 @@ import './ManagerView.css';
 {/*manager page hub*/}
 export default function ManagerView (){
     const [managers, setManagers] = useState([]); //to store all managers from database
-    const [manager, setManager] = useState({ emp_id: '', password: ''});
+    const [manager, setManager] = useState({ emp_id: '', name: '', password: '', role: '', _id: ''});
     const [error, setError] = useState('');
     const [isLogged, setIsLogged] = useState(false); //allows access to manager menu when true 
 
@@ -42,12 +42,15 @@ export default function ManagerView (){
 
     //manager login 
     const Login = details => {
-        console.log(details)
+        console.log(managers)
         managers.map((employee) => {
             //split into two seperate if statements to avoid multiple login errors
             if(details.emp_id == employee.emp_id){ //if the user name matches
+                
                 if(details.password == employee.password){ //check the password
+                    setManager((prev) => (employee));
                     handleLog();
+                    console.log(manager)
                 }
                 else{ 
                     setError('Credentials do not match. Please try again.');
@@ -68,6 +71,23 @@ export default function ManagerView (){
         setIsLogged(!isLogged);
     }
 
+    //adds a change from manager
+    const Change = async (details) => {
+        const change = ({item: details.item, action: details.action, emp: manager})
+        const payload = change
+
+        console.log(payload)
+        //add to database
+        await api.insertChange(payload).then(res => {
+            window.alert(`Change inserted seccessfully`)
+            change = {
+                item: '',
+                action: '',
+                emp: '',
+            }
+        }) 
+    }
+
     return (
         <>
         <div className='manager'> 
@@ -76,7 +96,7 @@ export default function ManagerView (){
             {/*if manager is logged in, show the navbar */}        
             { isLogged ?
             <div className='manager-body'>
-               <StaffMenu level= {2} />
+               <StaffMenu Change={Change} level= {2}/>
                 <Router>
                     <Navbar/>
                     

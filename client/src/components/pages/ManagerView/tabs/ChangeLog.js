@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as ReactBootStrap from 'react-bootstrap';
 
 import api from '../../../../api'
@@ -15,6 +15,28 @@ const change = {
 
 export default function ChangeLog(){
     const [changeLog, setChangeLog] = useState([]);
+
+    //get all changes that are currently logged
+    useEffect(() => {
+        handleGetChanges()
+        const intervalId = setInterval(() => {
+            handleGetChanges()
+        }, 10000);
+
+        return() => {
+            clearInterval(intervalId);
+        }
+    }, []);
+
+    const handleGetChanges = async() => {
+        await api.getChanges.then(changes => {
+            const curr_changes = changes.data.data
+            console.log(curr_changes)
+            curr_changes.map((changes) => {
+
+            })
+        })
+    }
 
     //render all sales
     const renderChange = (change, index) => {

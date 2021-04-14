@@ -25,6 +25,9 @@ export const getOrder = id => api.get(`/order/${id}`)
 export const updateTable = (table_num, payload) => api.put(`/table/${table_num}`,payload)
 export const getTables = () => api.get(`/tables`)
 export const getTableByNum = (table_num) => api.get(`/table/${table_num}`)
+//change
+export const insertChange = payload => api.post(`/change`, payload)
+export const getChanges = () => api.get(`/changes`)
 
 
 
@@ -45,6 +48,8 @@ const apis = {
     updateTable,
     getTables,
     getTableByNum,
+    insertChange,
+    getChanges,
 }
 
 export default apis

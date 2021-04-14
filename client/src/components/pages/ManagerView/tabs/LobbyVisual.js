@@ -6,7 +6,6 @@ import './LobbyVisual.css';
 export default function LobbyVisual(){
     return(
         <div className="MgrLobby">
-        
             <TableView />  
         </div>
     );
