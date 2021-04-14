@@ -28,6 +28,9 @@ export const getTableByNum = (table_num) => api.get(`/table/${table_num}`)
 //change
 export const insertChange = payload => api.post(`/change`, payload)
 export const getChanges = () => api.get(`/changes`)
+//operation times
+export const updateTime = (id, payload) => api.post(`/setting/${id}`, payload)
+export const getTimes = () => api.get(`/settings`)
 
 
 
@@ -50,6 +53,8 @@ const apis = {
     getTableByNum,
     insertChange,
     getChanges,
+    updateTime,
+    getTimes,
 }
 
 export default apis

@@ -222,7 +222,7 @@ export default function StaffMenu({Change, level}) {
     //OTHER MENU OPTIONS vv
 
     //to handle update and log the change
-    const handleUpdate = async (payload, button) => {
+    const handleUpdate = async (payload) => {
         console.log(payload)
         await api.updateItem(payload._id, payload).then(res => {
             window.alert('Menu item change has been submitted')

@@ -1,17 +1,51 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import TimeField from 'react-simple-timefield';
+
+import api from '../../../../api';
 
 
 import "./ConsumerSettings.css";
 
 export default function ConsumerSettings(){
-    const [storeHours, setStoreHours] = useState({ startTime: '', endTime: ''});
+    const [storeHours, setStoreHours] = useState([])   //to collect 
+    const [newStoreHours, setNewStoreHours] = useState({ startTime: '', endTime: ''});
 
-    const set = (startTime) => {
+    //get times that are already stored
+    useEffect(() => {
+        handleGetTimes()
+    }, []);
+
+    const handleGetTimes = async() => {
+        await api.getTimes().then(times => {
+            const curr_times = times.data.data
+
+            let tempTimes = []
+            curr_times.map((time) => {
+                tempTimes = [...tempTimes, time]
+            })
+            //set states
+            setStoreHours(tempTimes)
+            console.log(tempTimes)
+        })
+    };
+
+    //set and send times
+    const setValue = (variable) => {
+        //console.log(variable)
         return({target: {value} }) => {
-            setStoreHours(storeHours => ({ ...storeHours, [startTime]: value}));
+            setNewStoreHours(newStoreHours => ({ ...newStoreHours, [variable]: value}))
         }
     };
+
+    //to handle update of times
+    const handleUpdate = async () => {
+        let { startTime, endTime} = newStoreHours
+        let payload = {startTime, endTime}
+        console.log(payload)
+        await api.updateTime(payload._id, payload).then(res => {
+            window.alert('Time Changed')
+        })
+    } 
 
     return(
         <div className="ConsumerSettings">
@@ -23,13 +57,48 @@ export default function ConsumerSettings(){
                 </p>
 
                 <div>
-                    Starting Time: &emsp; {storeHours.startTime}
-                    <input className="time-input" placeholder="00:00:00" value={storeHours.startTime} onChange={set('startTime')} />
+                    <h2 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Starting Time</h2> 
+                    <div>
+                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                            Current: 
+                            <label className="time-output">
+                                {storeHours.startTime}
+                            </label>
+                        </h3>
+                        
+                    </div>
+                    
+                    <br/>
+                    <div>
+                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                            Change: 
+                            <input type="text" className="time-input" value={newStoreHours.startTime} onChange={setValue('startTime')} />
+                        </h3>
+                        
+                    </div>
+                    
                 </div>
                 <br/>
                 <div>
-                    Ending Time: &ensp;&emsp; {storeHours.endTime}
-                    <input className="time-input" placeholder="00:00:00" value={storeHours.endTime} onChange={set('endTime')}/>
+                    <h2 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Ending Time</h2> 
+                    <div>
+                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                            Current: 
+                            <label className="time-output">{storeHours.endTime}</label>
+                        </h3>
+                        
+                    </div>
+                    <br/>
+                    <div>
+                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                            Change: 
+                            <input type="text" className="time-input" value={newStoreHours.endTime} onChange={setValue('startTime')} />
+                        </h3>
+                        
+                    </div></div>
+                <div>
+                    <br/>
+                    <button style={{ marginLeft: '40%'}} onClick={handleUpdate}>SAVE CHANGES</button>
                 </div>
             </form>  
         </div>

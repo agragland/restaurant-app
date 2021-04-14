@@ -5,6 +5,8 @@ import api from '../../../../api'
 
 import "./ChangeLog.css";
 
+const endOfDay = "--------------------------------------End Of Day--------------------------------------"
+
 export default function ChangeLog(){
     const [changeLog, setChangeLog] = useState([]);
 
@@ -45,14 +47,14 @@ export default function ChangeLog(){
     //render all sales
     const renderChange = (change, index) => {
         return(
-            <tr key={index}>
-                <td>{change.date}</td>
-                <td>{change.time}</td>
-                <td>{change.emp_id}</td>
-                <td>{change.item}</td>
-                <td>{change.change}</td>
-            </tr>
-        )
+        <tr key={index}>
+            <td>{change.date}</td>
+            <td>{change.time}</td>
+            <td>{change.emp_id}</td>
+            <td>{change.item}</td>
+            <td>{change.change}</td>
+        </tr>
+        )        
     }
     
     return(

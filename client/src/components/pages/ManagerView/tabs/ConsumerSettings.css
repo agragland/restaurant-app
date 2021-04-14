@@ -5,6 +5,10 @@
     z-index: 2;
 }
 
+.ConsumerSettings .cs-body {
+
+}
+
 .save-btn{
     width: 50px;
     height: 20px;
@@ -16,4 +20,16 @@
     border-radius: 8px;
     transition: 0.4s;
     border: black solid 1px;
+    margin-left: 20px;
+}
+
+.time-output{
+    width: 210px;
+    height: 30px;
+    padding: 5px;
+    background-color: lightgray;
+    border-radius: 8px;
+    transition: 0.4s;
+    border: black solid 1px;
+    margin-left: 20px;
 }
