@@ -150,7 +150,7 @@ export default function DailySalesReport(){
 
     return(
         <div className="DSR">
-            <h1>DSR</h1>
+            <h1>Daily Sales Report</h1>
             <div className="DSR-visual">
                 <ReactBootStrap.Table striped bordered hover size="sm">
                     <thead>

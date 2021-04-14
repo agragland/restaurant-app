@@ -18,7 +18,6 @@ export default function ConsumerSettings(){
     const handleGetTimes = async() => {
         await api.getTimes().then(times => {
             const curr_times = times.data.data
-
             let tempTimes = []
             curr_times.map((time) => {
                 let tempTime = { startTime: time.startTime, endTime: time.endTime}
@@ -26,21 +25,18 @@ export default function ConsumerSettings(){
                 tempTimes = [...tempTimes, tempTime]
             })
             //set states
-            setStoreHours(tempTimes)
+            setStoreHours(tempTimes[0])
             console.log(storeHours)
         })
     };
 
     //set and send times
     const setValue = (variable) => {
-        //console.log(variable)
         return({target: {value} }) => {
             setNewStoreHours(newStoreHours => ({ ...newStoreHours, [variable]: value}))
+            console.log(newStoreHours)
         }
     };
-
-    //save
-    
 
     //to handle update of times
     const handleUpdate = async () => {
@@ -58,47 +54,47 @@ export default function ConsumerSettings(){
                 <h1>Consumer Settings</h1>
                 <p>To adjust the time orders will be accepted, <br/>
                     type the new time in the text box provided. <br/>
-                    Use format '00:00:00' using time in 24 hours.
                 </p>
+                <h2 style={{ fontSize: '18px' }}> Use format 'HH:MM:SS'</h2> 
 
                 <div className='cs-body'>
-                    <h2 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Starting Time</h2> 
+                    <h3 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Starting Time</h3> 
                     <div>
-                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                        <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Current: 
                             <label className="time-output">
-                                {storeHours[0].startTime}
+                                {storeHours.startTime}
                             </label>
-                        </h3>
+                        </p>
                         
                     </div>
                     
                     <br/>
                     <div>
-                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                        <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Change: 
                             <input type="text" className="time-input" value={newStoreHours.startTime} onChange={setValue('startTime')} />
-                        </h3>
+                        </p>
                         
                     </div>
                     
                 </div>
                 <br/>
                 <div>
-                    <h2 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Ending Time</h2> 
+                    <h3 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Ending Time</h3> 
                     <div>
-                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                        <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Current: 
-                            <label className="time-output">{storeHours[0].endTime}</label>
-                        </h3>
+                            <label className="time-output">{storeHours.endTime}</label>
+                        </p>
                         
                     </div>
                     <br/>
                     <div>
-                        <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
+                        <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Change: 
-                            <input type="text" className="time-input" value={newStoreHours.endTime} onChange={setValue('startTime')} />
-                        </h3>
+                            <input type="text" className="time-input" value={newStoreHours.endTime} onChange={setValue('endTime')} />
+                        </p>
                         
                     </div></div>
                 <div>
