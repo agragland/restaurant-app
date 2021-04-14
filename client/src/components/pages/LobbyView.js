@@ -13,7 +13,7 @@ const globalTables = [
     available, available, available, available, available, available, available, available, available, available,
 ]
 
-export default function TableView() {
+export default function TableView({Change}) {
     const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
     const [table, setTable] = useState({status: "Available", orders: [], drinks: [], assistance: false});
@@ -152,8 +152,6 @@ export default function TableView() {
         order.subtotal -= price
         order.tax -= 0.0825 * price
         order.total -= 1.085 * price
-        if(order.total < 0)
-            order.total = 0
 
         handleUpdateOrder(order)      //re-enable when ready
 
@@ -238,7 +236,7 @@ export default function TableView() {
     return (
         <div className="lobby">
             <p className="lobby-title">Lobby</p>
-            <StaffMenu level={1} />
+            <StaffMenu Change={Change} level={1} />
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}

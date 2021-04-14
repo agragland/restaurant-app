@@ -88,7 +88,6 @@ function Navbar() {
         let change = ({item: details.item, action: details.action, emp: employee})
         const payload = change
 
-        console.log(payload)
         //add to database
         await api.insertChange(payload).then(res => {
             window.alert(`Change inserted seccessfully`)
