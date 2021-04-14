@@ -23,7 +23,7 @@ function Navbar() {
     const [component, setComponent] = useState(<CustomerView/>);
     const [showModal, setShowModal] = useState(false);
     const [employees, setEmployees] = useState([]);
-    const [employee, setEmployee] = useState({ emp_id: ''});
+    const [employee, setEmployee] = useState({});
     const [error, setError] = useState('');
 
     //get and store all employee info
@@ -67,14 +67,13 @@ function Navbar() {
         employees.map((worker) => {
             //split into two seperate if statements to avoid multiple login errors
             if(details.emp_id == worker.emp_id){ //if the user name matches
+                setEmployee(worker)
                 handleModal();
             }
             else{
                 setError('Credentials do not match. Please try again.');
             }
         })
-
-
     }
 
     //employee signin
@@ -83,6 +82,23 @@ function Navbar() {
             setEmployee( employee => ({...employee, [variable]: value}));
         }
     };
+
+    //adds a change from manager
+    const Change = async (details) => {
+        let change = ({item: details.item, action: details.action, emp: employee})
+        const payload = change
+
+        console.log(payload)
+        //add to database
+        await api.insertChange(payload).then(res => {
+            window.alert(`Change inserted seccessfully`)
+            change = {
+                item: '',
+                action: '',
+                emp: employee._id,
+            }
+        }) 
+    }
 
     const submitHandler = e => {
         e.preventDefault(); //prevents duplicate entries
@@ -98,7 +114,7 @@ function Navbar() {
 
         //chooses which view to display
         if(view === "Lobby"){
-            setComponent(() => <LobbyView />)
+            setComponent(() => <LobbyView Change={Change}/>)
             handleModal();
             handleGetLobby();
         }

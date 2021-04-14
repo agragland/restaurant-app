@@ -28,8 +28,8 @@ export default function ChangeLog(){
             let tempChanges = []
             curr_changes.map((change) => {
                 let tempChange = {date: '', time: '', emp_id: '', item: '', change: ''}
-                tempChange.date = change.createdAt.slice(0,10)
-                tempChange.time = change.createdAt.slice(11,19)
+                tempChange.date = getDate(change.createdAt)
+                tempChange.time = getTime(change.createdAt)
                 tempChange.emp_id = change.emp.emp_id
                 tempChange.item = change.item
                 tempChange.change = change.action
@@ -53,6 +53,27 @@ export default function ChangeLog(){
             <td>{change.change}</td>
         </tr>
         )        
+    }
+
+    //format time
+    const getTime = (creationTime) => {
+        console.log(creationTime)
+        const time = new Date(creationTime)     //gets Date based on when order was created
+        const hours = time.getHours()
+        const minutes = time.getMinutes()
+        const seconds = time.getSeconds()
+        //converts Date to 24 hour clock, adds leading zeros if needed
+        return ((hours < 10 ? '0' : '') + hours) + ":" + ((minutes < 10 ? '0' : '') + minutes) + ":" + ((seconds < 10 ? '0' : '') + seconds)
+    }
+
+    //format date
+    const getDate = (creationDate) => {
+        const date = new Date(creationDate)
+        const year = date.getFullYear()
+        const month = date.getMonth()+1
+        const day = date.getDate()
+
+        return(year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0': '') + day)
     }
     
     return(
