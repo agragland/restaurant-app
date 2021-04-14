@@ -94,15 +94,15 @@ export default function KidsCorner(){
                     </div>
                 </form>
                 :
-                <div>
-                    <h2>games</h2>
-                    <button onClick={handleExit}>Exit Kids Corner</button>
-                    
+                <div className="signin-form">
+                    <div className='form-inner'>
+                        <button onClick={handleExit} style={{ marginTop: '-50px'}}>
+                            Exit Kids Corner
+                        </button>
+                    </div>
                 </div>
-                }
-                
+                }    
             </div>
-            
              :
             <form className="signin-form">
                 <div className='form-inner'>
