@@ -5,8 +5,6 @@ import api from '../../../../api'
 
 import "./ChangeLog.css";
 
-const endOfDay = "--------------------------------------End Of Day--------------------------------------"
-
 export default function ChangeLog(){
     const [changeLog, setChangeLog] = useState([]);
 

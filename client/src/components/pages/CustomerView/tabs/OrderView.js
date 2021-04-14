@@ -62,7 +62,10 @@ export default class OrderView extends React.Component{
             total: 0,
             status: '',
             table: 0,
-            coupon: coupon
+            coupon: coupon,
+            openTime: "",
+            closeTime: "",
+            canOrder: true
         }
     }
 
@@ -109,13 +112,45 @@ export default class OrderView extends React.Component{
         }
 
     }
+    
+    handleGetTimes = async() => {
+        apis.getTimes().then(times => {
+            const curr_times = times.data.data
+            curr_times.map((time) => {
+                let now = this.getTime(new Date())
+                console.log(now)
+                if( now>time.startTime && now<time.endTime){
+                    this.setState({canOrder: false});
+                }
+                else{
+                    this.setState({canOrder: true});
+                }
+            })
+            //set states
+            //console.log(tempTime)
+            //this.setState({openTime: tempTime.startTime}) // closeTime: tempTimes[0].endTime})
+            //console.log(this.openTime)
+        })
+        
+    };
+
+    getTime = (creationTime) => {
+        const time = new Date(creationTime)     //gets Date based on when order was created
+        const hours = time.getHours()
+        const minutes = time.getMinutes()
+        const seconds = time.getSeconds()
+        //converts Date to 24 hour clock, adds leading zeros if needed
+        return ((hours < 10 ? '0' : '') + hours) + ":" + ((minutes < 10 ? '0' : '') + minutes) + ":" + ((seconds < 10 ? '0' : '') + seconds)
+    }
+
 
     OrderStatusHandler = () => {
-
+        this.handleGetTimes()
+        console.log(this.state.canOrder)
         if(payload.status === 'Waiting')
         {
             return(
-                <button onClick={this.placeOrderHandler}>Place Order</button>
+                <button disabled={this.state.canOrder} onClick={this.placeOrderHandler}>Place Order</button>
             )
         }
         else if(payload.status === 'Created')

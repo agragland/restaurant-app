@@ -8,7 +8,7 @@ import "./ConsumerSettings.css";
 
 export default function ConsumerSettings(){
     const [storeHours, setStoreHours] = useState([])   //to collect 
-    const [newStoreHours, setNewStoreHours] = useState({ startTime: "", endTime: ""});
+    const [newStoreHours, setNewStoreHours] = useState({ startTime: "", endTime: "", _id: ""});
 
     //get times that are already stored
     useEffect(() => {
@@ -18,9 +18,10 @@ export default function ConsumerSettings(){
     const handleGetTimes = async() => {
         await api.getTimes().then(times => {
             const curr_times = times.data.data
+            console.log(curr_times)
             let tempTimes = []
             curr_times.map((time) => {
-                let tempTime = { startTime: time.startTime, endTime: time.endTime}
+                let tempTime = time
                 
                 tempTimes = [...tempTimes, tempTime]
             })
@@ -30,18 +31,31 @@ export default function ConsumerSettings(){
         })
     };
 
-    //set and send times
-    const setValue = (variable) => {
+    //set times
+    const setNewValue = (variable) => {
         return({target: {value} }) => {
             setNewStoreHours(newStoreHours => ({ ...newStoreHours, [variable]: value}))
             console.log(newStoreHours)
         }
     };
 
-    //to handle update of times
-    const handleUpdate = async () => {
-        let { startTime, endTime} = newStoreHours
-        let payload = {startTime, endTime}
+    //prepare new time to update
+    const prepTimeChange = () => {
+        //get current data
+        let tempTime = storeHours;
+        if(newStoreHours.startTime !== ""){
+            tempTime.startTime = newStoreHours.startTime;
+        }
+        if(newStoreHours.endTime !== ""){
+            tempTime.endTime = newStoreHours.endTime;
+        }   
+        
+                
+        handleUpdate(tempTime)
+    };
+
+    //update with new time
+    const handleUpdate = async(payload) => {
         console.log(payload)
         await api.updateTime(payload._id, payload).then(res => {
             window.alert('Time Changed')
@@ -73,7 +87,7 @@ export default function ConsumerSettings(){
                     <div>
                         <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Change: 
-                            <input type="text" className="time-input" value={newStoreHours.startTime} onChange={setValue('startTime')} />
+                            <input type="text" className="time-input" value={newStoreHours.startTime} onChange={setNewValue('startTime')} />
                         </p>
                         
                     </div>
@@ -93,13 +107,13 @@ export default function ConsumerSettings(){
                     <div>
                         <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Change: 
-                            <input type="text" className="time-input" value={newStoreHours.endTime} onChange={setValue('endTime')} />
+                            <input type="text" className="time-input" value={newStoreHours.endTime} onChange={setNewValue('endTime')} />
                         </p>
                         
                     </div></div>
                 <div>
                     <br/>
-                    <button style={{ marginLeft: '40%'}} onClick={handleUpdate}>SAVE CHANGES</button>
+                    <button style={{ marginLeft: '40%'}} onClick={prepTimeChange}>SAVE CHANGES</button>
                 </div>
             </form>  
         </div>
