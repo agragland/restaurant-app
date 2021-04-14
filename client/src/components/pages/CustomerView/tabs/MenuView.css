@@ -42,3 +42,16 @@
 .item-name{
     font-weight: bold;
 }
+
+.comment-input{
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    transition: 0.4s;
+    border: black solid 1px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-bottom: 2px;
+}

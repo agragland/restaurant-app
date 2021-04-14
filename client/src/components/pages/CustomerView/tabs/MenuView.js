@@ -14,6 +14,9 @@ export const Item = ({item}) => {
         comment = e.target.value
     }
 
+    if(item.isAvailable === false)
+        return <></>
+
     return(
     <>
         <Modal show={customItem}>
@@ -28,7 +31,7 @@ export const Item = ({item}) => {
                 </ul>
                 <form>
                     <label>Comments:</label>
-                    <input type = "text" onChange={handleCommentField}/>
+                    <input type = "text" className="comment-input" onChange={handleCommentField}/>
                 </form>
                 <button onClick={() => {
                     handleAddToOrder(item, comment);

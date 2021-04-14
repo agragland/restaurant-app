@@ -98,7 +98,7 @@ function CustomerLogin({ Login, Guest, error }) {
         <form className="signin-form" onSubmit={submitHandler}>
             <div className='form-inner'>
                 <h2>Customer Login</h2>
-                {errorMsg}
+                {error}
                 {/*enter name*/}
                 <div className='form-group'>
                     <label  htmlFor='name'>Name:</label>
