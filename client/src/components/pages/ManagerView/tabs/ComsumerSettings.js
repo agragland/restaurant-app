@@ -8,7 +8,7 @@ import "./ConsumerSettings.css";
 
 export default function ConsumerSettings(){
     const [storeHours, setStoreHours] = useState([])   //to collect 
-    const [newStoreHours, setNewStoreHours] = useState({ startTime: '', endTime: ''});
+    const [newStoreHours, setNewStoreHours] = useState({ startTime: "", endTime: ""});
 
     //get times that are already stored
     useEffect(() => {
@@ -21,11 +21,13 @@ export default function ConsumerSettings(){
 
             let tempTimes = []
             curr_times.map((time) => {
-                tempTimes = [...tempTimes, time]
+                let tempTime = { startTime: time.startTime, endTime: time.endTime}
+                
+                tempTimes = [...tempTimes, tempTime]
             })
             //set states
             setStoreHours(tempTimes)
-            console.log(tempTimes)
+            console.log(storeHours)
         })
     };
 
@@ -36,6 +38,9 @@ export default function ConsumerSettings(){
             setNewStoreHours(newStoreHours => ({ ...newStoreHours, [variable]: value}))
         }
     };
+
+    //save
+    
 
     //to handle update of times
     const handleUpdate = async () => {
@@ -56,13 +61,13 @@ export default function ConsumerSettings(){
                     Use format '00:00:00' using time in 24 hours.
                 </p>
 
-                <div>
+                <div className='cs-body'>
                     <h2 style={{ marginLeft: '2%', textAlign: 'left', fontSize: '24px', textDecoration: 'underline' }}>Starting Time</h2> 
                     <div>
                         <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Current: 
                             <label className="time-output">
-                                {storeHours.startTime}
+                                {storeHours[0].startTime}
                             </label>
                         </h3>
                         
@@ -84,7 +89,7 @@ export default function ConsumerSettings(){
                     <div>
                         <h3 style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Current: 
-                            <label className="time-output">{storeHours.endTime}</label>
+                            <label className="time-output">{storeHours[0].endTime}</label>
                         </h3>
                         
                     </div>
