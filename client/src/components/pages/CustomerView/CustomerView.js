@@ -11,6 +11,7 @@ import CustomerLogin from './tabs/CustomerLogin'
 import MenuView from "./tabs/MenuView";
 import OrderView, {updateCoupon} from "./tabs/OrderView";
 import PaymentView from "./tabs/PaymentView";
+import KidsCorner from "./tabs/KidsCorner"
 
 export default function CustomerView() {
     const [customers, setCustomers] = useState([]); //to store all customers from database
@@ -77,14 +78,16 @@ export default function CustomerView() {
                 <div className='customer-body'>
 
                     <Navbar/>
-                    {/*Consumer Settings*/}
+                    {/*Customer Loyalty Rewards*/}
                     <Route exact path="/Rewards"  />
-                    {/*DailySalesReport*/}
+                    {/*Menu*/}
                     <Route exact path="/Menu" component={MenuView} />
-                    {/*Change Log */}
+                    {/*Order*/}
                     <Route exact path="/Order" component={OrderView}  />
-                    {/*Lobby View*/}
+                    {/*Payment*/}
                     <Route exact path="/Payment" component={PaymentView}  />
+                    {/*Games*/}
+                    <Route exact path="/KidsCorner" component={KidsCorner} />
                 </div> :
                 /*else, show customer log in page*/
                 <div className='login' >

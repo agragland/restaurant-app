@@ -48,9 +48,7 @@ export default function ConsumerSettings(){
         }
         if(newStoreHours.endTime !== ""){
             tempTime.endTime = newStoreHours.endTime;
-        }   
-        
-                
+        }              
         handleUpdate(tempTime)
     };
 
