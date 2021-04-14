@@ -52,22 +52,53 @@ function CustomerLogin({ Login, Guest, error }) {
 
         //add to database
         await api.insertCustomer(payload).then(res => {
-           window.alert(`Item inserted seccessfully`)
-            
-        }) 
+           window.alert(`Item inserted successfully`)
+        })
         handleAddClick();
         console.log(customer)
-        Login(customer)        
+        Login(customer)
     }
 
+    const [customers, setCustomers] = useState({})
+    const handleGetCustomer = async () => {
+        await api.getAllCustomers().then(loyals => {
+            const all_customers = loyals.data.data
+            let temp_customers = []
 
+            all_customers.map((loyal) => {
+
+                //add to the temp array
+                temp_customers = [...temp_customers, loyal]
+            })
+            //set state to temp
+            console.log(temp_customers)
+            setCustomers(temp_customers)
+            console.log(customers)
+        })
+    }
+
+    const [errorMsg, setErrorMsg] = useState(error)
+    //customer login
+    const checkUnique = () => {
+        console.log(customer)
+        handleGetCustomer()
+        customers.map((worker) => {
+            //split into two seperate if statements to avoid multiple login errors
+            if(false){ //if the user name matches
+                setErrorMsg('Credentials do not match. Please try again.')
+            }
+            else{
+                AddCustomer()
+            }
+        })
+    }
 
     return (
         <>
         <form className="signin-form" onSubmit={submitHandler}>
             <div className='form-inner'>
                 <h2>Customer Login</h2>
-                {error}
+                {errorMsg}
                 {/*enter name*/}
                 <div className='form-group'>
                     <label  htmlFor='name'>Name:</label>
@@ -103,12 +134,12 @@ function CustomerLogin({ Login, Guest, error }) {
                     {/*enter email*/}
                     <div className='form-group'>
                         <label  htmlFor='email'>E-mail:</label>
-                        <input type="text" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
+                        <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
                     </div> 
                     {/*enter phone number*/}
                     <div className='form-group'>
                         <label  htmlFor='phoneNumber'>Phone Number:</label>
-                        <input type="text" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                        <input type="text" pattern="[0-9]{10}" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                     </div>   
                     {/*enter phone number*/}
                     <div className='form-group'>

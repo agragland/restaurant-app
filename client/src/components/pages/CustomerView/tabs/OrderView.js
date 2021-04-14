@@ -3,6 +3,8 @@ import apis from "../../../../api";
 import {preparePayment} from "./PaymentView";
 import "./OrderView.css"
 
+const sundayNumber = 0;
+
 let payload = {
     items: [],
     comments: [],
@@ -118,7 +120,6 @@ export default class OrderView extends React.Component{
             const curr_times = times.data.data
             curr_times.map((time) => {
                 let now = this.getTime(new Date())
-                console.log(now)
                 if( now>time.startTime && now<time.endTime){
                     this.setState({canOrder: false});
                 }
@@ -126,10 +127,6 @@ export default class OrderView extends React.Component{
                     this.setState({canOrder: true});
                 }
             })
-            //set states
-            //console.log(tempTime)
-            //this.setState({openTime: tempTime.startTime}) // closeTime: tempTimes[0].endTime})
-            //console.log(this.openTime)
         })
         
     };
@@ -146,7 +143,6 @@ export default class OrderView extends React.Component{
 
     OrderStatusHandler = () => {
         this.handleGetTimes()
-        console.log(this.state.canOrder)
         if(payload.status === 'Waiting')
         {
             return(
@@ -189,7 +185,6 @@ export default class OrderView extends React.Component{
     }
 
     EditRemoveButtons = (item_test) => {
-        console.log(payload.status)
         if(payload.status === 'Waiting')
         {
             return(
@@ -206,10 +201,28 @@ export default class OrderView extends React.Component{
         //set up order payload and submit
         payload.status = 'Created'
         this.setState({status: 'Created'})
-        let { items, comments, commped, subtotal, total,  } = this.state
+        let { items, comments, commped, subtotal  } = this.state
+
+        if(new Date().getDay() === sundayNumber){
+            for(let i = 0; i < items.length; i++) {
+                if(items[i].category === "entrees"){
+                    for(let j = 0; j < items.length; j++) {
+                        if(items[j].category === "kids" && commped[j] === false){
+                            subtotal -= items[j].price
+                            commped[j] = true
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         subtotal -= coupon
-        if(total < 0)
-            total = 0
+        if(subtotal < 0)
+            subtotal = 0
+        const total = subtotal
+
+        this.setState({subtotal: subtotal})
 
         const final_payload = { order_items:items, comments, commped, subtotal, total, status:'Created', table:payload.table }
         await apis.createOrder(final_payload).then(res => {
@@ -220,6 +233,13 @@ export default class OrderView extends React.Component{
     displayCoupon = () => {
         if(this.state.coupon > 0)
             return <p>A coupon of ${this.state.coupon.toFixed(2)} has been added due to your loyalty.</p>
+        else
+            return <></>
+    }
+
+    displaySunday = () => {
+        if(new Date().getDay() === sundayNumber)
+            return <p>Sunday special! You can receive a free Kids meal for every Entree you purchase.</p>
         else
             return <></>
     }
@@ -237,6 +257,7 @@ export default class OrderView extends React.Component{
                 }
             </div>
             {this.displayCoupon()}
+            {this.displaySunday()}
             <p className="big-text">Subtotal: ${this.state.subtotal.toFixed(2)}</p>
             {this.OrderStatusHandler()}
         </div>
