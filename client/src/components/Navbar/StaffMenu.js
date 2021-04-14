@@ -291,7 +291,7 @@ export default function StaffMenu({Change, level}) {
         let tempItem = unavailMenuItems[index] //used for change log
 
         //delete from database
-        handleUpdate(unavailMenuItems[index])
+        handleDelete(unavailMenuItems[index])
 
         //remove from unavailible menu
         let temp = [...unavailMenuItems]
@@ -355,7 +355,6 @@ export default function StaffMenu({Change, level}) {
                                             category={item.category}
                                             price={item.price}
                                             />
-                                            <button value={index} onClick={clickToRemove}>Remove Item</button>
                                         </div>
                                     )
                                 }
@@ -394,7 +393,6 @@ export default function StaffMenu({Change, level}) {
                                         category={item.category}
                                         price={item.price}
                                         />
-                                        <button value={index} onClick={clickToRemove}>Remove Item</button>
                                     </div>)
                                 }
                                 else
@@ -719,7 +717,7 @@ export default function StaffMenu({Change, level}) {
                     <DropMenu show={showUnavailableDesserts}>
                         {
                             unavailMenuItems.map((item, index) => {
-                                if(item.category === 'dessert' && canReplace)
+                                if(item.category === 'desserts' && canReplace)
                                 {
                                     return(
                                     <div className="item-container">
