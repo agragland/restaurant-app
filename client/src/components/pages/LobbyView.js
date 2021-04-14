@@ -212,6 +212,7 @@ export default function TableView() {
             else
                 tableColor = "white"
         }
+        return <></>
     }
 
     function setNeeds(curTable) {
@@ -247,8 +248,9 @@ export default function TableView() {
                 </>
             ))}
             <Modal show={tableShow}>
-                <button onClick={handleTableClick}>X</button>
+                <button className="x-button" onClick={handleTableClick}>X</button>
                 <button className='orderButton' onClick={handleOrderClick} disabled={!table.orders[0]} >Show Order</button>
+                <br/>
                 <p>
                     Table {tableNum}
                 </p>
@@ -256,14 +258,14 @@ export default function TableView() {
                 <button onClick={handleCompleteClick} disabled={!(table.status === "Order Ready" || table.drinks.length !== 0 || table.assistance)}>Complete Request</button>
             </Modal>
             <Modal show={orderShow}>
-                <button onClick={handleOrderClick}>X</button>
+                <button className="x-button" onClick={handleOrderClick}>X</button>
                 <p>Table {tableNum} Order</p>
                 {table.orders.map((order, orderIndex) => (
                     order.order_items.map((item, itemIndex) => (
-                        <p>
-                            {item.name}, ${item.price}
-                            <button data-orderindex={orderIndex} data-itemindex={itemIndex} disabled = {order.commped[itemIndex]} onClick={handleRemoveClick}>Remove</button>
-                        </p>
+                        <div className="item-list">
+                            {item.name}, ${item.price} &nbsp;
+                            <button className="comp-button" data-orderindex={orderIndex} data-itemindex={itemIndex} disabled={order.commped[itemIndex]} onClick={handleRemoveClick}>Comp</button>
+                        </div>
                     ))
                 ))}
             </Modal>

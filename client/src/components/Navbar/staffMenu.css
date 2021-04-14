@@ -52,11 +52,8 @@
 
 .category {
     position: relative;
-    width: 105%;
-    left: -1px;
+    width: 95%;
     padding: 16px 16px;
-    margin-left: -20px;
-    margin-right: -30px;
     text-align: center;
     overflow: hidden;
 }
@@ -67,6 +64,34 @@
     height: 100px;
 }
 
-p {
-    font-size: medium
+
+.item-container{
+    position: relative;
+    left: 50%;
+    margin: 5px;
+    padding-bottom: 5px;
+    transform: translate(-50%, 0);
+    background-color: whitesmoke;
+    outline: black solid 1px;
+    width: 60%
+}
+
+.add-item-input{
+    padding: 5px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    transition: 0.4s;
+    border: black solid 1px;
+}
+
+.back-button{
+    position: absolute;
+    left: 0.5%;
+    top: 1%;
+}
+
+.submit{
+    border: black solid 1px;
+    background-color: #00a1bf;
+    color: white;
 }

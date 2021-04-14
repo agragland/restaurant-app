@@ -3,12 +3,7 @@ import "./staffMenu.css"
 import api from "../../api";
 
 const Item = ({name, price,}) => (
-    <div>
-        <div>
-            <p>{name}</p>
-            <p>{price}</p>
-        </div>
-    </div>
+    <p>{name} ${price}</p>
 )
 
 
@@ -180,7 +175,7 @@ export default function StaffMenu({Change, level}) {
     //various dropdown menus based on menu categories ^^
 //--------------------------------------------------------------------------------------------------------------------------
     //ADD ITEM TO MENU vv
-    const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: '', img: '', isAvailable: true})
+    const [menuItem, setMenuItem] = useState({name: '', category: '', ingredients: '', price: 0.00, img: '', isAvailable: true})
     
     //add menu item
     const [showAdd, setShowAdd] = useState(false);
@@ -206,15 +201,15 @@ export default function StaffMenu({Change, level}) {
         console.log(payload)
         //add to database
         await api.insertItem(payload).then(res => {
-            window.alert(`Item inserted seccessfully`)
-            menuItem = {
+            window.alert(`Item inserted successfully`)
+            setMenuItem({
                 name: '',
                 category: '',
                 ingredients: '',
                 price: 0.00,
                 img: '',
-                isAvailable: 1
-            }
+                isAvailable: true
+            })
         }) 
 
         console.log(availMenuItems)
@@ -327,7 +322,7 @@ export default function StaffMenu({Change, level}) {
         <div>
             <button onClick={handleModalClick} className="menu-button">Menu</button>
             <Modal show={showModal}>
-                <button onClick={handleModalClick} style={{position: 'fixed', left: '11%', top: '11%'}}>X</button>
+                <button onClick={handleModalClick} className="back-button">X</button>
                 
                 <h3 style={{textAlign: 'center', fontSize: '20px'}}>Menu</h3>
                 <p>
@@ -338,26 +333,29 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'appetizers' && canRemove)
                                 {
                                     return(
-                                    <>
-                                        <Item
-                                        key={index}
-                                        name={item.name}
-                                        category={item.category}
-                                        price={item.price}
-                                        />
-                                        <button value={index} onClick={clickToRemove}>Remove Item</button> 
-                                    </>)
-                                    
+                                        <div className="item-container">
+                                            <Item
+                                            key={index}
+                                            name={item.name}
+                                            category={item.category}
+                                            price={item.price}
+                                            />
+                                            <button value={index} onClick={clickToRemove}>Remove Item</button>
+                                        </div>
+                                    )
                                 }
                                 else if(item.category === 'appetizers')
                                 {
                                     return(
-                                        <Item
-                                        key={index}
-                                        name={item.name}
-                                        category={item.category}
-                                        price={item.price}
-                                        />)
+                                        <div className="item-container">
+                                            <Item
+                                            key={index}
+                                            name={item.name}
+                                            category={item.category}
+                                            price={item.price}
+                                            />
+                                        </div>
+                                    )
                                 }
                                 else
                                     return null;
@@ -373,25 +371,28 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'entrees' && canRemove)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
                                         />
-                                        <button value={index} onClick={clickToRemove}>Remove Item</button> 
-                                    </>)
-                                    
+                                        <button value={index} onClick={clickToRemove}>Remove Item</button>
+                                    </div>)
+
                                 }
                                 else if(item.category === 'entrees')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -407,7 +408,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'sides' && canRemove)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -415,17 +416,21 @@ export default function StaffMenu({Change, level}) {
                                         price={item.price}
                                         />
                                         <button value={index} onClick={clickToRemove}>Remove Item</button> 
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'sides')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>
+                                    )
                                 }
                                 else
                                     return null;
@@ -441,25 +446,27 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'kids' && canRemove)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
                                         />
-                                        <button value={index} onClick={clickToRemove}>Remove Item</button> 
-                                    </>)
-                                    
+                                        <button value={index} onClick={clickToRemove}>Remove Item</button>
+                                    </div>)
                                 }
                                 else if(item.category === 'kids')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -475,7 +482,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'desserts' && canRemove)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -483,17 +490,20 @@ export default function StaffMenu({Change, level}) {
                                         price={item.price}
                                         />
                                         <button value={index} onClick={clickToRemove}>Remove Item</button> 
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'desserts')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -509,7 +519,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'drinks' && canRemove)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -517,17 +527,20 @@ export default function StaffMenu({Change, level}) {
                                         price={item.price}
                                         />
                                         <button value={index} onClick={clickToRemove}>Remove Item</button> 
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'drinks')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -543,8 +556,8 @@ export default function StaffMenu({Change, level}) {
     --------------------------------------------------------------------------------------------------
         UNACCESSIBLE MENU vv */}
         <UnavailableModal show={showUnavailableModal}>
-            <button onClick={handleUnavailableClick} style={{position: 'fixed', left: '11%', top: '11%'}}>Back To Menu</button>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            
+            <button onClick={handleUnavailableClick} className="back-button">Back To Menu</button>
+            <br/>
             <h3 style={{textAlign: 'center', fontSize: '20px'}}>Unavailable Menu</h3>
                 <p>
                     <button onClick={handleUnavailableAppetizersClick} className="category">Appetizers</button>
@@ -554,7 +567,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'appetizers' && canReplace)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -563,18 +576,20 @@ export default function StaffMenu({Change, level}) {
                                         />
                                         <button value={index} onClick={clickToReplace}>Replace Item</button> 
                                         <button value={index} onClick={DeleteMenu}>Delete Item</button>  
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'appetizers')
                                 {
                                     return(
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                        />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -590,7 +605,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'entrees' && canReplace)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -599,17 +614,20 @@ export default function StaffMenu({Change, level}) {
                                         />
                                         <button value={index} onClick={clickToReplace}>Replace Item</button> 
                                         <button value={index} onClick={DeleteMenu}>Delete Item</button>  
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'entrees')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -625,7 +643,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'sides' && canReplace)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -634,17 +652,20 @@ export default function StaffMenu({Change, level}) {
                                         />
                                         <button value={index} onClick={clickToReplace}>Replace Item</button> 
                                         <button value={index} onClick={DeleteMenu}>Delete Item</button>  
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'sides')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -660,7 +681,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'kids' && canReplace)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -669,17 +690,20 @@ export default function StaffMenu({Change, level}) {
                                         />
                                         <button value={index} onClick={clickToReplace}>Replace Item</button> 
                                         <button value={index} onClick={DeleteMenu}>Delete Item</button>  
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'kids')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -695,7 +719,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'dessert' && canReplace)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -704,17 +728,20 @@ export default function StaffMenu({Change, level}) {
                                         />
                                         <button value={index} onClick={clickToReplace}>Replace Item</button> 
                                         <button value={index} onClick={DeleteMenu}>Delete Item</button>  
-                                    </>)
+                                    </div>)
                                     
                                 }
                                 else if(item.category === 'desserts')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -730,7 +757,7 @@ export default function StaffMenu({Change, level}) {
                                 if(item.category === 'drinks' && canReplace)
                                 {
                                     return(
-                                    <>
+                                    <div className="item-container">
                                         <Item
                                         key={index}
                                         name={item.name}
@@ -739,17 +766,19 @@ export default function StaffMenu({Change, level}) {
                                         />
                                         <button value={index} onClick={clickToReplace}>Replace Item</button> 
                                         <button value={index} onClick={DeleteMenu}>Delete Item</button>  
-                                    </>)
-                                    
+                                    </div>)
                                 }
                                 else if(item.category === 'drinks')
                                 {
-                                    return(<Item
+                                    return(
+                                    <div className="item-container">
+                                        <Item
                                         key={index}
                                         name={item.name}
                                         category={item.category}
                                         price={item.price}
-                                    />)
+                                        />
+                                    </div>)
                                 }
                                 else
                                     return null;
@@ -767,12 +796,12 @@ export default function StaffMenu({Change, level}) {
         ADD ITEM TO MENU vv */}    
 
             <AddModal show={showAdd}>
-                <button onClick={handleAddClick}>X</button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <button onClick={handleAddClick}>X</button>
                 <form onSubmit={AddMenu}>
                     {/*enter name*/}
                     <label>
                     Name: &emsp;
-                    <input type="text" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
+                    <input type="text" className="add-item-input" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
                     </label>
                     <br/>
                     {/*select category*/}
@@ -797,12 +826,12 @@ export default function StaffMenu({Change, level}) {
                     <br/>
                     <label>
                         Price: &emsp;
-                        <input type="text" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
+                        <input type="text" className="add-item-input" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
                     </label>
                     <br/>
                     {/*collect image*/}
                     <br/>
-                    <input type="submit" value="Create Menu Item" />
+                    <input className="submit" type="submit" value="Create Menu Item" />
                 </form>
             </AddModal>
         </div>
