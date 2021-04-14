@@ -101,16 +101,18 @@ export default function NavBar(){
             <Modal show={showModalTableNums}>
                 <button onClick={handleClickTable} className="x-button">X</button>
                 <br/>
-                {tableNums.map(tableNum => (
-                    <button onClick={() => handleClickNum(tableNum)} className="table-num-button">{tableNum}</button>
-                ))}
+                <div className="table-num-grid">
+                    {tableNums.map(tableNum => (
+                        <button onClick={() => handleClickNum(tableNum)} className="table-num-button">{tableNum}</button>
+                    ))}
+                </div>
             </Modal>
             <Modal show={showModalRefills}>
                 <button onClick={refillModalX} className="x-button">X</button>
                 <br/>
                 {drinks.map((drink, index) => (
                     <>
-                        <button onClick={handleClickRefill} value={index} disabled={disableRefills[index]}>{drink.name}</button>
+                        <button className="drink-refill-button" onClick={handleClickRefill} value={index} disabled={disableRefills[index]}>{drink.name}</button>
                         <br/>
                     </>
                 ))}

@@ -54,3 +54,17 @@
     left: 1%;
     top: 1%;
 }
+
+.table-num-grid{
+    display: grid;
+    margin-top: 5px;
+    grid-template-columns: repeat(10, auto);
+}
+
+.table-num-button{
+    margin: 1px;
+}
+
+.drink-refill-button{
+    margin: 2px;
+}

@@ -82,18 +82,17 @@ function CustomerLogin({ Login, Guest, error }) {
                     <input type="text" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                 </div>             
                 
-                <input type='submit' value='LOGIN' /> <br/>
+                <input type='submit' value='LOGIN' /> <br/><br/><br/><br/>
                 <div style={{justifySelf: 'start'}}>
-                <button onClick={handleAddClick} style={{justifySelf: 'left'}}>Create New Account</button>    
-                <button onClick={Guest} style={{justifySelf: 'right'}} >Continue As Guest</button> 
+                    <button onClick={handleAddClick}>Create New Account</button>
+                    <button onClick={Guest}>Continue As Guest</button>
                 </div>
             </div>
         </form>
         <AddModal show={showAdd}>
-         
             <form className='signin-form' onSubmit={AddCustomer} >
                 <div className='form-inner'>
-                    <h2 style={{fontSize: "18px"}}>Create Customer Account</h2>
+                    <h2>Create Customer Account</h2>
                     {/*enter name*/}
                     <div className='form-group'>
                         <label  htmlFor='name'>Name:</label>
@@ -114,10 +113,11 @@ function CustomerLogin({ Login, Guest, error }) {
                         <label  htmlFor='birthday'>Birthday:</label>
                         <input type="text" placeholder="Enter birthday here" value={customer.birthday} onChange={setValue('birthday')} />
                     </div>  
-                    <div style={{position: 'relative', left: '-15%'}}>
-                        <button onClick={handleAddClick}>Back</button> 
-                        <input type='submit' value='Create Account' /> 
-                    </div>            
+                    <div>
+                        <input type='submit' value='Create Account' />
+                        <br/>
+                        <button onClick={handleAddClick}>Back</button>
+                    </div>
                 </div>
             </form>
         </AddModal>
