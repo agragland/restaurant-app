@@ -73,7 +73,7 @@ export default function ManagerView (){
 
     //adds a change from manager
     const Change = async (details) => {
-        const change = ({item: details.item, action: details.action, emp: manager})
+        let change = ({item: details.item, action: details.action, emp: manager})
         const payload = change
 
         console.log(payload)
@@ -83,7 +83,7 @@ export default function ManagerView (){
             change = {
                 item: '',
                 action: '',
-                emp: '',
+                emp: manager._id,
             }
         }) 
     }
