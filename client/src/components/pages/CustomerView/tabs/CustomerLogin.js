@@ -1,5 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import api from '../../../../api'
+import {updateCoupon} from './OrderView'
 
 import './CustomerLogin.css'
 
@@ -24,6 +25,7 @@ function CustomerLogin({ Login, Guest, error }) {
     const submitHandler = e => {
         e.preventDefault(); //prevents duplicate entries
 
+        updateCoupon(2)
         Login(customer)
         console.log(error)
     } 

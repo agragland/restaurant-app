@@ -3,8 +3,7 @@ import apis from "../../../../api"
 import Modal from "../../../Modal"
 import "./PaymentView.css"
 import api from "../../../../api";
-import {getTableNum} from "./OrderView";
-import {handleAddToOrder} from "./OrderView";
+import {getTableNum, getCoupon} from "./OrderView";
 
 let payload = {
     order_id: '',

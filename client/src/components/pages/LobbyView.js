@@ -152,6 +152,8 @@ export default function TableView() {
         order.subtotal -= price
         order.tax -= 0.0825 * price
         order.total -= 1.085 * price
+        if(order.total < 0)
+            order.total = 0
 
         handleUpdateOrder(order)      //re-enable when ready
 

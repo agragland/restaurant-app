@@ -41,9 +41,13 @@ export const handleAddToOrder = (item, comment) => {
     console.log(payload)
 }
 
-
-
-
+let coupon = 0
+export const updateCoupon = (discount) => {
+    coupon = discount
+}
+export const getCoupon = () => {
+    return coupon
+}
 
 export default class OrderView extends React.Component{
     constructor(props) {
@@ -57,7 +61,8 @@ export default class OrderView extends React.Component{
             tax: 0,
             total: 0,
             status: '',
-            table: 0
+            table: 0,
+            coupon: coupon
         }
     }
 
@@ -166,13 +171,23 @@ export default class OrderView extends React.Component{
         //set up order payload and submit
         payload.status = 'Created'
         this.setState({status: 'Created'})
-        const { items, comments, commped, subtotal, total,  } = this.state
+        let { items, comments, commped, subtotal, total,  } = this.state
+        subtotal -= coupon
+        if(total < 0)
+            total = 0
+
         const final_payload = { order_items:items, comments, commped, subtotal, total, status:'Created', table:payload.table }
         await apis.createOrder(final_payload).then(res => {
             preparePayment(res.data.id)
         })
     }
 
+    displayCoupon = () => {
+        if(this.state.coupon > 0)
+            return <p>A coupon of ${this.state.coupon.toFixed(2)} has been added due to your loyalty.</p>
+        else
+            return <></>
+    }
 
     render() {
     return(
@@ -186,6 +201,7 @@ export default class OrderView extends React.Component{
                 ))
                 }
             </div>
+            {this.displayCoupon()}
             <p className="big-text">Subtotal: ${this.state.subtotal.toFixed(2)}</p>
             {this.OrderStatusHandler()}
         </div>

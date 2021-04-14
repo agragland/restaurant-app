@@ -9,7 +9,7 @@ import Modal from "../../Modal";
 
 import CustomerLogin from './tabs/CustomerLogin'
 import MenuView from "./tabs/MenuView";
-import OrderView from "./tabs/OrderView";
+import OrderView, {updateCoupon} from "./tabs/OrderView";
 import PaymentView from "./tabs/PaymentView";
 
 export default function CustomerView() {
@@ -53,6 +53,7 @@ export default function CustomerView() {
     }
     //guest login
     const LoginGuest = () => {
+        updateCoupon(0)
         handleLog();
     }
 
