@@ -103,6 +103,8 @@ export default function KidsCorner(){
     const Logout = () => {
         console.log(exitPassword === parentPassword)
         //split into two seperate if statements to avoid multiple login errors
+        console.log(exitPassword)
+        console.log(parentPassword)
         if((exitPassword === parentPassword)){ //if the password
             handleModal();
         }
@@ -153,8 +155,8 @@ export default function KidsCorner(){
                         {error}
                         {/*enter parent password*/}
                         <div className='form-group'>
-                            <label  htmlFor='password'>Enter Exiting Password:</label>
-                            <input type="text" title="password" value={exitPassword} onChange={handleExitPassword} />
+                            <label>Enter Exiting Password:</label>
+                            <input type="text" title="password" onChange={handleExitPassword()} />
                         </div>
                         <div>
                             <button onClick={submitExit}>Exit Kids Corner</button>
