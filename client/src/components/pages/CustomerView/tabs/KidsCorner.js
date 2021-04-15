@@ -4,7 +4,7 @@ import {createBrowserHistory} from 'history'
 
 import TacoSweeper from '../../../../games/TacoSweeper/TacoSweeper'
 import TacoSnek from '../../../../games/TacoSnek/App'
-import tictacotac from '../../../../games/tictactaco/App'
+import tictactaco from '../../../../games/tictactaco/App'
 
 import './KidsCorner.css'
 
@@ -91,7 +91,7 @@ export default function KidsCorner(){
             console.log(gameHeader)
         }
         else if(game === "Tic Taco Toe"){
-            setComponent(() => <tictacotac/>)
+            setComponent(() => <tictactaco/>)
         }
     }
 
