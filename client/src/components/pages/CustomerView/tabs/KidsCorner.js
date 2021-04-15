@@ -48,7 +48,7 @@ export const GamePages = [
         cName: 'nav-links'
     },
     {
-        title: "Tic Taco Toe",
+        title: "Tic Taco Taco",
         url: "#",
         cName: 'nav-links'
     }
@@ -87,7 +87,7 @@ export default function KidsCorner(){
         else if(game === "Taco Snake"){
             setComponent(() => <TacoSnek/>)
         }
-        else if(game === "Tic Taco Toe"){
+        else if(game === "Tic Taco Taco"){
             setComponent(() => <Game/>)
         }
     }
