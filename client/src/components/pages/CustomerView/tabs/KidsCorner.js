@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-//import App from '../../../../../../games/TacoFloat'
+import {Link, Router, Route} from 'react-router-dom';
+import {createBrowserHistory} from 'history'
+
+import TacoSweeper from '../../../../games/TacoSweeper/TacoSweeper'
 
 import './KidsCorner.css'
 
@@ -22,10 +24,10 @@ export default function KidsCorner(){
     const [showModal, setShowModal] = useState(true)
     const [exitPassword, setExitPassword] = useState("")        //text that changes with input
     const [parentPassword, setParentPassword] = useState("")    //sets password needed to leave kids center
-    const [gameLinks, setGameLinks] = useState([])              //will list all links to games
     const [error, setError] = useState('');
     const [isSet, setIsSet] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
+    const history = createBrowserHistory();                     //browser history
 
     //handle modal
     const handleModal = () => {
@@ -96,14 +98,22 @@ export default function KidsCorner(){
                 :
                 <div className="signin-form">
                     <div className='form-inner'>
-                        <ul>
+                        <ul >
                             {/*MineSweep*/}
-                            <li><Link to='/MineSweep'>Mine Sweep</Link></li>
+                            <li><Link to='/TacoSweeper'>Taco Sweeper</Link></li>
                             {/*Snake*/}
-                            <li><Link to='/Snake'>Snake</Link></li>                            {/*TicTacToe*/}
+                            <li><Link to='/Snake'>Snake</Link></li>                            
                             {/*TicTacToe*/}
                             <li><Link to='/TicTacToe'>Tic Tac Toe</Link></li>
                         </ul>
+                        <Router history={history}>
+                            {/*MineSweep*/}
+                            <Route exact path='/TacoSweeper' component={<TacoSweeper/>}/>
+                            {/*Snake
+                            <Route exactPath='/Snake' component={Snake}/>*/}
+                            {/*TicTacToe
+                            <Route exact path='/TicTacToe' component={TicTacToe}/>*/}
+                        </Router>
                         <button onClick={handleExit} style={{ marginTop: '-50px'}}>
                             Exit Kids Corner
                         </button>
