@@ -208,8 +208,8 @@ export default function KidsCorner(){
         <GameModal show={showGameModal}>
             <div style={{ marginTop: '10%', backgroundColor: 'lightgray', height: '78%'}}>
                 <div>
-                    {component} 
                     <button onClick={handleGameModal}>Back to Games</button>
+                    {component} 
                 </div>
                 
             </div>
