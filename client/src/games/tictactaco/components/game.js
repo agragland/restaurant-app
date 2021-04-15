@@ -8,7 +8,7 @@ const styles = {
 };
 
 const Game = () => {
-    const [history, setHistory] = useState([Array(9).fill(null)]);
+    const [board, setBoard] = useState(Array(9).fill(null));
     const [xIsNext, setXisNext] = useState(true);
     const winner = calculateWinner(board);
 
@@ -20,10 +20,6 @@ const Game = () => {
         boardCopy[i] = xIsNext ? 'X' : 'O';
         setBoard(boardCopy);
         setXisNext(!xIsNext);
-    }
-
-    const jumpTo = () => {
-
     }
 
     const renderMoves = () => (
