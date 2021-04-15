@@ -30,6 +30,10 @@ export default function TableView({Change}) {
         };
     }, []);
 
+    const refresh = () => {
+        handleGetTables()
+    }
+
     const handleGetTables = async () => {
         let tempTables = []
         for(let i = 0; i < 20; i++)
@@ -237,6 +241,7 @@ export default function TableView({Change}) {
         <div className="lobby">
             <p className="lobby-title">Lobby</p>
             <StaffMenu Change={Change} level={1} />
+            <button className="refresh" onClick={refresh}>⟳</button>
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}

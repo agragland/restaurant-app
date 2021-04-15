@@ -18,6 +18,10 @@ export default function KitchenView (){
         };
     }, []);
 
+    const refresh = () => {
+        handleGetOrders()
+    }
+
     //gets orders from the db
     const handleGetOrders = async () => {
         await api.getAllOrders().then(orders => {
@@ -102,6 +106,7 @@ export default function KitchenView (){
     return (
         <div className='kitchen'>
             <p className='kitchen-title'>Kitchen</p>
+            <button className="refresh" onClick={refresh}>⟳</button>
             <section className="order-queue">
                 <h1 className="queue-title">Queue</h1>
                 {orderQueue.map((order, index) => (

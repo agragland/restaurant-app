@@ -33,5 +33,10 @@
     margin: 5px;
 }
 
-.comp-button{
+.refresh{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: whitesmoke;
+    color: black;
 }
