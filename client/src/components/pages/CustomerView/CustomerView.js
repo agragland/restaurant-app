@@ -43,8 +43,8 @@ export default function CustomerView() {
     const Login = details => {
         console.log(details)
         customers.map((worker) => {
-            //split into two seperate if statements to avoid multiple login errors
-            if((details.name == worker.name) && (details.email == worker.email) && (details.phoneNumber == worker.phoneNumber)){ //if the user name matches
+            //checks if credentials match
+            if((details.name === worker.name) && (details.email === worker.email) && (details.phoneNumber === worker.phoneNumber)){ //if the user name matches
                 handleLog();
             }
             else{
@@ -54,6 +54,7 @@ export default function CustomerView() {
     }
     //guest login
     const LoginGuest = () => {
+        //when logging in as guest, remove loyalty coupon
         updateCoupon(0)
         handleLog();
     }

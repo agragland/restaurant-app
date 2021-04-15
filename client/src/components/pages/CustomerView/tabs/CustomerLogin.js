@@ -59,40 +59,6 @@ function CustomerLogin({ Login, Guest, error }) {
         Login(customer)
     }
 
-    const [customers, setCustomers] = useState({})
-    const handleGetCustomer = async () => {
-        await api.getAllCustomers().then(loyals => {
-            const all_customers = loyals.data.data
-            let temp_customers = []
-
-            all_customers.map((loyal) => {
-
-                //add to the temp array
-                temp_customers = [...temp_customers, loyal]
-            })
-            //set state to temp
-            console.log(temp_customers)
-            setCustomers(temp_customers)
-            console.log(customers)
-        })
-    }
-
-    const [errorMsg, setErrorMsg] = useState(error)
-    //customer login
-    const checkUnique = () => {
-        console.log(customer)
-        handleGetCustomer()
-        customers.map((worker) => {
-            //split into two seperate if statements to avoid multiple login errors
-            if(false){ //if the user name matches
-                setErrorMsg('Credentials do not match. Please try again.')
-            }
-            else{
-                AddCustomer()
-            }
-        })
-    }
-
     return (
         <>
         <form className="signin-form" onSubmit={submitHandler}>

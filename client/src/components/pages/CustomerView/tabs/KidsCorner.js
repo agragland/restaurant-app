@@ -127,7 +127,6 @@ export default function KidsCorner(){
         return({target: {value}}) => {
             setParentPassword(value);
         }
-        
     };
     const handleExitPassword = () => {
         return({target: {value}}) => {
