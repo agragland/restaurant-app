@@ -10,7 +10,6 @@ import { unmountComponentAtNode } from "react-dom";
 import App from "./app";
 import {StaffMenu,Item} from "./components/Navbar/StaffMenu";
 import {Navbar} from "./components";
-import userEvent from "@testing-library/user-event";
 import api from "./api"
 import "./components/Modal"
 import Modal from "./components/Modal";
@@ -38,9 +37,10 @@ describe("help button tests",  () => {
     });
 
 
-    test("Help button is visible", () => {
+    test("navbar button is visible", () => {
         render(<App/>)
-        expect(screen.getByText('Call Staff')).toBeInTheDocument();
+        //expect(screen.getByText('Call Staff')).toBeInTheDocument();
+        expect(screen.getByText('Lobby')).toBeInTheDocument();
     });
     test("clicking help button fires handler", () => {
         const handleClick = jest.fn();
@@ -85,30 +85,15 @@ describe('Addition', () => {
 });
 
 describe('StaffMenu Item returns values', () => {
-    let container = null;
-    beforeEach(() => {
-        // setup a DOM element as a render target
-        container = document.createElement("div");
-        document.body.appendChild(container);
-    });
-
-    afterEach(() => {
-        // cleanup on exiting
-        unmountComponentAtNode(container);
-        container.remove();
-        container = null;
-    });
 
     it('StaffMenu Item displays a single value', () => {
         render(<Item name='asdf' />)
-        expect(screen.getByText('asdf')).not.toBeNull()
+        expect(screen.getByText('asdf $')).not.toBeNull()
     });
 
     it('StaffMenu Item displays multiple values', () => {
         render(<Item name='asdf' price='123'/>)
-        expect(screen.getByText('asdf')).not.toBeNull()
-        expect(screen.getByText('123')).not.toBeNull()
-
+        expect(screen.getByText('asdf $123')).not.toBeNull()
     });
 
     it('StaffMenu has no values when passed no input', () => {
@@ -116,6 +101,7 @@ describe('StaffMenu Item returns values', () => {
         expect(screen.queryByText('asdf')).toBeNull();
     });
 });
+
 describe("modal tests", () => {
     let container = null;
     beforeEach(() => {

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import "./staffMenu.css"
 import api from "../../api";
 
-const Item = ({name, price,}) => (
+export const Item = ({name, price,}) => (
     <p>{name} ${price}</p>
 )
 
