@@ -10,13 +10,14 @@ export const Item = ({item}) => {
     const [customItem, showCustomItem] = useState(false);
     let comment = ""
 
-    const handleCommentField = (e) => {
+    const handleCommentField = (e) => { //set comments
         comment = e.target.value
     }
 
     if(item.isAvailable === false)
         return <></>
 
+    //returns information for an item, or a modal with the information if the customer adds comments
     return(
     <>
         <Modal show={customItem}>
@@ -58,7 +59,6 @@ export const Item = ({item}) => {
     )
 }
 
-
 function DropMenu({show, children}) {
     if(!show)
         return null;
@@ -77,6 +77,7 @@ export default function MenuView(){
     }, []);
 
 
+    //gets all items from the database
     const handleGetItems = async () => {
         await api.getAllItems().then(items => {
             menu_items = items.data.data
@@ -85,6 +86,7 @@ export default function MenuView(){
         console.log(menu_items)
     }
 
+    //turns off all drop menus
     const resetShow = () => {
         setShowEntrees(false)
         setShowAppetizers(false)
@@ -94,6 +96,7 @@ export default function MenuView(){
         setShowDrinks(false)
     }
 
+    //Entrees
     const [showEntrees, setShowEntrees] = useState(false);
     const handleEntreesClick = () => {
         resetShow()

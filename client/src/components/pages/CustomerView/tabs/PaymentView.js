@@ -16,6 +16,7 @@ export const preparePayment = (id) => {
 }
 
 const PaymentItem = ({item, comp}) => {
+    //displays item and shows price as "$0.00" if the item is comped
     if(comp)
     {
         return (
@@ -37,41 +38,44 @@ export default class PaymentView extends React.Component {
         super(props);
 
         this.state = {
-            order_id: '',
-            order: {},
-            paymentReady: false,
-            cardModal: false,
-            modal_2: 0,
-            freeDessert: 0,
-            customTip: 0,
-            customItem: false,
-            splitNum: 1,
-            splitCheck: false,
-            splitTotal: 0
+            order_id: '',           //id of order in the db
+            order: {},              //order from the db
+            paymentReady: false,    //if the customer can pay
+            cardModal: false,       //modal for "pay with card"
+            paymentModal: 0,        //modal for tip, insert card, free dessert chance, etc.
+            freeDessert: 0,         //if the customer gets a free dessert
+            customTip: 0,           //value of the custom tip
+            customItem: false,      //if the item has comments
+            splitNum: 1,            //the number of times the bill is being split
+            splitCheck: false,      //if the bill is being split
+            splitTotal: 0           //the total price per bill split
         }
     }
 
     componentDidMount = async () => {
+        //gets the order from the db
         await apis.getOrder(payload.order_id).then(order =>{
             if(order.data.data.status === 'Delivered')
             {
+                //updates state
                 this.setState({
                     order: order.data.data,
                     paymentReady: true,
-                    modal_2: 0
+                    paymentModal: 0
                 })
             }
         }).catch(err => {
             this.setState({
                 paymentReady: false,
-                modal_2: 0
+                paymentModal: 0
             })
         })
 
-        this.handleGetItems()
+        this.handleGetItems()   //gets items from db
         console.log(this.state)
     }
 
+    //gets all items from the db
     handleGetItems = async () => {
         await api.getAllItems().then(items => {
             menu_items = items.data.data
@@ -80,19 +84,23 @@ export default class PaymentView extends React.Component {
         console.log(menu_items)
     }
 
+    //updates order in db
     handleUpdateOrder = async (payload) => {
         await api.updateOrder(payload._id, payload)
     }
 
+    //sends the free dessert, if the customer wins it
     orderFreeDessert = async (item, comments) => {
         //set up order payload and submit
         const final_payload = { order_items: [item], comments, commped: [true], subtotal: 0, total: 0, status:'Created', table:getTableNum() }
+        //creates the order
         await apis.createOrder(final_payload).then(res => {
             window.alert(`Order created successfully`)
             preparePayment(res.data.id)
         })
     }
 
+    //displays info for the item, and displays a modal if customer wants to add comments
     Item = ({item}) => {
         let comment = ""
 
@@ -145,22 +153,26 @@ export default class PaymentView extends React.Component {
         )
     }
 
+    //checks if the bill is finished repeating, based on splitNum
     continueSplit = () => {
+        //if no more repeats necessary
         if(this.state.splitNum === 1) {
-            this.tipModalHandler(3)
+            this.tipModalHandler(3)     //go to chance for free dessert
         }
+        //if needs more repeats
         else {
             this.setState(prevState => ({
-                splitNum: prevState.splitNum-1,
-                splitTotal: prevState.splitTotal-prevState.order.tip
+                splitNum: prevState.splitNum-1,     //decrements splitNum
+                splitTotal: prevState.splitTotal-prevState.order.tip    //resets spitTotal
             }))
-            this.tipModalHandler(1)
+            this.tipModalHandler(1)     //go to insert card
         }
     }
 
+    //displays the modal for paying with card, selecting tip, amount paid, and free dessert chance
     cardModal = () =>
     {
-        if (this.state.modal_2 === 0) {
+        if (this.state.paymentModal === 0) {             //insert ccard
             return (
                 <Modal show={this.state.cardModal}>
                     <p>Please insert Card</p>
@@ -170,7 +182,7 @@ export default class PaymentView extends React.Component {
                     </button>
                 </Modal>
             )
-        } else if (this.state.modal_2 === 1) {
+        } else if (this.state.paymentModal === 1) {      //selecting tip
             return (
                 <Modal show={this.state.cardModal}>
                     <h1>Select your tip</h1>
@@ -194,14 +206,14 @@ export default class PaymentView extends React.Component {
                     </button>
                 </Modal>
             )
-        } if (this.state.modal_2 === 2) {
+        } if (this.state.paymentModal === 2) {           //amount paid
             return (
                 <Modal show={this.state.cardModal}>
                     <h1>You Paid ${this.state.splitTotal.toFixed(2)}</h1>
                     <button onClick={this.continueSplit}>Continue</button>
                 </Modal>
             )
-        } else if (this.state.modal_2 === 3) {
+        } else if (this.state.paymentModal === 3) {      //free dessert chance
             return (
                 <Modal show={this.state.cardModal}>
                     <h1>Time for a chance to win a free dessert!</h1>
@@ -216,18 +228,20 @@ export default class PaymentView extends React.Component {
     DESSERT HANDLING
     *********
     */
+    //displays chance for free dessert, and displays free dessert selection if they win or consolation if they didn't win
     freeDessertHandler = () => {
         let temp = this.state.order
         temp.status = "paid"
+        //updates order in db to be paid
         this.handleUpdateOrder(temp)
 
-        if(this.state.freeDessert === 0)
+        if(this.state.freeDessert === 0)        //before chance is taken
         {
             return(
                 <button onClick={this.dessertRandomizer}>Click for a chance to win!</button>
             )
         }
-        else if(this.state.freeDessert === 1)
+        else if(this.state.freeDessert === 1)   //if customer wins
         {
             return(
                 <>
@@ -249,7 +263,7 @@ export default class PaymentView extends React.Component {
                 </>
             )
         }
-        else if(this.state.freeDessert === 2)
+        else if(this.state.freeDessert === 2)   //if customer loses
         {
             return(
                 <>
@@ -261,12 +275,13 @@ export default class PaymentView extends React.Component {
         }
     }
 
+    //rng
     dessertRandomizer = () => {
-        if(Math.random() <= 0.33)
+        if(Math.random() <= 0.33)       //1/3 chance (roughly) to win
         {
             this.setState({freeDessert: 1})
         }
-        else
+        else                            //2/3 chance (roughly) to lose
         {
            this.setState({freeDessert: 2})
         }
@@ -277,39 +292,42 @@ export default class PaymentView extends React.Component {
     TIP HANDLING
     *********
     */
+    //updates total based on tip
     tipHandler = async (tipPerc) => {
-        let temp = this.state.order
-        temp.tip = this.state.splitTotal * tipPerc
-        temp.total += temp.tip
+        let temp = this.state.order     //temp variable based on state
+        temp.tip = this.state.splitTotal * tipPerc  //updates tip based on customer input
+        temp.total += temp.tip          //updates total based on tip
+
+        //updates state
         this.setState(prevState => ({order: temp, splitTotal: prevState.splitTotal+temp.tip}))
-        this.tipModalHandler(2)
+        //go to next step in payment
+        this.setState({paymentModal: 2})
 
         console.log(this.state)
     }
 
-    tipModalHandler = (state) => {
-        this.setState({modal_2: state})
-    }
-
+    //handles custom tip value from customer
     handleCustomTipValue = (e) => {
-        this.setState({
+        this.setState({     //updates state
             customTip: e.target.value
         })
     }
 
+    //handles change in splitNum based on customer input
     handleChangeSplit = (e) => {
         this.setState({
-            splitNum: Math.ceil(e.target.value)
+            splitNum: Math.ceil(e.target.value)     //updates state, ensuring number is an integer
         })
     }
 
+    //toggles splitCheck bool
     handleClickSplit = () => {
         this.setState(prevState => ({splitCheck: !prevState.splitCheck}))
     }
 
+    //toggles cardModal, turns splitCheck Modal off, and updates splitNum
     cardPaymentHandler = () =>
     {
-
         this.setState(prevState => ({
             cardModal: !prevState.cardModal, splitCheck: false,
             splitTotal: prevState.order.total/prevState.splitNum
@@ -338,17 +356,17 @@ export default class PaymentView extends React.Component {
         })
     }
 
+    //displays based on if the order is delivered
     paymentStatusHandler = () => {
-        if(!this.state.paymentReady)
+        if(!this.state.paymentReady)    //order not delivered
         {
             return (
                 <>
-                <p className="big-text">No order placed</p>
-                <p className="big-text">Go place an order!</p>
+                <p className="big-text">Can't pay yet, you don't have an order delivered!</p>
                 </>
             )
         }
-        else
+        else    //order is delivered
         {
             return (
                 <div>
