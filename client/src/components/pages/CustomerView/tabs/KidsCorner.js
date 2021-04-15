@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 //import App from '../../../../../../games/TacoFloat'
 
 import './KidsCorner.css'
@@ -96,6 +96,14 @@ export default function KidsCorner(){
                 :
                 <div className="signin-form">
                     <div className='form-inner'>
+                        <ul>
+                            {/*MineSweep*/}
+                            <li><Link to='/MineSweep'>Mine Sweep</Link></li>
+                            {/*Snake*/}
+                            <li><Link to='/Snake'>Snake</Link></li>                            {/*TicTacToe*/}
+                            {/*TicTacToe*/}
+                            <li><Link to='/TicTacToe'>Tic Tac Toe</Link></li>
+                        </ul>
                         <button onClick={handleExit} style={{ marginTop: '-50px'}}>
                             Exit Kids Corner
                         </button>

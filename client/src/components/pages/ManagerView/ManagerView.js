@@ -9,6 +9,7 @@ import DailySalesReport from './tabs/DailySalesReport';
 import LobbyVisual from './tabs/LobbyVisual';
 import Navbar from './Navbar';
 import ManagerLogin from './tabs/ManagerLogin'
+import Time from '../../Clock'
 
 import './ManagerView.css';
 
@@ -92,7 +93,7 @@ export default function ManagerView (){
         <>
         <div className='manager'> 
             <div className='manager-title'>Manager</div>
-
+            <Time />
             {/*if manager is logged in, show the navbar */}        
             { isLogged ?
             <div className='manager-body'>
