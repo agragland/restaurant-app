@@ -1,0 +1,41 @@
+.manager{
+    font-size: 1rem;
+    justify-items: center;
+    background-color: transparent;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    height: 650px; /*Size for height is currently fixed*/
+    margin-bottom: 15px;
+}
+
+.manager .manager-title{
+    background-color: #440D0F;
+    justify-self: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.managaner .manager-body{
+    display: block;
+    justify-self: center;
+}
+
+.logout{
+    position: relative;
+    bottom: -30%;
+    right: -45%;
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #F5853F 50%, #F5853F 50%, #440D0F);
+    background-size: 200%;
+    background-position: 0%;
+    transition: 0.4s;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background-position: 100% 0%;
+}

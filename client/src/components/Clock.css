@@ -1,0 +1,14 @@
+.Time{
+    position: absolute;
+    justify-content: back;
+    right: 50px;
+    background: transparent;
+    font-size: 1rem;
+}
+
+.clock-display{
+    padding: .25rem 1rem;
+    border: 1px solid;
+    right: 10px;
+    background: white;
+}
