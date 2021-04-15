@@ -52,7 +52,7 @@ function CustomerLogin({ Login, Guest, error }) {
 
         //add to database
         await api.insertCustomer(payload).then(res => {
-           window.alert(`Item inserted successfully`)
+           window.alert(`A new item has been inserted (see Avalible Menu items)`)
         })
         handleAddClick();
         console.log(customer)
