@@ -48,7 +48,8 @@ export default class PaymentView extends React.Component {
             customItem: false,      //if the item has comments
             splitNum: 1,            //the number of times the bill is being split
             splitCheck: false,      //if the bill is being split
-            splitTotal: 0           //the total price per bill split
+            splitTotal: 0,           //the total price per bill split
+            hasPayed: false
         }
     }
 
@@ -157,7 +158,7 @@ export default class PaymentView extends React.Component {
     continueSplit = () => {
         //if no more repeats necessary
         if(this.state.splitNum === 1) {
-            this.tipModalHandler(3)     //go to chance for free dessert
+            this.setState({paymentModal: 3})     //go to chance for free dessert
         }
         //if needs more repeats
         else {
@@ -165,7 +166,7 @@ export default class PaymentView extends React.Component {
                 splitNum: prevState.splitNum-1,     //decrements splitNum
                 splitTotal: prevState.splitTotal-prevState.order.tip    //resets spitTotal
             }))
-            this.tipModalHandler(1)     //go to insert card
+            this.setState({paymentModal: 1})     //go to insert card
         }
     }
 
@@ -177,7 +178,7 @@ export default class PaymentView extends React.Component {
                 <Modal show={this.state.cardModal}>
                     <p>Please insert Card</p>
                     <button onClick={() => {
-                        this.tipModalHandler(1)
+                        this.setState({paymentModal: 1})
                     }}>Insert Card
                     </button>
                 </Modal>
@@ -277,6 +278,7 @@ export default class PaymentView extends React.Component {
 
     //rng
     dessertRandomizer = () => {
+        this.setState({hasPayed: true})
         if(Math.random() <= 0.33)       //1/3 chance (roughly) to win
         {
             this.setState({freeDessert: 1})
@@ -379,9 +381,9 @@ export default class PaymentView extends React.Component {
                     <p className="big-text">Subtotal: {this.state.order.subtotal.toFixed(2)}</p>
                     <p className="big-text">Tax: {(this.state.order.subtotal * 0.0825).toFixed(2)}</p>
                     <p className="big-text">Total: {this.state.order.total.toFixed(2)}</p>
-                    <button onClick={this.cardPaymentHandler}>Pay with Card</button>
-                    <button onClick={this.handleClickCash}>Pay with Cash</button>
-                    <button onClick={this.handleClickSplit}>Split Check</button>
+                    <button disabled={this.state.hasPayed} onClick={this.cardPaymentHandler}>Pay with Card</button>
+                    <button disabled={this.state.hasPayed} onClick={this.handleClickCash}>Pay with Cash</button>
+                    <button disabled={this.state.hasPayed} onClick={this.handleClickSplit}>Split Check</button>
                 </div>
 
             )
