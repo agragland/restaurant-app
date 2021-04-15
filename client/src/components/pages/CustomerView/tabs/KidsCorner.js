@@ -4,6 +4,7 @@ import {createBrowserHistory} from 'history'
 
 import TacoSweeper from '../../../../games/TacoSweeper/TacoSweeper'
 import TacoSnek from '../../../../games/TacoSnek/App'
+import tictacotac from '../../../../games/tictactaco/App'
 
 import './KidsCorner.css'
 
@@ -82,18 +83,15 @@ export default function KidsCorner(){
 
         //choose which game to play
         if(game === "Taco Sweeper"){
-            gameHeader = "Taco Sweeper"
             setComponent(() => <TacoSweeper/>)
             console.log(gameHeader)
         }
         else if(game === "Taco Snake"){
-            gameHeader = "Taco Snake"
             setComponent(() => <TacoSnek/>)
             console.log(gameHeader)
         }
         else if(game === "Tic Taco Toe"){
-            gameHeader = "Tic Taco Toe"
-
+            setComponent(() => <tictacotac/>)
         }
     }
 

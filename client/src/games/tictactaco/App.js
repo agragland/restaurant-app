@@ -1,6 +1,6 @@
 import React from 'react';
 import Game from './components/game';
 
-const App = () => <Game />;
+const tictactaco = () => <Game />;
 
-export default App;
+export default tictactaco;
