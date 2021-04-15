@@ -2,13 +2,13 @@ import React from 'react';
 import Square from './square';
 
 const style = {
-        border: '6px solid darkblue',
-        borderRadius: '12px',
-        width: '550px',
-        height: '550px',
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplate: 'repeat(3, 1fr) / repeat(3, 1fr)'
+    border: '4px solid darkblue',
+    borderRadius: '10px',
+    width: '550px',
+    height: '550px',
+    margin: '0 auto',
+    display: 'grid',
+    gridTemplate: 'repeat(3, 1fr) / repeat(3, 1fr)'
 };
 
 const Board = ({ squares, onClick }) => (
@@ -19,4 +19,4 @@ const Board = ({ squares, onClick }) => (
     </div>
 )
 
-    export default Board;
+export default Board;
