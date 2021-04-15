@@ -112,7 +112,7 @@ export default function NavBar(){
                 <ul className= 'cst-nav-tab'>
                     <li><button className="cst-nav-button" onClick={handleClickModalRefill}>Refills</button></li>
                     <li><button className="cst-nav-button" onClick={handleClickHelp}>Call Staff</button> </li>
-                    <li className="cst-nav-link"><Link className="cst-tab-text" to="/Rewards">Rewards</Link></li>
+                    
                     <li className="cst-nav-link"><Link className="cst-tab-text" to="/Menu">Menu</Link></li>
                     <li className="cst-nav-link"><Link className="cst-tab-text" to="/Order">Order</Link></li>
                     <li className="cst-nav-link"><Link className="cst-tab-text" to="/Payment">Payment</Link></li>
