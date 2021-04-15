@@ -114,7 +114,7 @@ export default class PaymentView extends React.Component {
                 </ul>
                 <form>
                     <label>Comments:</label>
-                    <input type = "text" onChange={handleCommentField}/>
+                    <input type = "text" title="comments" onChange={handleCommentField}/>
                 </form>
                 <button onClick={() => {
                     this.orderFreeDessert(item, comment);
@@ -187,7 +187,7 @@ export default class PaymentView extends React.Component {
                     }}>20% tip
                     </button>
                     <br/>
-                    <input type='number' className="payment-input" value={this.state.customTip} onChange={this.handleCustomTipValue}/>
+                    <input type='number' title="custom tip" className="payment-input" value={this.state.customTip} onChange={this.handleCustomTipValue}/>
                     <button onClick={() => {
                         this.tipHandler(this.state.customTip / 100)
                     }}>Submit Custom Tip
@@ -379,7 +379,7 @@ export default class PaymentView extends React.Component {
                 </div>
                 {this.cardModal()}
                 <Modal show={this.state.splitCheck}>
-                    <input type='number' step="1" min="1" className="payment-input" value={this.state.splitNum} onChange={this.handleChangeSplit}/>
+                    <input title="split bill number" type='number' step="1" min="1" className="payment-input" value={this.state.splitNum} onChange={this.handleChangeSplit}/>
                     <button onClick={() => {this.cardPaymentHandler()}} disabled={this.state.splitNum < 1}>Continue</button>
                 </Modal>
             </section>

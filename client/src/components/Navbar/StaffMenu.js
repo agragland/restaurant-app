@@ -803,7 +803,7 @@ export default function StaffMenu({Change, level}) {
                         {/*enter name*/}
                         <label style={{ fontSize: '16px'}}>
                         Name: 
-                        <input style={{ marginLeft: '55px' }} type="text" className="add-item-input" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
+                        <input style={{ marginLeft: '55px' }} type="text" title="Name" className="add-item-input" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
                         </label>
                         <br/>
                         {/*select category*/}
@@ -828,12 +828,12 @@ export default function StaffMenu({Change, level}) {
                         <br/>
                         <label style={{ fontSize: '16px'}}>
                             Price: 
-                            <input  style={{ marginLeft: '65px' }} type="text" className="add-item-input" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
+                            <input  style={{ marginLeft: '65px' }} title="Price" type="text" className="add-item-input" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
                         </label>
                         <br/>
                         {/*collect image*/}
                         <br/>
-                        <input className="submit" type="submit" value="Create Menu Item" />
+                        <input className="submit" title="submit" type="submit" value="Create Menu Item" />
                     </form>
             </AddModal>
         </div>

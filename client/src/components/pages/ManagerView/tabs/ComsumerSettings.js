@@ -85,7 +85,7 @@ export default function ConsumerSettings(){
                     <div>
                         <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Change: 
-                            <input type="text" className="time-input" value={newStoreHours.startTime} onChange={setNewValue('startTime')} />
+                            <input type="text" title="new start time" className="time-input" value={newStoreHours.startTime} onChange={setNewValue('startTime')} />
                         </p>
                         
                     </div>
@@ -105,7 +105,7 @@ export default function ConsumerSettings(){
                     <div>
                         <p style={{ marginLeft: '10%', textAlign: 'left', fontSize: '18px' }}>
                             Change: 
-                            <input type="text" className="time-input" value={newStoreHours.endTime} onChange={setNewValue('endTime')} />
+                            <input type="text" title="new end time" className="time-input" value={newStoreHours.endTime} onChange={setNewValue('endTime')} />
                         </p>
                         
                     </div></div>
