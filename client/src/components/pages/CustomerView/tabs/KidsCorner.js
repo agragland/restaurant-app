@@ -3,6 +3,7 @@ import {Link, Router, Route} from 'react-router-dom';
 import {createBrowserHistory} from 'history'
 
 import TacoSweeper from '../../../../games/TacoSweeper/TacoSweeper'
+import TacoSnek from '../../../../games/TacoSnek/App'
 
 import './KidsCorner.css'
 
@@ -74,6 +75,7 @@ export default function KidsCorner(){
 
     //GAMES
     //chooses which game to play
+    let gameHeader = ''
     const handleGame = (e) => {
         e.preventDefault() //blocks auto refresh
         handleGameModal()
@@ -81,12 +83,17 @@ export default function KidsCorner(){
 
         //choose which game to play
         if(game === "Taco Sweeper"){
+            gameHeader = "Taco Sweeper"
             setComponent(() => <TacoSweeper/>)
+            console.log(gameHeader)
         }
         else if(game === "Taco Snake"){
-
+            gameHeader = "Taco Snake"
+            setComponent(() => <TacoSnek/>)
+            console.log(gameHeader)
         }
         else if(game === "Tic Taco Toe"){
+            gameHeader = "Tic Taco Toe"
 
         }
     }
@@ -207,12 +214,17 @@ export default function KidsCorner(){
             
         </Modal>
         <GameModal show={showGameModal}>
-            <div style={{ }}>
-                {component}
+            <div style={{ marginTop: '10%', backgroundColor: 'lightgray', height: '78%'}}>
+                <h2>Game</h2>
+                <div>
+                    {component} 
+                    <button onClick={handleGameModal}>Back to Games</button>
+                </div>
+                
             </div>
-            <div>
-                <button onClick={handleGameModal}>Back to Games</button>
-            </div>
+
+               
+
         </GameModal>
         </>
     )

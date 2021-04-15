@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import Snake from '../../../../Games/snek_game/src/Snake';
-import Food from '../../../../Games/snek_game/src/Food';
+import Snake from './Snake';
+import Food from './Food';
+
+import './TacoSnek.css'
 
 const getRandomCoords = () => {
     let min = 1;
@@ -20,7 +22,7 @@ const initalState = {
     ]
 }
 
-class App extends Component {
+class TacoSnek extends Component {
 
     state = initalState;
 
@@ -131,4 +133,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default TacoSnek;
