@@ -17,13 +17,3 @@ export function calculateWinner(squares) {
     }
     return null;
 }
-
-
-// Testing segment for win logic
-const squares = [
-    null, null, null,
-    'X', 'X', 'O',
-    null, null, null
-];
-
-//console.log(calculateWinner(squares));
