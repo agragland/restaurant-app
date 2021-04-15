@@ -4,7 +4,7 @@ import {createBrowserHistory} from 'history'
 
 import TacoSweeper from '../../../../games/TacoSweeper/TacoSweeper'
 import TacoSnek from '../../../../games/TacoSnek/App'
-import tictactaco from '../../../../games/tictactaco/App'
+import Game from '../../../../games//tictactaco/components/game'
 
 import './KidsCorner.css'
 
@@ -61,8 +61,8 @@ export default function KidsCorner(){
     const [exitPassword, setExitPassword] = useState("")        //text that changes with input
     const [parentPassword, setParentPassword] = useState("")    //sets password needed to leave kids center
     const [error, setError] = useState('');
-    const [isSet, setIsSet] = useState(false);
-    const [isExiting, setIsExiting] = useState(false);
+    const [isSet, setIsSet] = useState(false);                  
+    const [isExiting, setIsExiting] = useState(false);          
 
     //handle modal
     const handleModal = () => {
@@ -75,7 +75,6 @@ export default function KidsCorner(){
 
     //GAMES
     //chooses which game to play
-    let gameHeader = ''
     const handleGame = (e) => {
         e.preventDefault() //blocks auto refresh
         handleGameModal()
@@ -84,14 +83,12 @@ export default function KidsCorner(){
         //choose which game to play
         if(game === "Taco Sweeper"){
             setComponent(() => <TacoSweeper/>)
-            console.log(gameHeader)
         }
         else if(game === "Taco Snake"){
             setComponent(() => <TacoSnek/>)
-            console.log(gameHeader)
         }
         else if(game === "Tic Taco Toe"){
-            setComponent(() => <tictactaco/>)
+            setComponent(() => <Game/>)
         }
     }
 
@@ -133,9 +130,11 @@ export default function KidsCorner(){
         }
     }
 
+    //set parent password
     const handleLog = () => {
         setIsSet(!isSet);
     }
+    //set exiting password
     const handleExit = () => {
         setIsExiting(!isExiting);
     }
@@ -143,10 +142,12 @@ export default function KidsCorner(){
     return(
         <>
         <Modal show={showModal}>
+            {/*enter parent password*/}
             {isSet ? 
-            <div>
+            <div>{/*exiting games*/}
                 {isExiting ?
                 <form className="signin-form">
+                    
                     <div className='form-inner'>
                         <h2>Kids Corner</h2>
                         {error}
@@ -160,8 +161,9 @@ export default function KidsCorner(){
                         </div>
                     </div>
                 </form>
-                :
+                :   
                 <div className="signin-form">
+                    {/*lists the games*/}
                     <div className='form-inner'>
                         <ul>
                             {GamePages.map((item, index) => {

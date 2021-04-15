@@ -24,7 +24,7 @@ const Game = () => {
 
     const renderMoves = () => (
         <button onClick={() => setBoard(Array(9).fill(null))}>
-            Start Game
+            New Game
         </button>
     )
 
