@@ -117,8 +117,10 @@ function endGame(target) {
     let rows = target.parentElement.parentElement.children.length;
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-            if (document.getElementById(`${i}_${j}`))
-            document.getElementById(`${i}_${j}`).click();
+            if (document.getElementById(`${i}_${j}`)){
+                document.getElementById(`${i}_${j}`).click();
+            }
+            
         }
     }
 }

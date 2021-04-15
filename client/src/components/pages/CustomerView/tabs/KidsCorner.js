@@ -20,8 +20,42 @@ function Modal({show, children}) {
     );
 }
 
+//makes modal
+function GameModal({show, children}) {
+    if (!show)
+        return null;
+
+    return (
+        <div className="employee-modal-background">
+            <section className="employee-modal-main-staff">
+                {children}
+            </section>
+        </div>
+    );
+}
+
+export const GamePages = [
+    {
+        title: "Taco Sweeper",
+        url: "#",
+        cName: 'nav-links'
+    },
+    {
+        title: "Taco Snake",
+        url: "#",
+        cName: 'nav-links'
+    },
+    {
+        title: "Tic Taco Toe",
+        url: "#",
+        cName: 'nav-links'
+    }
+]
+
 export default function KidsCorner(){
     const [showModal, setShowModal] = useState(true)
+    const [showGameModal, setShowGameModal] = useState(true)
+    const [component, setComponent] = useState()
     const [exitPassword, setExitPassword] = useState("")        //text that changes with input
     const [parentPassword, setParentPassword] = useState("")    //sets password needed to leave kids center
     const [error, setError] = useState('');
@@ -33,6 +67,31 @@ export default function KidsCorner(){
     const handleModal = () => {
         setShowModal(() => !showModal)
     }
+    //handle game modal
+    const handleGameModal = () => {
+        setShowGameModal(() => !showGameModal)
+    }
+
+    //GAMES
+    //chooses which game to play
+    const handleGame = (e) => {
+        e.preventDefault() //blocks auto refresh
+        handleGameModal()
+        const game = e.target.name
+
+        //choose which game to play
+        if(game === "Taco Sweeper"){
+            setComponent(() => <TacoSweeper/>)
+        }
+        else if(game === "Taco Snake"){
+
+        }
+        else if(game === "Tic Taco Toe"){
+
+        }
+    }
+
+    //LOGIN/OUT
     //parent logout
     const Logout = () => {
         console.log(exitPassword === parentPassword)
@@ -77,6 +136,7 @@ export default function KidsCorner(){
     }
 
     return(
+        <>
         <Modal show={showModal}>
             {isSet ? 
             <div>
@@ -88,7 +148,7 @@ export default function KidsCorner(){
                         {/*enter parent password*/}
                         <div className='form-group'>
                             <label  htmlFor='password'>Enter Exiting Password:</label>
-                            <input type="text" title="password" value={exitPassword} onChange={handleExitPassword()} />
+                            <input type="text" title="password" value={exitPassword} onChange={handleExitPassword} />
                         </div>
                         <div>
                             <button onClick={submitExit}>Exit Kids Corner</button>
@@ -98,22 +158,25 @@ export default function KidsCorner(){
                 :
                 <div className="signin-form">
                     <div className='form-inner'>
-                        <ul >
-                            {/*MineSweep*/}
-                            <li><Link to='/TacoSweeper'>Taco Sweeper</Link></li>
-                            {/*Snake*/}
-                            <li><Link to='/Snake'>Snake</Link></li>                            
-                            {/*TicTacToe*/}
-                            <li><Link to='/TicTacToe'>Tic Tac Toe</Link></li>
+                        <ul>
+                            {GamePages.map((item, index) => {
+                                return(
+                                    <li key={index}>
+                                        <a href={item.url} name={item.title} onClick={handleGame}>
+                                            {item.title} <br/>
+                                        </a>
+                                    </li>
+                                )
+                            })}
                         </ul>
-                        <Router history={history}>
-                            {/*MineSweep*/}
-                            <Route exact path='/TacoSweeper' component={<TacoSweeper/>}/>
+                        {/*<Router history={history}>
+                            MineSweep
+                            <Route exact path='/TacoSweeper' component={PlayTacoSweeper}/>*/}
                             {/*Snake
                             <Route exactPath='/Snake' component={Snake}/>*/}
                             {/*TicTacToe
-                            <Route exact path='/TicTacToe' component={TicTacToe}/>*/}
-                        </Router>
+                            <Route exact path='/TicTacToe' component={TicTacToe}/>
+                        </Router>*/}
                         <button onClick={handleExit} style={{ marginTop: '-50px'}}>
                             Exit Kids Corner
                         </button>
@@ -143,5 +206,14 @@ export default function KidsCorner(){
             }
             
         </Modal>
+        <GameModal show={showGameModal}>
+            <div style={{ }}>
+                {component}
+            </div>
+            <div>
+                <button onClick={handleGameModal}>Back to Games</button>
+            </div>
+        </GameModal>
+        </>
     )
 }
