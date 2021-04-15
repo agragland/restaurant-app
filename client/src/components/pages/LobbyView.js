@@ -133,27 +133,27 @@ export default function TableView({Change}) {
                 }
             })
         }
-        else if(table.drinks.length !== 0){
+        else if(table.drinks.length !== 0){     //needs refill
             let tempTable = table
             tempTable.drinks = []
             setTable(tempTable)
         }
-        else if (table.manualOrder === true){
+        else if (table.manualOrder === true){   //needs staff to take order
             let tempTable = table
             tempTable.manualOrder = false
             setTable(tempTable)
         }
-        else if (table.takeoutBox === true){
+        else if (table.takeoutBox === true){    //needs takeout boxes
             let tempTable = table
             tempTable.takeoutBox = false
             setTable(tempTable)
         }
-        else if (table.payCash === true){
+        else if (table.payCash === true){       //needs to pay with cash
             let tempTable = table
             tempTable.payCash = false
             setTable(tempTable)
         }
-        else if(table.assistance === true){
+        else if(table.assistance === true){     //needs general help
             let tempTable = table
             tempTable.assistance = false
             setTable(tempTable)

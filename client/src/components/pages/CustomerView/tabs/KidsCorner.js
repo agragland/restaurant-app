@@ -211,11 +211,7 @@ export default function KidsCorner(){
                     <button onClick={handleGameModal}>Back to Games</button>
                     {component} 
                 </div>
-                
             </div>
-
-               
-
         </GameModal>
         </>
     )

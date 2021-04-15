@@ -101,8 +101,23 @@ export default function NavBar(){
     }
 
     const handleClickNum = (tableNum) => {  //when a number is selected within the change table modal
-        updateTableNum(tableNum)            //update the table number
-        setShowModalTableNums(false)  //close change table modal
+        api.getTableByNum(getTableNum()).then(table => {
+            let tempTable = table.data.data
+            if(tempTable.status === "Occupied") {
+                tempTable.status = "Available"
+                api.updateTable(tempTable.table_num, tempTable)
+            }
+
+            updateTableNum(tableNum)            //update the table number
+            setShowModalTableNums(false)  //close change table modal
+            api.getTableByNum(tableNum).then(newTable => {
+                tempTable = newTable.data.data
+                if(tempTable.status === "Available"){
+                    tempTable.status = "Occupied"
+                    api.updateTable(tempTable.table_num, tempTable)
+                }
+            })
+        })
     }
 
     const tableNums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]  //array of all table numbers

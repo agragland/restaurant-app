@@ -67,7 +67,6 @@ export default class OrderView extends React.Component{
             status: '',
             table: 0,
 
-            coupon: coupon, //value of loyalty coupon
             openTime: "",   //opening time for the store
             closeTime: "",  //closing time for the store
             canOrder: true  //boolean for if the customer can order, based on opening/closing times
@@ -254,8 +253,8 @@ export default class OrderView extends React.Component{
 
     //displays the description of the coupon, if it exists
     displayCoupon = () => {
-        if(this.state.coupon > 0)
-            return <p>A coupon of ${this.state.coupon.toFixed(2)} has been added due to your loyalty.</p>
+        if(coupon > 0)
+            return <p>A coupon of ${coupon.toFixed(2)} has been added due to your loyalty.</p>
         else
             return <></>
     }

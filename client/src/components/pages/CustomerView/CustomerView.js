@@ -1,4 +1,3 @@
-
 import './CustomerView.css'
 import api from '../../../api'
 import {BrowserRouter as Router, Route} from "react-router-dom";
@@ -10,7 +9,7 @@ import Modal from "../../Modal";
 
 import CustomerLogin from './tabs/CustomerLogin'
 import MenuView from "./tabs/MenuView";
-import OrderView, {updateCoupon} from "./tabs/OrderView";
+import OrderView, {updateCoupon, getCoupon} from "./tabs/OrderView";
 import PaymentView from "./tabs/PaymentView";
 import KidsCorner from "./tabs/KidsCorner"
 
@@ -63,7 +62,16 @@ export default function CustomerView() {
     //determines the view of the customer navbar
     const [isLogged, setIsLogged] = useState(false);
     const handleLog = () => {
-        setIsLogged(!isLogged);
+        const tempCoupon = getCoupon()
+        //sets default table (table 8) to occupied
+        api.getTableByNum(8).then(table => {
+            let tempTable = table.data.data
+            if (tempTable.status === "Available")
+                tempTable.status = "Occupied"
+            api.updateTable(8, tempTable)
+            updateCoupon(tempCoupon)
+            setIsLogged(!isLogged);
+        })
     }
 
     return (
