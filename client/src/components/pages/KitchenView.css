@@ -9,10 +9,9 @@
 .kitchen-title{
     justify-self: center;
     font-size: 2.5rem;
-    color: black;
-    background-color: lightgray;
+    color: aliceblue;
+    background-color: #16324F;
 }
-
 
 .active-orders{
     position: relative;
@@ -22,9 +21,6 @@
     float: right;
     overflow-y: auto;
     padding-bottom: 100px;
-}
-
-.queue-title{
 }
 
 .queue-button{
@@ -69,9 +65,9 @@
     font-weight: normal;
 }
 
-.item-name{
+.kchn-item-name{
     margin: 0;
-    padding:0;
+    padding: 0;
 }
 
 .item-comments{

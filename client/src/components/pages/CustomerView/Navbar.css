@@ -19,8 +19,7 @@
 }
 
 .cst-nav-link{
-    color: white;
-    text-decoration: none;
+    color: black;
     padding: .5rem 1rem;
 }
 
@@ -32,12 +31,13 @@
 
 .cst-tab-text{
     font-size: 1.25rem;
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
 .cst-nav-button{
     background-color: #ffc87c;
+    color: black;
     height: 50px;
     width: 100px;
 }
@@ -52,4 +52,18 @@
     position: absolute;
     left: 1%;
     top: 1%;
+}
+
+.table-num-grid{
+    display: grid;
+    margin-top: 5px;
+    grid-template-columns: repeat(10, auto);
+}
+
+.table-num-button{
+    margin: 1px;
+}
+
+.drink-refill-button{
+    margin: 2px;
 }

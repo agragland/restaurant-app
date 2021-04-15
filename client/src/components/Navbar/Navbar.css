@@ -12,6 +12,8 @@
 
 .employee-id{
     color: #fff;
+    font-size: 32px;
+    font-weight: bold;
     justify-self: start;
     margin-left: 20px;
     cursor: pointer;
@@ -46,4 +48,28 @@
     background-color: #0091Ad;
     border-radius: 4px;
     transition: all 0.2s ease-out;
+}
+
+.employee-modal-background{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.employee-modal-main-staff{
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+ .error {
+    text-align: justify;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 3;
 }

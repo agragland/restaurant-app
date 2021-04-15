@@ -1,6 +1,9 @@
 import React from "react";
 import apis from "../../../../api";
 import {preparePayment} from "./PaymentView";
+import "./OrderView.css"
+
+const sundayNumber = 0;
 
 let payload = {
     items: [],
@@ -40,27 +43,13 @@ export const handleAddToOrder = (item, comment) => {
     console.log(payload)
 }
 
-const OrderItem = ({item, comment, comp}) => {
-    if(comp)
-    {
-        return (
-            <div>
-                <p>{item.name} 0.00</p>
-                <p>{comment}</p>
-            </div>
-        )
-    }
-    return (
-        <div>
-            <p>{item.name} {item.price}</p>
-            <p>{comment}</p>
-        </div>
-    )
-
-
+let coupon = 0
+export const updateCoupon = (discount) => {
+    coupon = discount
 }
-
-
+export const getCoupon = () => {
+    return coupon
+}
 
 export default class OrderView extends React.Component{
     constructor(props) {
@@ -74,7 +63,11 @@ export default class OrderView extends React.Component{
             tax: 0,
             total: 0,
             status: '',
-            table: 0
+            table: 0,
+            coupon: coupon,
+            openTime: "",
+            closeTime: "",
+            canOrder: true
         }
     }
 
@@ -121,21 +114,73 @@ export default class OrderView extends React.Component{
         }
 
     }
+    
+    handleGetTimes = async() => {
+        apis.getTimes().then(times => {
+            const curr_times = times.data.data
+            curr_times.map((time) => {
+                let now = this.getTime(new Date())
+                if( now>time.startTime && now<time.endTime){
+                    this.setState({canOrder: false});
+                }
+                else{
+                    this.setState({canOrder: true});
+                }
+            })
+        })
+        
+    };
+
+    getTime = (creationTime) => {
+        const time = new Date(creationTime)     //gets Date based on when order was created
+        const hours = time.getHours()
+        const minutes = time.getMinutes()
+        const seconds = time.getSeconds()
+        //converts Date to 24 hour clock, adds leading zeros if needed
+        return ((hours < 10 ? '0' : '') + hours) + ":" + ((minutes < 10 ? '0' : '') + minutes) + ":" + ((seconds < 10 ? '0' : '') + seconds)
+    }
+
 
     OrderStatusHandler = () => {
-
+        this.handleGetTimes()
         if(payload.status === 'Waiting')
         {
             return(
-                <button onClick={this.placeOrderHandler}>Place Order</button>
+                <button disabled={this.state.canOrder} onClick={this.placeOrderHandler}>Place Order</button>
             )
         }
         else if(payload.status === 'Created')
         {
             return(
-                <h1>Order Placed! Ready for Payment</h1>
+                <p className="big-text">Order Placed!</p>
             )
         }
+
+    }
+
+    OrderItem = ({item, comment, comp}) => {
+        if(comp)
+        {
+            return (
+                <div>
+                    {item.name} $0.00
+                    &nbsp;
+                    {comment}
+                    &nbsp;
+                    {this.EditRemoveButtons(item)}
+                </div>
+            )
+        }
+        return (
+            <div>
+                {item.name} ${item.price}
+                &nbsp;
+                {comment}
+                &nbsp;
+                {this.EditRemoveButtons(item)}
+            </div>
+        )
+
 
     }
 
@@ -156,30 +201,64 @@ export default class OrderView extends React.Component{
         //set up order payload and submit
         payload.status = 'Created'
         this.setState({status: 'Created'})
-        const { items, comments, commped, subtotal, total,  } = this.state
+        let { items, comments, commped, subtotal  } = this.state
+
+        if(new Date().getDay() === sundayNumber){
+            for(let i = 0; i < items.length; i++) {
+                if(items[i].category === "entrees"){
+                    for(let j = 0; j < items.length; j++) {
+                        if(items[j].category === "kids" && commped[j] === false){
+                            subtotal -= items[j].price
+                            commped[j] = true
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        subtotal -= coupon
+        if(subtotal < 0)
+            subtotal = 0
+        const total = subtotal
+
+        this.setState({subtotal: subtotal})
+
         const final_payload = { order_items:items, comments, commped, subtotal, total, status:'Created', table:payload.table }
         await apis.createOrder(final_payload).then(res => {
-            window.alert(`Order created successfully`)
             preparePayment(res.data.id)
         })
     }
 
+    displayCoupon = () => {
+        if(this.state.coupon > 0)
+            return <p>A coupon of ${this.state.coupon.toFixed(2)} has been added due to your loyalty.</p>
+        else
+            return <></>
+    }
+
+    displaySunday = () => {
+        if(new Date().getDay() === sundayNumber)
+            return <p>Sunday special! You can receive a free Kids meal for every Entree you purchase.</p>
+        else
+            return <></>
+    }
 
     render() {
     return(
-        <div>
+        <div className="order-container">
             <h1>Your Order</h1>
             <div>
                 {this.state.items.map((item_test,index) => (
                     <div>
-                    <OrderItem key={index} item={item_test} comment={this.state.comments[index]} comp={this.state.commped[index]} />
-                        {this.EditRemoveButtons(item_test)}
-
+                        <this.OrderItem key={index} item={item_test} comment={this.state.comments[index]} comp={this.state.commped[index]} />
                     </div>
                 ))
                 }
             </div>
-            <h1>Subtotal: ${this.state.subtotal.toFixed(2)}</h1>
+            {this.displayCoupon()}
+            {this.displaySunday()}
+            <p className="big-text">Subtotal: ${this.state.subtotal.toFixed(2)}</p>
             {this.OrderStatusHandler()}
         </div>
 

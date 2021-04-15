@@ -63,11 +63,34 @@ export default function NavBar(){
         })
     }
 
+    const [showModalHelp, setShowModalHelp] = useState(false)
     const handleClickHelp = () => {     //when the assistance button is clicked
+        setShowModalHelp(prev => !prev)
+    }
+
+    const generalHelp = () => {
         //update table to notify lobby of help request
         handleGetTable().then((table) => {
             let new_table = table.data.data
             new_table.assistance = true
+            handleUpdateTable(new_table)
+        })
+    }
+
+    const takeOrder = () => {
+        //update table to notify lobby of take order manually request
+        handleGetTable().then((table) => {
+            let new_table = table.data.data
+            new_table.manualOrder = true
+            handleUpdateTable(new_table)
+        })
+    }
+
+    const takeHome = () => {
+        //update table to notify lobby of take home box request
+        handleGetTable().then((table) => {
+            let new_table = table.data.data
+            new_table.takeoutBox = true
             handleUpdateTable(new_table)
         })
     }
@@ -101,19 +124,28 @@ export default function NavBar(){
             <Modal show={showModalTableNums}>
                 <button onClick={handleClickTable} className="x-button">X</button>
                 <br/>
-                {tableNums.map(tableNum => (
-                    <button onClick={() => handleClickNum(tableNum)} className="table-num-button">{tableNum}</button>
-                ))}
+                <div className="table-num-grid">
+                    {tableNums.map(tableNum => (
+                        <button onClick={() => handleClickNum(tableNum)} className="table-num-button">{tableNum}</button>
+                    ))}
+                </div>
             </Modal>
             <Modal show={showModalRefills}>
                 <button onClick={refillModalX} className="x-button">X</button>
                 <br/>
                 {drinks.map((drink, index) => (
                     <>
-                        <button onClick={handleClickRefill} value={index} disabled={disableRefills[index]}>{drink.name}</button>
+                        <button className="drink-refill-button" onClick={handleClickRefill} value={index} disabled={disableRefills[index]}>{drink.name}</button>
                         <br/>
                     </>
                 ))}
+            </Modal>
+            <Modal show={showModalHelp}>
+                <button onClick={handleClickHelp} className="x-button">X</button>
+                <br/><br/>
+                <button onClick={generalHelp}>Staff Help</button>&nbsp;
+                <button onClick={takeOrder}>Staff Take Order</button>&nbsp;
+                <button onClick={takeHome}>Take home box</button>&nbsp;
             </Modal>
         </>
     );

@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Modal from '../Modal';
+import StaffMenu from "../Navbar/StaffMenu";
+
 import './LobbyView.css';
 import api from "../../api";
 
-const available = {status: "Available", orders: [[]], drinks: [], assistance: false}
+const available = {status: "Available", orders: [[]], drinks: [], assistance: false, manualOrder: false, payCash: false, takeoutBox: false}
 
 //temporary array for items
 const globalTables = [
@@ -11,7 +13,7 @@ const globalTables = [
     available, available, available, available, available, available, available, available, available, available,
 ]
 
-export default function TableView() {
+export default function TableView({Change}) {
     const [tables, setTables] = useState(globalTables)
     const [tableNum, setTableNum] = useState("1");  //the number of the table (1-20)
     const [table, setTable] = useState({status: "Available", orders: [], drinks: [], assistance: false});
@@ -28,10 +30,14 @@ export default function TableView() {
         };
     }, []);
 
+    const refresh = () => {
+        handleGetTables()
+    }
+
     const handleGetTables = async () => {
         let tempTables = []
         for(let i = 0; i < 20; i++)
-            tempTables = [...tempTables, {status: "Available", orders: [], drinks: [], assistance: false}]         //initializes array
+            tempTables = [...tempTables, {status: "Available", orders: [], drinks: [], assistance: false, manualOrder: false, payCash: false, takeoutBox: false}]         //initializes array
 
         await api.getTables().then(db_tables => {
             const curr_tables = db_tables.data.data
@@ -41,6 +47,9 @@ export default function TableView() {
             curr_tables.map((table) => {
                 tempTables[table.table_num-1].status = table.status
                 tempTables[table.table_num-1].assistance = table.assistance
+                tempTables[table.table_num-1].manualOrder = table.manualOrder
+                tempTables[table.table_num-1].payCash = table.payCash
+                tempTables[table.table_num-1].takeoutBox = table.takeoutBox
                 tempTables[table.table_num-1].drinks = table.refills
             })
         })
@@ -129,6 +138,21 @@ export default function TableView() {
             tempTable.drinks = []
             setTable(tempTable)
         }
+        else if (table.manualOrder === true){
+            let tempTable = table
+            tempTable.manualOrder = false
+            setTable(tempTable)
+        }
+        else if (table.takeoutBox === true){
+            let tempTable = table
+            tempTable.takeoutBox = false
+            setTable(tempTable)
+        }
+        else if (table.payCash === true){
+            let tempTable = table
+            tempTable.payCash = false
+            setTable(tempTable)
+        }
         else if(table.assistance === true){
             let tempTable = table
             tempTable.assistance = false
@@ -136,7 +160,10 @@ export default function TableView() {
         }
 
         //update database
-        handleUpdateTable({table_num: tableNum, status: "Occupied", refills: table.drinks, assistance: table.assistance})
+        handleUpdateTable({
+            table_num: tableNum, status: "Occupied", refills: table.drinks,
+            assistance: table.assistance, manualOrder: table.manualOrder, takeoutBox: table.takeoutBox
+        })
 
         setTableShow(() => false);
     };
@@ -181,6 +208,24 @@ export default function TableView() {
                 </div>
             );
         }
+        else if (table.manualOrder === true)     //needs manual order
+            return(
+                <div>
+                    <p>Manual order requested.</p>
+                </div>
+            );
+        else if (table.takeoutBox === true)      //needs takeout boxes
+            return(
+                <div>
+                    <p>Takeout boxes requested.</p>
+                </div>
+            );
+        else if (table.payCash === true)         //needs manual pay
+            return(
+                <div>
+                    <p>Pay with cash requested.</p>
+                </div>
+            );
         else if (table.assistance === true) {
             return(
                 <div>
@@ -197,12 +242,17 @@ export default function TableView() {
     function setColor(curTable) {
         if(curTable !== undefined) {    //ensures curTable is not undefined
             const curStatus = curTable.status
-
             //sets button color based on status
             if (curStatus === "Order Ready")
                 tableColor = "pink"
             else if (curTable.drinks.length !== 0)      //needs refill
                 tableColor = "lightblue"
+            else if (curTable.manualOrder === true)     //needs manual order
+                tableColor = "lightyellow"
+            else if (curTable.takeoutBox === true)      //needs takeout boxes
+                tableColor = "#9375ff"
+            else if (curTable.payCash === true)         //needs manual pay
+                tableColor = "darkgray"
             else if (curTable.assistance === true)      //needs help
                 tableColor = "#ffc87c"        //light orange
             else if (curStatus === "Occupied")
@@ -210,6 +260,7 @@ export default function TableView() {
             else
                 tableColor = "white"
         }
+        return <></>
     }
 
     function setNeeds(curTable) {
@@ -221,6 +272,12 @@ export default function TableView() {
                 return "Order Ready"
             else if (curTable.drinks.length !== 0)      //needs refill
                 return "Refill"
+            else if (curTable.manualOrder === true)     //needs manual order
+                return "Manual order"
+            else if (curTable.takeoutBox === true)      //needs takeout boxes
+                return "Takeout boxes"
+            else if (curTable.payCash === true)         //needs manual pay
+                return "Pay with cash"
             else if (curTable.assistance === true)      //needs help
                 return "Assistance Requested"
             else if (curStatus === "Occupied")
@@ -233,6 +290,8 @@ export default function TableView() {
     return (
         <div className="lobby">
             <p className="lobby-title">Lobby</p>
+            <StaffMenu Change={Change} level={1} />
+            <button className="refresh" onClick={refresh}>Refresh</button>
             {tables.map((table, index) => (
                 <>
                     {setColor(table)}
@@ -244,8 +303,9 @@ export default function TableView() {
                 </>
             ))}
             <Modal show={tableShow}>
-                <button onClick={handleTableClick}>X</button>
+                <button className="x-button" onClick={handleTableClick}>X</button>
                 <button className='orderButton' onClick={handleOrderClick} disabled={!table.orders[0]} >Show Order</button>
+                <br/>
                 <p>
                     Table {tableNum}
                 </p>
@@ -253,14 +313,14 @@ export default function TableView() {
                 <button onClick={handleCompleteClick} disabled={!(table.status === "Order Ready" || table.drinks.length !== 0 || table.assistance)}>Complete Request</button>
             </Modal>
             <Modal show={orderShow}>
-                <button onClick={handleOrderClick}>X</button>
+                <button className="x-button" onClick={handleOrderClick}>X</button>
                 <p>Table {tableNum} Order</p>
                 {table.orders.map((order, orderIndex) => (
                     order.order_items.map((item, itemIndex) => (
-                        <p>
-                            {item.name}, ${item.price}
-                            <button data-orderindex={orderIndex} data-itemindex={itemIndex} disabled = {order.commped[itemIndex]} onClick={handleRemoveClick}>Remove</button>
-                        </p>
+                        <div className="item-list">
+                            {item.name}, ${item.price} &nbsp;
+                            <button className="comp-button" data-orderindex={orderIndex} data-itemindex={itemIndex} disabled={order.commped[itemIndex]} onClick={handleRemoveClick}>Comp</button>
+                        </div>
                     ))
                 ))}
             </Modal>

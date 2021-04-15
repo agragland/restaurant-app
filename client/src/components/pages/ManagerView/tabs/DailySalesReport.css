@@ -1,7 +1,7 @@
 .DSR{
     position: relative;
     background-color: gray;
-    height: 500px;
+    height: 650px;
     margin: 0px;
 }
 
@@ -13,6 +13,7 @@
     width: 70%;
     background: white;
     border: 1px solid #440D0F;
+    overflow-y: auto;
 }
 
 .DSR-visual .header{
@@ -41,4 +42,25 @@
     width: 100%;
     background: white;
     border: 1px solid #440D0F;
+}
+
+.quantity {
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
+}
+
+.price {
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
+}
+
+.profit{
+    height: 100%;
+    width: 25%;
+    justify-self: start;
+    float: left;
 }

@@ -9,8 +9,6 @@ function App() {
         <div className="App">
             <div className="bg"/>
                 <Navbar />
-
-
         </div>
     );
 }

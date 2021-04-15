@@ -55,6 +55,9 @@ updateTable = async (req, res) => {
         table.status = body.status
         table.refills = body.refills
         table.assistance = body.assistance
+        table.manualOrder = body.manualOrder
+        table.payCash = body.payCash
+        table.takeoutBox = body.takeoutBox
         table
             .save()
             .then(() => {

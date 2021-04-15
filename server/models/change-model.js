@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 
 const Change = new Schema(
     {
-        item: {type: Number, required: true},
-        action: {type: String, required: true},
-        employee: {type: String, required: true}, //Manager, Lobby, Kitchen
+        item: {type: String, required: true},
+        action: {type: String, required: true}, //Created, Deleted, Updated
+        emp: {type: mongoose.Schema.Types.ObjectId, ref: 'employees'}, //Reference to Employee
     },
     {timestamps: true}
 )

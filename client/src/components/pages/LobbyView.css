@@ -4,23 +4,39 @@
     background-color: lightgray;
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 2rem;
 }
 
 .tableButton{
+    color: black;
     width: 200px;
     height: 100px;
     padding: 16px 16px;
     margin-left: 10px;
     margin-bottom: 10px;
-} 
+}
 
 .orderButton{
-    margin-inline-end: 0;
+    position: absolute;
+    right: 1%;
+    top: 1%;
 }
 
 .lobby-title{
     justify-self: center;
     font-size: 2.5rem;
+    color:aliceblue;
+    background-color: #0091AD;
+}
+
+.item-list{
+    margin: 5px;
+}
+
+.refresh{
+    position: fixed;
+    background-color: whitesmoke;
+    top: 0;
+    left: 0;
     color: black;
-    background-color: lightgray;
 }

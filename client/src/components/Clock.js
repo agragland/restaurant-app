@@ -1,6 +1,5 @@
 import React from 'react';
 import Clock from 'react-live-clock';
-import Moment from 'react-moment';
 
 import 'moment-timezone';
 import "./Clock.css";
@@ -8,9 +7,9 @@ import "./Clock.css";
 export default function Time(){
     return(
         <div className="Time">
-            <h3>Current Time:{" "}
-            <Clock className="clock-display" format={'HH:mm:ss'} ticking={true} />
-            </h3> 
+            <p className="big-text">Current Time:{" "}
+            <Clock className="clock-display" format={'HH:mm:ss'} ticking={true} timezone={'US/Central'} />
+            </p>
        </div>
     );
 }

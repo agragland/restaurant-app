@@ -6,10 +6,7 @@ import Modal from "../../../Modal";
 
 let menu_items = [];
 
-
-
 export const Item = ({item}) => {
-
     const [customItem, showCustomItem] = useState(false);
     let comment = ""
 
@@ -17,13 +14,16 @@ export const Item = ({item}) => {
         comment = e.target.value
     }
 
+    if(item.isAvailable === false)
+        return <></>
+
     return(
     <>
         <Modal show={customItem}>
             <button onClick={() => showCustomItem(!customItem)} className="x-button">X</button>
             <div>
-                <p>{item.name}</p>
-                <p>{item.price}</p>
+                <p className="item-name">{item.name}</p>
+                <p>${item.price}</p>
                 <ul>
                     {item.ingredients.map((ingredient, index) =>
                         <li key={index}>{ingredient}</li>
@@ -31,7 +31,7 @@ export const Item = ({item}) => {
                 </ul>
                 <form>
                     <label>Comments:</label>
-                    <input type = "text" onChange={handleCommentField}/>
+                    <input type = "text" className="comment-input" onChange={handleCommentField}/>
                 </form>
                 <button onClick={() => {
                     handleAddToOrder(item, comment);
@@ -42,14 +42,15 @@ export const Item = ({item}) => {
         </Modal>
         <div className={"item-display"}>
             <div>
-                <p>{item.name}</p>
-                <p>{item.price}</p>
+                <p className="item-name">{item.name}</p>
+                <p>${item.price}</p>
                 <ul>
                     {item.ingredients.map((ingredient, index) =>
                         <li key={index}>{ingredient}</li>
                     )}
                 </ul>
                 <button onClick={() => handleAddToOrder(item, "")}>Add to Order</button>
+                &nbsp;
                 <button onClick={() => showCustomItem(!customItem)}>Customize</button>
             </div>
         </div>
@@ -84,141 +85,157 @@ export default function MenuView(){
         console.log(menu_items)
     }
 
+    const resetShow = () => {
+        setShowEntrees(false)
+        setShowAppetizers(false)
+        setShowSides(false)
+        setShowKids(false)
+        setShowDesserts(false)
+        setShowDrinks(false)
+    }
+
     const [showEntrees, setShowEntrees] = useState(false);
     const handleEntreesClick = () => {
-        setShowEntrees((prev) => !prev);
+        resetShow()
+        setShowEntrees(true);
     }
 
     //Appetizers
     const [showAppetizers, setShowAppetizers] = useState(false);
     const handleAppetizersClick = () => {
-        setShowAppetizers((prev) => !prev);
+        resetShow()
+        setShowAppetizers(true);
     }
 
     //Sides
     const [showSides, setShowSides] = useState(false);
     const handleSidesClick = () => {
-        setShowSides((prev) => !prev);
+        resetShow()
+        setShowSides(true);
     }
 
     //Kids
     const [showKids, setShowKids] = useState(false);
     const handleKidsClick = () => {
-        setShowKids((prev) => !prev);
+        resetShow()
+        setShowKids(true);
     }
 
     //Desserts
     const [showDesserts, setShowDesserts] = useState(false);
     const handleDessertsClick = () => {
-        setShowDesserts((prev) => !prev);
+        resetShow()
+        setShowDesserts(true);
     }
 
     //Drinks
     const [showDrinks, setShowDrinks] = useState(false);
     const handleDrinksClick = () => {
-        setShowDrinks((prev) => !prev);
+        resetShow()
+        setShowDrinks(true);
     }
 
     return(
-
-        <div className={"full-menu-box"}>
-            <div className={"menu-box"}>
-                <h1>Menu</h1>
-                    <button onClick={handleAppetizersClick}>Appetizers</button>
-                    <DropMenu show={showAppetizers}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'appetizers')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <button onClick={handleEntreesClick}>Entrees</button>
-                    <DropMenu show={showEntrees}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'entrees')
-                                {
-                                    return(
-                                        <Item key={index} item={item}/>
-                                        )
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <button onClick={handleSidesClick}>Sides</button>
-                    <DropMenu show={showSides}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'sides')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <button onClick={handleKidsClick}>Kids Meals</button>
-                    <DropMenu show={showKids}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'kids')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <button onClick={handleDessertsClick}>Desserts</button>
-                    <DropMenu show={showDesserts}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'desserts')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
-                    <button onClick={handleDrinksClick}>Drinks</button>
-                    <DropMenu show={showDrinks}>
-                        {
-                            menu_items.map((item, index) => {
-                                if(item.category === 'drinks')
-                                {
-                                    return(<Item
-                                        key={index}
-                                        item={item}
-                                    />)
-                                }
-                                else
-                                    return null;
-                            })
-                        }
-                    </DropMenu>
+        <div className={"menu-box"}>
+            <h1>Menu</h1>
+            <div className="button-container">
+                <button className="category-button" onClick={handleAppetizersClick} disabled={showAppetizers}>Appetizers</button>
+                <button className="category-button" onClick={handleEntreesClick} disabled={showEntrees}>Entrees</button>
+                <button className="category-button" onClick={handleSidesClick} disabled={showSides}>Sides</button>
+                <button className="category-button" onClick={handleKidsClick} disabled={showKids}>Kids Meals</button>
+                <button className="category-button" onClick={handleDessertsClick} disabled={showDesserts}>Desserts</button>
+                <button className="category-button" onClick={handleDrinksClick} disabled={showDrinks}>Drinks</button>
+            </div>
+            <div className="menu-container">
+                <DropMenu show={showAppetizers}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'appetizers')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showEntrees}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'entrees')
+                            {
+                                return(
+                                    <Item key={index} item={item}/>
+                                )
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showSides}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'sides')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showKids}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'kids')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showDesserts}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'desserts')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
+                <DropMenu show={showDrinks}>
+                    {
+                        menu_items.map((item, index) => {
+                            if(item.category === 'drinks')
+                            {
+                                return(<Item
+                                    key={index}
+                                    item={item}
+                                />)
+                            }
+                            else
+                                return null;
+                        })
+                    }
+                </DropMenu>
             </div>
         </div>
     );
