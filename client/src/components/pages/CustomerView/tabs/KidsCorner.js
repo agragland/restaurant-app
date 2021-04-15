@@ -197,7 +197,7 @@ export default function KidsCorner(){
                         <button onClick={submitEnter}>Set Password</button>
                     </div>
                     <div>
-                        <button onclick={handleModal}>Back to Restaurant</button>
+                        <Link className="cst-tab-text" to="/Order">Back to Restaurant</Link>
                     </div>
                 </div>
             </form>

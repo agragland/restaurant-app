@@ -2,6 +2,7 @@
 import './CustomerView.css'
 import api from '../../../api'
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import {createBrowserHistory} from 'history'
 import Time from "../../Clock";
 import Navbar from "./Navbar";
 import React, {useState, useEffect} from "react";
@@ -16,6 +17,7 @@ import KidsCorner from "./tabs/KidsCorner"
 export default function CustomerView() {
     const [customers, setCustomers] = useState([]); //to store all customers from database
     const [error, setError] = useState('');
+    const history = createBrowserHistory();
 
     //data base
     useEffect (() => {
@@ -43,8 +45,8 @@ export default function CustomerView() {
     const Login = details => {
         console.log(details)
         customers.map((worker) => {
-            //checks if credentials match
-            if((details.name === worker.name) && (details.email === worker.email) && (details.phoneNumber === worker.phoneNumber)){ //if the user name matches
+            //split into two seperate if statements to avoid multiple login errors
+            if((details.name == worker.name) && (details.email == worker.email) && (details.phoneNumber == worker.phoneNumber)){ //if the user name matches
                 handleLog();
             }
             else{
@@ -54,7 +56,6 @@ export default function CustomerView() {
     }
     //guest login
     const LoginGuest = () => {
-        //when logging in as guest, remove loyalty coupon
         updateCoupon(0)
         handleLog();
     }
@@ -67,9 +68,8 @@ export default function CustomerView() {
 
     return (
         <>
-
         <div className='customer'>
-            <Router>
+            <Router history={history}>
                 <Time />
                 <div className='customer-title'>
                     <h1>Customer</h1>
@@ -79,8 +79,6 @@ export default function CustomerView() {
                 <div className='customer-body'>
 
                     <Navbar/>
-                    {/*Customer Loyalty Rewards*/}
-                    <Route exact path="/Rewards"  />
                     {/*Menu*/}
                     <Route exact path="/Menu" component={MenuView} />
                     {/*Order*/}
