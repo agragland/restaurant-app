@@ -55,14 +55,13 @@ export const GamePages = [
 
 export default function KidsCorner(){
     const [showModal, setShowModal] = useState(true)
-    const [showGameModal, setShowGameModal] = useState(true)
+    const [showGameModal, setShowGameModal] = useState(false)
     const [component, setComponent] = useState()
     const [exitPassword, setExitPassword] = useState("")        //text that changes with input
     const [parentPassword, setParentPassword] = useState("")    //sets password needed to leave kids center
     const [error, setError] = useState('');
     const [isSet, setIsSet] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
-    const history = createBrowserHistory();                     //browser history
 
     //handle modal
     const handleModal = () => {
@@ -177,14 +176,6 @@ export default function KidsCorner(){
                                 )
                             })}
                         </ul>
-                        {/*<Router history={history}>
-                            MineSweep
-                            <Route exact path='/TacoSweeper' component={PlayTacoSweeper}/>*/}
-                            {/*Snake
-                            <Route exactPath='/Snake' component={Snake}/>*/}
-                            {/*TicTacToe
-                            <Route exact path='/TicTacToe' component={TicTacToe}/>
-                        </Router>*/}
                         <button onClick={handleExit} style={{ marginTop: '-50px'}}>
                             Exit Kids Corner
                         </button>
@@ -216,7 +207,6 @@ export default function KidsCorner(){
         </Modal>
         <GameModal show={showGameModal}>
             <div style={{ marginTop: '10%', backgroundColor: 'lightgray', height: '78%'}}>
-                <h2>Game</h2>
                 <div>
                     {component} 
                     <button onClick={handleGameModal}>Back to Games</button>
