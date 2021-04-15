@@ -797,43 +797,46 @@ export default function StaffMenu({Change, level}) {
         ADD ITEM TO MENU vv */}    
 
             <AddModal show={showAdd}>
-                <button onClick={handleAddClick}>X</button>
-                <form onSubmit={AddMenu}>
-                    {/*enter name*/}
-                    <label>
-                    Name: &emsp;
-                    <input type="text" className="add-item-input" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
-                    </label>
-                    <br/>
-                    {/*select category*/}
-                    <label>
-                        Category:
-                        <select value={menuItem.category} onChange={setValue('category')} >
-                            <option value="entrees">Entrees</option>
-                            <option value="appetizers">Appetizers</option>
-                            <option value="sides">Sides</option>
-                            <option value="kids">Kids</option>
-                            <option value="desserts">Desserts</option>
-                            <option value="drinks">Drink</option>
-                        </select>
-                    </label>
-                    {/*enter ingredients*/}
-                    <br/> 
-                    <label>
-                        Ingredients: &emsp;
-                        <textarea placeholder="List all cooking ingredients here" value={menuItem.ingredients} onChange={setValue('ingredients')} />
-                    </label>
-                    {/*enter price*/}
-                    <br/>
-                    <label>
-                        Price: &emsp;
-                        <input type="text" className="add-item-input" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
-                    </label>
-                    <br/>
-                    {/*collect image*/}
-                    <br/>
-                    <input className="submit" type="submit" value="Create Menu Item" />
-                </form>
+                <div style={{}}>
+                    <button onClick={handleAddClick}>X</button>
+                    <h3 style={{ textAlign: 'center' }}>Add Item</h3>
+                    <form onSubmit={AddMenu} style={{ marginLeft: '20%'}}>
+                        {/*enter name*/}
+                        <label style={{ fontSize: '16px'}}>
+                        Name: 
+                        <input style={{ marginLeft: '55px' }} type="text" className="add-item-input" placeholder="Enter name of item here" value={menuItem.name} onChange={setValue('name')} />
+                        </label>
+                        <br/>
+                        {/*select category*/}
+                        <label style={{ fontSize: '16px'}}>
+                            Category:
+                            <select  style={{ marginLeft: '35px' }} value={menuItem.category} onChange={setValue('category')} >
+                                <option value="entrees">Entrees</option>
+                                <option value="appetizers">Appetizers</option>
+                                <option value="sides">Sides</option>
+                                <option value="kids">Kids</option>
+                                <option value="desserts">Desserts</option>
+                                <option value="drinks">Drink</option>
+                            </select>
+                        </label>
+                        {/*enter ingredients*/}
+                        <br/> 
+                        <label style={{ fontSize: '16px'}}>
+                            Ingredients: 
+                            <textarea  style={{ marginLeft: '20px' }} placeholder="List all cooking ingredients here" value={menuItem.ingredients} onChange={setValue('ingredients')} />
+                        </label>
+                        {/*enter price*/}
+                        <br/>
+                        <label style={{ fontSize: '16px'}}>
+                            Price: 
+                            <input  style={{ marginLeft: '65px' }} type="text" className="add-item-input" placeholder="Enter price of item here" value={menuItem.price} onChange={setValue('price')} />
+                        </label>
+                        <br/>
+                        {/*collect image*/}
+                        <br/>
+                        <input className="submit" type="submit" value="Create Menu Item" />
+                    </form>
+                </div>
             </AddModal>
         </div>
     );
