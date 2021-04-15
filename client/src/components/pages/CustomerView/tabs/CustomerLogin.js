@@ -32,7 +32,10 @@ function CustomerLogin({ Login, Guest, error }) {
 
     //set the value of an input 
     const setValue = (variable) => {
+
         return({target: {value}}) => {
+            setCreateDisabled(true)
+            setErrorMessage("Please check uniqueness.")
             setCustomer(customer => ({...customer, [variable]: value}));
         }
     };
@@ -57,6 +60,52 @@ function CustomerLogin({ Login, Guest, error }) {
         handleAddClick();
         console.log(customer)
         Login(customer)
+    }
+
+    const [customers, setCustomers] = useState([{}])
+    const handleGetCustomer = async () => {
+        await api.getAllCustomers().then(loyals => {
+            const all_customers = loyals.data.data
+            let temp_customers = []
+
+            all_customers.map((loyal) => {
+
+                //add to the temp array
+                temp_customers = [...temp_customers, loyal]
+            })
+            //set state to temp
+            setCustomers(temp_customers)
+        })
+    }
+
+    //customer login
+    const [errorMessage, setErrorMessage] = useState("Please check uniqueness.")
+    const [createDisabled, setCreateDisabled] = useState(true)
+    const checkUnique = async () => {
+        handleGetCustomer()
+        let {email, phoneNumber} = customer
+        let tempError = ""
+        for(let i = 0; i < customers.length; i++){
+            //split into two seperate if statements to avoid multiple login errors
+            if(email == customers[i].email){ //if the user name matches
+                tempError = "Email already in use."
+                    if(phoneNumber == customers[i].phoneNumber){
+                        tempError += " Phone number already in use."
+                    }
+                setCreateDisabled(true)
+                break
+            }
+            if(phoneNumber == customers[i].phoneNumber){
+                tempError += " Phone number already in use."
+                setCreateDisabled(true)
+                break
+            }
+        }
+        if(tempError === ""){
+            tempError = "Info is unique."
+            setCreateDisabled(false)
+        }
+        setErrorMessage(tempError)
     }
 
     return (
@@ -89,35 +138,37 @@ function CustomerLogin({ Login, Guest, error }) {
             </div>
         </form>
         <AddModal show={showAdd}>
+            <button className="unique-button" onClick={checkUnique}>Unique?</button>
             <form className='signin-form' onSubmit={AddCustomer} >
                 <div className='form-inner'>
                     <h2>Create Customer Account</h2>
+                    <p>{errorMessage}</p>
                     {/*enter name*/}
                     <div className='form-group'>
                         <label  htmlFor='name'>Name:
-                            <input type="text" title="John Doe" value={customer.name} onChange={setValue('name')} />
+                            <input required type="text" title="John Doe" value={customer.name} onChange={setValue('name')} />
                         </label>
                     </div>
                     {/*enter email*/}
                     <div className='form-group'>
                         <label  htmlFor='email'>E-mail:
-                            <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="real@email.com" value={customer.email} onChange={setValue('email')} />
+                            <input required type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="real@email.com" value={customer.email} onChange={setValue('email')} />
                         </label>
                     </div>
                     {/*enter phone number*/}
                     <div className='form-group'>
                         <label  htmlFor='phoneNumber'>Phone Number:
-                            <input type="text" pattern="[0-9]{10}" title="1234567890" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                            <input required type="text" pattern="[0-9]{10}" title="1234567890" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                         </label>
                     </div>
                     {/*enter phone number*/}
                     <div className='form-group'>
                         <label  htmlFor='birthday'>Birthday:
-                            <input type="text" title="01/01/2000" value={customer.birthday} onChange={setValue('birthday')} />
+                            <input required type="text" title="01/01/2000" value={customer.birthday} onChange={setValue('birthday')} />
                         </label>
                     </div>  
                     <div>
-                        <input type='submit' title="submit" value='Create Account' />
+                        <input type='submit' title="submit" disabled={createDisabled} value='Create Account' />
                         <br/>
                         <button onClick={handleAddClick}>Back</button>
                     </div>
