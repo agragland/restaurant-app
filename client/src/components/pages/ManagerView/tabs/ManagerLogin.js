@@ -25,14 +25,14 @@ function ManagerLogin({ Login, error }) {
                 {error}
                 <div className='form-group'>
                     <label  htmlFor='empoyee id'>Employee ID:</label>
-                    <input type="text" value={manager.emp_id} onChange={setValue('emp_id')} />
+                    <input type="text" title="employee ID" value={manager.emp_id} onChange={setValue('emp_id')} />
                 </div>
                 <div className='form-group'>
                     <label  htmlFor='password'>Password:</label>
-                    <input type="password" value={manager.password} onChange={setValue('password')} />
+                    <input type="password" title="password" value={manager.password} onChange={setValue('password')} />
                 </div>              
                 
-                <input type='submit' value='LOGIN' />
+                <input type='submit' title="submit" value='LOGIN' />
             </div>
         </form>
     )

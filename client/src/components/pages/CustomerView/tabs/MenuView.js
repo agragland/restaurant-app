@@ -31,7 +31,7 @@ export const Item = ({item}) => {
                 </ul>
                 <form>
                     <label>Comments:</label>
-                    <input type = "text" className="comment-input" onChange={handleCommentField}/>
+                    <input type = "text" title="comments" className="comment-input" onChange={handleCommentField}/>
                 </form>
                 <button onClick={() => {
                     handleAddToOrder(item, comment);

@@ -86,7 +86,7 @@ export default function KidsCorner(){
                         {/*enter parent password*/}
                         <div className='form-group'>
                             <label  htmlFor='password'>Enter Exiting Password:</label>
-                            <input type="text" value={exitPassword} onChange={handleExitPassword()} />
+                            <input type="text" title="password" value={exitPassword} onChange={handleExitPassword()} />
                         </div>
                         <div>
                             <button onClick={submitExit}>Exit Kids Corner</button>
@@ -111,7 +111,7 @@ export default function KidsCorner(){
                     {/*enter parent password*/}
                     <div className='form-group'>
                         <label  htmlFor='password'>Enter Parent Password:</label>
-                        <input type="text" value={parentPassword} onChange={handleParentPassword()} />
+                        <input type="text" title="password" value={parentPassword} onChange={handleParentPassword()} />
                     </div>
                     <div>
                         <button onClick={submitEnter}>Set Password</button>

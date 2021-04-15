@@ -115,7 +115,7 @@ function CustomerLogin({ Login, Guest, error }) {
                     <input type="text" title="1234567890" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                 </div>             
                 
-                <input type='submit' value='LOGIN' /> <br/><br/><br/><br/>
+                <input type='submit' title="submit" value='LOGIN' /> <br/><br/><br/><br/>
                 <div style={{justifySelf: 'start'}}>
                     <button onClick={handleAddClick}>Create New Account</button>
                     <button onClick={Guest}>Continue As Guest</button>
@@ -151,7 +151,7 @@ function CustomerLogin({ Login, Guest, error }) {
                         </label>
                     </div>  
                     <div>
-                        <input type='submit' value='Create Account' />
+                        <input type='submit' title="submit" value='Create Account' />
                         <br/>
                         <button onClick={handleAddClick}>Back</button>
                     </div>

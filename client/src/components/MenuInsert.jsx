@@ -70,23 +70,23 @@ class MenuInsert extends Component {
                 <form>
                     <label>
                         Name:
-                        <input type="text" value={this.state.value} onChange={this.handleChangeInputName} />
+                        <input type="text" title="John Doe" value={this.state.value} onChange={this.handleChangeInputName} />
                     </label>
                     <label>
                         Category:
-                        <input type="text" value={this.state.value} onChange={this.handleChangeInputCategory} />
+                        <input type="text" title="Entrees" value={this.state.value} onChange={this.handleChangeInputCategory} />
                     </label>
                     <label>
                         Ingredients:
-                        <input type="text" value={this.state.value} onChange={this.handleChangeInputIngredients} />
+                        <input type="text" title="Taco Shell" value={this.state.value} onChange={this.handleChangeInputIngredients} />
                     </label>
                     <label>
                         Price:
-                        <input type="text" value={this.state.value} onChange={this.handleChangeInputPrice} />
+                        <input type="text" title="9.99" value={this.state.value} onChange={this.handleChangeInputPrice} />
                     </label>
                     <label>
                         Image:
-                        <input type="text" value={this.state.value} onChange={this.handleChangeInputImage} />
+                        <input type="text" title="" value={this.state.value} onChange={this.handleChangeInputImage} />
                     </label>
                     <label>
                         Available?:
