@@ -155,7 +155,7 @@ function Navbar() {
             </Modal>
             {component}
             <nav className="NavbarPages">
-                <h1 className="employee-id">Taco Palace</h1> {/* Still need to add inputed employee id*/}
+                <p className="employee-id">Taco Palace</p> {/* Still need to add inputed employee id*/}
                 <ul className={clicked ? 'nav-page active' : 'nav-page'} >
                     {StaffPages.map((item, index) => {
                         return(

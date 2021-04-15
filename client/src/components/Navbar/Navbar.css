@@ -12,6 +12,8 @@
 
 .employee-id{
     color: #fff;
+    font-size: 32px;
+    font-weight: bold;
     justify-self: start;
     margin-left: 20px;
     cursor: pointer;

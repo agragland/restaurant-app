@@ -316,6 +316,28 @@ export default class PaymentView extends React.Component {
         }))
     }
 
+    /*
+    *********
+    Pay Cash Handling
+    *********
+    */
+    //returns value of current table
+    handleGetTable = async () => {
+        return await api.getTableByNum(getTableNum())
+    }
+    //updates database with a new table
+    handleUpdateTable = async (table) => {
+        await api.updateTable(table.table_num, table)
+    }
+    handleClickCash = () => {
+        //update table to notify lobby of take home box request
+        this.handleGetTable().then((table) => {
+            let new_table = table.data.data
+            new_table.payCash = true
+            this.handleUpdateTable(new_table)
+        })
+    }
+
     paymentStatusHandler = () => {
         if(!this.state.paymentReady)
         {
@@ -340,7 +362,7 @@ export default class PaymentView extends React.Component {
                     <p className="big-text">Tax: {(this.state.order.subtotal * 0.0825).toFixed(2)}</p>
                     <p className="big-text">Total: {this.state.order.total.toFixed(2)}</p>
                     <button onClick={this.cardPaymentHandler}>Pay with Card</button>
-                    <button>Pay with Cash</button>
+                    <button onClick={this.handleClickCash}>Pay with Cash</button>
                     <button onClick={this.handleClickSplit}>Split Check</button>
                 </div>
 

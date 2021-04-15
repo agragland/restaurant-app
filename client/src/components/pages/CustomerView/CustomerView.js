@@ -71,7 +71,7 @@ export default function CustomerView() {
             <Router>
                 <Time />
                 <div className='customer-title'>
-                    Customer
+                    <h1>Customer</h1>
                 </div>
                 {/*if customer is logged in, show the navbar */}
             { isLogged ?

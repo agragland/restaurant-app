@@ -97,22 +97,22 @@ function CustomerLogin({ Login, Guest, error }) {
         <>
         <form className="signin-form" onSubmit={submitHandler}>
             <div className='form-inner'>
-                <h2>Customer Login</h2>
+                <h1>Customer Login</h1>
                 {error}
                 {/*enter name*/}
                 <div className='form-group'>
                     <label  htmlFor='name'>Name:</label>
-                    <input type="text" placeholder="Enter name here" value={customer.name} onChange={setValue('name')} />
+                    <input type="text" title="John Doe" value={customer.name} onChange={setValue('name')} />
                 </div>
                 {/*enter email*/}
                 <div className='form-group'>
                     <label  htmlFor='email'>E-mail:</label>
-                    <input type="text" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
+                    <input type="text" title="real@email.com" value={customer.email} onChange={setValue('email')} />
                 </div> 
                 {/*enter phone number*/}
                 <div className='form-group'>
                     <label  htmlFor='phoneNumber'>Phone Number:</label>
-                    <input type="text" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                    <input type="text" title="1234567890" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
                 </div>             
                 
                 <input type='submit' value='LOGIN' /> <br/><br/><br/><br/>
@@ -128,23 +128,27 @@ function CustomerLogin({ Login, Guest, error }) {
                     <h2>Create Customer Account</h2>
                     {/*enter name*/}
                     <div className='form-group'>
-                        <label  htmlFor='name'>Name:</label>
-                        <input type="text" placeholder="Enter name here" value={customer.name} onChange={setValue('name')} />
+                        <label  htmlFor='name'>Name:
+                            <input type="text" title="John Doe" value={customer.name} onChange={setValue('name')} />
+                        </label>
                     </div>
                     {/*enter email*/}
                     <div className='form-group'>
-                        <label  htmlFor='email'>E-mail:</label>
-                        <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Enter Email here" value={customer.email} onChange={setValue('email')} />
-                    </div> 
+                        <label  htmlFor='email'>E-mail:
+                            <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="real@email.com" value={customer.email} onChange={setValue('email')} />
+                        </label>
+                    </div>
                     {/*enter phone number*/}
                     <div className='form-group'>
-                        <label  htmlFor='phoneNumber'>Phone Number:</label>
-                        <input type="text" pattern="[0-9]{10}" placeholder="Enter phone number here" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
-                    </div>   
+                        <label  htmlFor='phoneNumber'>Phone Number:
+                            <input type="text" pattern="[0-9]{10}" title="1234567890" value={customer.phoneNumber} onChange={setValue('phoneNumber')} />
+                        </label>
+                    </div>
                     {/*enter phone number*/}
                     <div className='form-group'>
-                        <label  htmlFor='birthday'>Birthday:</label>
-                        <input type="text" placeholder="Enter birthday here" value={customer.birthday} onChange={setValue('birthday')} />
+                        <label  htmlFor='birthday'>Birthday:
+                            <input type="text" title="01/01/2000" value={customer.birthday} onChange={setValue('birthday')} />
+                        </label>
                     </div>  
                     <div>
                         <input type='submit' value='Create Account' />

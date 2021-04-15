@@ -19,8 +19,7 @@
 }
 
 .cst-nav-link{
-    color: white;
-    text-decoration: none;
+    color: black;
     padding: .5rem 1rem;
 }
 
@@ -32,7 +31,7 @@
 
 .cst-tab-text{
     font-size: 1.25rem;
-    color: white;
+    color: black;
     text-decoration: none;
 }
 

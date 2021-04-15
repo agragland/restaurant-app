@@ -91,7 +91,7 @@
     background-image: linear-gradient(to right, #F5853F 50%, #F5853F 50%, #440D0F);
     background-size: 200%;
     transition: 0.4s;
-    color: #fff;
+    color: black;
     font-weight: 700;
     border: black solid 1px;
     cursor: pointer;
@@ -112,7 +112,7 @@
     background-size: 200%;
     background-position: 0%;
     transition: 0.4s;
-    color: #fff;
+    color: black;
     font-weight: 700;
     cursor: pointer;
 }
