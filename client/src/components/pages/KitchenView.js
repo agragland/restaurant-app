@@ -109,7 +109,7 @@ export default function KitchenView (){
             <div>
                 <h1 className='kitchen-title'> Kitchen</h1>   
                 <div style={{ position: 'fixed', marginTop: '10px;', marginLeft: '70%', zIndex: '2'}}>
-                    <p style={{ textAlign: 'center', outline: 'black solid 3px', height: '2rem', width: '16rem', backgroundColor: 'gray', fontSize: '18px', color: 'black' }}>Current Time: {''}
+                    <p style={{ textAlign: 'center', outline: 'black solid 3px', height: '2rem', width: '16rem', backgroundColor: 'lightgray', fontSize: '18px', color: 'black' }}>Current Time: {''}
                     <Clock style={{ fontSize: '16px', color: 'black' }} format={'HH:mm:ss'} ticking={true} timezone={'US/Central'} />
                     </p>
                 </div>
