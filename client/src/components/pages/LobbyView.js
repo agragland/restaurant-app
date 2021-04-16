@@ -310,7 +310,7 @@ export default function TableView({Change}) {
                     Table {tableNum}
                 </p>
                 <Needs tableNum={tableNum}/>
-                <button onClick={handleCompleteClick} disabled={!(table.status === "Order Ready" || table.drinks.length !== 0 || table.assistance)}>Complete Request</button>
+                <button onClick={handleCompleteClick} disabled={!(table.status === "Order Ready" || table.drinks.length !== 0 || table.assistance || table.manualOrder || table.takeoutBox || table.payCash)}>Complete Request</button>
             </Modal>
             <Modal show={orderShow}>
                 <button className="x-button" onClick={handleOrderClick}>X</button>
