@@ -229,15 +229,17 @@ export default class PaymentView extends React.Component {
     DESSERT HANDLING
     *********
     */
-    //displays chance for free dessert, and displays free dessert selection if they win or consolation if they didn't win
+    //makes the table available after the payment is finished
     handleMakeAvailable = () => {
-        api.getTableByNum(getTableNum()).then(table => {
+        api.getTableByNum(getTableNum()).then(table => {    //get current table
             let temp_table = table.data.data
-            temp_table.status = "Available"
+            temp_table.status = "Available"                 //make it available
+            //update db
             api.updateTable(temp_table.table_num, temp_table)
         })
     }
 
+    //displays chance for free dessert, and displays free dessert selection if they win or consolation if they didn't win
     freeDessertHandler = () => {
         let temp = this.state.order
         temp.status = "Paid"
