@@ -352,6 +352,8 @@ export default class PaymentView extends React.Component {
     handleClickCash = () => {
         //update table to notify lobby of take home box request
         this.handleGetTable().then((table) => {
+            this.setState({paymentModal: 3})
+            this.setState({cardModal: true})
             let new_table = table.data.data
             new_table.payCash = true
             this.handleUpdateTable(new_table)
