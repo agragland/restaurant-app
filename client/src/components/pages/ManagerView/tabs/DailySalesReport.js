@@ -44,7 +44,7 @@ export default function DailySalesReport(){
             tempOrders.map((order) => {
                 //store each item ordered
                 let tempBool = false
-                let tempDate = order.createdAt.slice(0, 10)
+                let tempDate = getDate(order.createdAt)
 
                 //calculate tip from order
                 let tempTip = {date: tempDate, tip: (order.total-order.subtotal)}
@@ -145,6 +145,16 @@ export default function DailySalesReport(){
         })
         //set date
         handleDate({target})
+    }
+
+    //format date
+    const getDate = (creationDate) => {
+        const date = new Date(creationDate)
+        const year = date.getFullYear()
+        const month = date.getMonth()+1
+        const day = date.getDate()
+
+        return(year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0': '') + day)
     }
     
 
