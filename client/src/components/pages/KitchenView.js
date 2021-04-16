@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './KitchenView.css'
+import Clock from 'react-live-clock'
 import api from "../../api";
 
 export default function KitchenView (){
@@ -105,10 +106,17 @@ export default function KitchenView (){
 
     return (
         <div className='kitchen'>
-            <p className='kitchen-title'>Kitchen</p>
+            <div>
+                <h1 className='kitchen-title'> Kitchen</h1>   
+                <div style={{ position: 'fixed', marginTop: '10px;', marginLeft: '70%', zIndex: '2'}}>
+                    <p style={{ textAlign: 'center', outline: 'black solid 3px', height: '2rem', width: '16rem', backgroundColor: 'lightgray', fontSize: '18px', color: 'black' }}>Current Time: {''}
+                    <Clock style={{ fontSize: '16px', color: 'black' }} format={'HH:mm:ss'} ticking={true} timezone={'US/Central'} />
+                    </p>
+                </div>
+            </div>
             <button className="refresh" onClick={refresh}>Refresh</button>
             <section className="order-queue">
-                <h1 className="queue-title">Queue</h1>
+                <h2 className="queue-title">Queue</h2>
                 {orderQueue.map((order, index) => (
                     <p>
                         <button value={index} className="queue-button" onClick={clickToActive}>
@@ -120,7 +128,7 @@ export default function KitchenView (){
                 ))}
             </section>
             <section className="active-orders">
-                <h1>Active</h1>
+                <h2 style={{ fontSize: '36px' }}>Active</h2>
                 {actives.map((order, activesIndex) => (
                     <section className="order">
                         <h3 className="order-table">Table {order.table}</h3>

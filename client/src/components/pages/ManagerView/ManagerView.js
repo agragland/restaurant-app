@@ -1,5 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
+import Clock from 'react-live-clock';
 import api from '../../../api'
 
 import StaffMenu from "../../Navbar/StaffMenu"
@@ -80,7 +81,6 @@ export default function ManagerView (){
         console.log(payload)
         //add to database
         await api.insertChange(payload).then(res => {
-            window.alert(`Change inserted seccessfully`)
             change = {
                 item: '',
                 action: '',
@@ -93,7 +93,11 @@ export default function ManagerView (){
         <>
         <div className='manager'> 
             <div className='manager-title'>Manager</div>
-            <Time />
+            <div className="Time" style={{}}>
+                <h3 style={{ fontSize: '18px', color: 'white' }}>Current Time: <br/></h3>
+                <Clock className="clock-display" format={'HH:mm:ss'} ticking={true} timezone={'US/Central'} />
+                
+            </div>
             {/*if manager is logged in, show the navbar */}        
             { isLogged ?
             <div className='manager-body'>
