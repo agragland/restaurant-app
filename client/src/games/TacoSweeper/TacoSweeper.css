@@ -6,7 +6,7 @@ table.sweeper {
     margin-left: 31%;
 }
 
-td {
+table.sweeper td {
     background-color: rgb(68, 122, 68);
     border-bottom: 4px solid grey;
     border-right: 4px solid grey;
