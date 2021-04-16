@@ -232,7 +232,7 @@ export default class PaymentView extends React.Component {
     //displays chance for free dessert, and displays free dessert selection if they win or consolation if they didn't win
     freeDessertHandler = () => {
         let temp = this.state.order
-        temp.status = "paid"
+        temp.status = "Paid"
         //updates order in db to be paid
         this.handleUpdateOrder(temp)
 
